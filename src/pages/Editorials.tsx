@@ -151,11 +151,10 @@ const Editorials = () => {
             Join Our Story
           </h2>
           <p className="text-lg text-gray-700 mb-8">Be part of our visual journey. Share your Scriptured moments and get featured in our community socials.</p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex justify-center">
             <button className="bg-black text-white px-8 py-3 font-medium hover:bg-gray-800 transition-colors duration-200">
               SUBMIT YOUR STORY
             </button>
-            <button className="border border-black text-black px-8 py-3 font-medium hover:bg-black hover:text-white transition-colors duration-200">THE 12 ACCESS</button>
           </div>
         </div>
       </div>
