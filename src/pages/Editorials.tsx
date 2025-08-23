@@ -59,7 +59,7 @@ const Editorials = () => {
         <div className="max-w-6xl mx-auto">
           {editorials.filter(editorial => editorial.featured).map(editorial => <div key={editorial.id} className="mb-16">
               <div className="relative group cursor-pointer">
-                <div className="aspect-video bg-gradient-to-br from-gray-900 to-gray-700 rounded-lg overflow-hidden">
+                <div className="relative aspect-video bg-gradient-to-br from-gray-900 to-gray-700 rounded-lg overflow-hidden">
                   <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <div className="bg-white bg-opacity-20 backdrop-blur-sm rounded-full p-4">
                       <Play className="w-8 h-8 text-white" />
@@ -100,7 +100,7 @@ const Editorials = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {editorials.filter(editorial => !editorial.featured).map(editorial => <div key={editorial.id} className="group cursor-pointer">
                 <div className="relative">
-                  <div className="aspect-video bg-gradient-to-br from-gray-200 to-gray-400 rounded-lg overflow-hidden mb-4">
+                  <div className="relative aspect-video bg-gradient-to-br from-gray-200 to-gray-400 rounded-lg overflow-hidden mb-4">
                     <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg">
                       <div className="bg-white bg-opacity-20 backdrop-blur-sm rounded-full p-3">
                         <Play className="w-6 h-6 text-white" />
