@@ -21,7 +21,7 @@ const Footer = () => {
                 <h3 className="font-serif text-2xl font-bold mb-4">SCRIPTURED</h3>
                 <p className="text-gray-300 mb-6 max-w-sm">Where ancient wisdom meets modern streetwear. Fashion with purpose, impact with intention.</p>
                 <div className="flex space-x-4">
-                  <a href="#" className="hover:text-gray-300 transition-colors duration-200">
+                  <a href="https://www.instagram.com/scriptured.official/" target="_blank" rel="noopener noreferrer" className="hover:text-gray-300 transition-colors duration-200">
                     <Instagram className="w-5 h-5" />
                   </a>
                   <a href="#" className="hover:text-gray-300 transition-colors duration-200">
