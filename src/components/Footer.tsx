@@ -30,8 +30,8 @@ const Footer = () => {
                   <a href="https://www.youtube.com/@ScripturedHQ" target="_blank" rel="noopener noreferrer" className="hover:text-gray-300 transition-colors duration-200">
                     <Youtube className="w-5 h-5" />
                   </a>
-                  <a href="#" className="hover:text-gray-300 transition-colors duration-200">
-                    <img src="/lovable-uploads/e8ba378f-6b25-4baa-97de-658c1b714c65.png" alt="Social media icon" className="w-6 h-6" />
+                  <a href="https://www.tiktok.com/@scripturedhq" target="_blank" rel="noopener noreferrer" className="hover:text-gray-300 transition-colors duration-200">
+                    <img src="/lovable-uploads/e8ba378f-6b25-4baa-97de-658c1b714c65.png" alt="TikTok" className="w-6 h-6" />
                   </a>
                   <a href="#" className="hover:text-gray-300 transition-colors duration-200">
                     <Mail className="w-5 h-5" />
