@@ -27,7 +27,7 @@ const Footer = () => {
                   <a href="https://x.com/ScripturedHQ" target="_blank" rel="noopener noreferrer" className="hover:text-gray-300 transition-colors duration-200">
                     <Twitter className="w-5 h-5" />
                   </a>
-                  <a href="#" className="hover:text-gray-300 transition-colors duration-200">
+                  <a href="https://www.youtube.com/@ScripturedHQ" target="_blank" rel="noopener noreferrer" className="hover:text-gray-300 transition-colors duration-200">
                     <Youtube className="w-5 h-5" />
                   </a>
                   <a href="#" className="hover:text-gray-300 transition-colors duration-200">
