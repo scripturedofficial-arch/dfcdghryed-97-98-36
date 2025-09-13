@@ -178,9 +178,9 @@ const Shop = () => {
       <div className="px-4 sm:px-6 lg:px-8 pb-8">
         <div className="max-w-7xl mx-auto">
                 <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-y-4 gap-x-1 px-[11px]">
-            {products.slice(0, 4).map(product => <div key={product.id} className="group cursor-pointer transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl" onClick={() => handleProductClick(product)} onMouseEnter={() => setHoveredProduct(product.id)} onMouseLeave={() => setHoveredProduct(null)}>
+            {products.slice(0, 4).map(product => <div key={product.id} className="h-full group cursor-pointer transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl" onClick={() => handleProductClick(product)} onMouseEnter={() => setHoveredProduct(product.id)} onMouseLeave={() => setHoveredProduct(null)}>
                 {/* Product Card */}
-                <div className="bg-white rounded-2xl overflow-hidden shadow-lg transition-all duration-300 group-hover:shadow-2xl">
+                <div className="h-full flex flex-col bg-white rounded-2xl overflow-hidden shadow-lg transition-all duration-300 group-hover:shadow-2xl">
                   {/* Product Image */}
                   <div className="relative aspect-square overflow-hidden bg-gray-50">
                     <img src={product.image} alt={product.name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
@@ -200,7 +200,7 @@ const Shop = () => {
                   </div>
                   
                   {/* Product Details */}
-                  <div className="p-4 space-y-3">
+                  <div className="p-4 space-y-3 mt-auto">
                     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2 gap-2 sm:gap-0">
                       <h3 className="font-bold text-base text-black tracking-tight leading-tight">
                         {product.name}
@@ -236,9 +236,9 @@ const Shop = () => {
       <div className="px-4 sm:px-6 lg:px-8 pb-16">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-y-4 gap-x-1 px-[11px]">
-            {products.slice(2, 6).map(product => <div key={product.id} className="group cursor-pointer transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl" onClick={() => handleProductClick(product)} onMouseEnter={() => setHoveredProduct(product.id)} onMouseLeave={() => setHoveredProduct(null)}>
+            {products.slice(2, 6).map(product => <div key={product.id} className="h-full group cursor-pointer transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl" onClick={() => handleProductClick(product)} onMouseEnter={() => setHoveredProduct(product.id)} onMouseLeave={() => setHoveredProduct(null)}>
                 {/* Product Card */}
-                <div className="bg-white rounded-2xl overflow-hidden shadow-lg transition-all duration-300 group-hover:shadow-2xl">
+                <div className="h-full flex flex-col bg-white rounded-2xl overflow-hidden shadow-lg transition-all duration-300 group-hover:shadow-2xl">
                   {/* Product Image */}
                   <div className="relative aspect-square overflow-hidden bg-gray-50">
                     <img src={product.image} alt={product.name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
@@ -258,7 +258,7 @@ const Shop = () => {
                   </div>
                   
                   {/* Product Details */}
-                  <div className="p-4 space-y-3">
+                  <div className="p-4 space-y-3 mt-auto">
                     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2 gap-2 sm:gap-0">
                       <h3 className="font-bold text-base text-black tracking-tight leading-tight">
                         {product.name}
