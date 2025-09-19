@@ -136,7 +136,7 @@ const FeaturedProducts = ({
   };
   return <>
       {/* CTA Buttons */}
-      <div className="flex flex-row gap-4 justify-center items-center bg-background py-8 transition-all duration-300 safe-area-spacing">
+      <div className="flex flex-row gap-4 justify-center items-center bg-background pt-3 md:pt-8 pb-8 transition-all duration-300 safe-area-spacing">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/50 to-background pointer-events-none"></div>
         <button onClick={handle36FiveClick} className={`relative z-10 px-8 py-4 text-lg font-medium transition-all duration-300 transform hover:scale-105 rounded-lg safe-touch-target ${activeButton === "36Five" ? "bg-black text-white hover:bg-gray-800" : "border-2 border-black text-black sm:text-white hover:bg-black hover:text-white"}`}>
           36Five
