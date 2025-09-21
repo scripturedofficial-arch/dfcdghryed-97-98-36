@@ -2586,7 +2586,7 @@ const Dashboard = () => {
         
         {/* Header Stack */}
         <div className="bg-background border-b max-w-full pt-[30px]">
-          {/* Mobile User Greeting */}
+          <div className="px-4 py-4 relative z-50 mt-[5px] md:mt-[20px]">
           {selectedContent?.includes("overview") && <div className="flex sm:hidden justify-center items-center px-4 pb-4 pt-9 border-b">
               <div className="flex items-center gap-4">
                 <div className="text-center">
