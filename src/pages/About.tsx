@@ -128,7 +128,7 @@ const About = () => {
           <h2 className="font-serif text-4xl md:text-5xl font-bold text-center mb-16">
             Our Values
           </h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-8">
             {[{
             value: "Honesty",
             description: "Transparent in all our practices"
