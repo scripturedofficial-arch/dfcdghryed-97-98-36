@@ -144,7 +144,7 @@ const About = () => {
           }, {
             value: "Creativity",
             description: "Innovative designs with purpose"
-          }].map((item, index) => <div key={index} className="text-center mx-auto">
+          }].map((item, index) => <div key={index} className="text-center">
                 <h3 className="font-serif text-2xl font-bold mb-4">{item.value}</h3>
                 <p className="text-gray-600">{item.description}</p>
               </div>)}
