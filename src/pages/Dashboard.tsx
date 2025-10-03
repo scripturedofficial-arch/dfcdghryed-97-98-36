@@ -74,6 +74,8 @@ const Dashboard = () => {
     frequency: "Daily summary"
   }]);
   const [emailFrequency, setEmailFrequency] = useState<"real-time" | "daily" | "weekly" | "important">("real-time");
+  const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
+  const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
 
   // Toggle notification preference
   const toggleNotificationPref = (index: number) => {
@@ -1879,7 +1881,17 @@ const Dashboard = () => {
                     <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
                       <span className="text-lg">‹</span>
                     </Button>
-                    <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                    <Button 
+                      variant="ghost" 
+                      size="sm" 
+                      className="h-8 w-8 p-0"
+                      onClick={() => {
+                        const nextMonth = (currentMonth + 1) % 12;
+                        const nextYear = nextMonth === 0 ? currentYear + 1 : currentYear;
+                        setCurrentMonth(nextMonth);
+                        setCurrentYear(nextYear);
+                      }}
+                    >
                       <span className="text-lg">›</span>
                     </Button>
                   </div>
