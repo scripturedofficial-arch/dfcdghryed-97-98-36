@@ -1875,10 +1875,20 @@ const Dashboard = () => {
                 <div className="flex items-center justify-between">
                   <CardTitle className="text-xl font-serif flex items-center gap-3">
                     <div className="w-2 h-8 bg-gradient-to-b from-primary to-primary/60 rounded-full"></div>
-                    January 2025
+                    {new Date(currentYear, currentMonth).toLocaleString('default', { month: 'long', year: 'numeric' })}
                   </CardTitle>
                   <div className="flex items-center gap-2">
-                    <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                    <Button 
+                      variant="ghost" 
+                      size="sm" 
+                      className="h-8 w-8 p-0"
+                      onClick={() => {
+                        const prevMonth = currentMonth === 0 ? 11 : currentMonth - 1;
+                        const prevYear = currentMonth === 0 ? currentYear - 1 : currentYear;
+                        setCurrentMonth(prevMonth);
+                        setCurrentYear(prevYear);
+                      }}
+                    >
                       <span className="text-lg">‹</span>
                     </Button>
                     <Button 
@@ -1906,20 +1916,31 @@ const Dashboard = () => {
                     </div>)}
                   
                   {/* Calendar Days */}
-                  {Array.from({
-                  length: 31
-                }, (_, i) => i + 1).map(day => {
-                  const hasEvent = [5, 12, 18, 25].includes(day);
-                  const isGodlyCircle = [12, 25].includes(day);
-                  const isToday = day === 15;
-                  return <div key={day} className={`
+                  {(() => {
+                    const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+                    const firstDayOfMonth = new Date(currentYear, currentMonth, 1).getDay();
+                    const today = new Date();
+                    const isCurrentMonth = currentMonth === today.getMonth() && currentYear === today.getFullYear();
+                    
+                    return Array.from({ length: daysInMonth + firstDayOfMonth }, (_, i) => {
+                      if (i < firstDayOfMonth) {
+                        return <div key={`empty-${i}`} className="aspect-square" />;
+                      }
+                      
+                      const day = i - firstDayOfMonth + 1;
+                      const hasEvent = [5, 12, 18, 25].includes(day);
+                      const isGodlyCircle = [12, 25].includes(day);
+                      const isToday = isCurrentMonth && day === today.getDate();
+                      
+                      return <div key={day} className={`
                           aspect-square flex items-center justify-center text-sm rounded-lg transition-all duration-300 cursor-pointer relative
                           ${isToday ? 'bg-primary text-primary-foreground font-bold ring-2 ring-primary/30' : hasEvent ? 'bg-muted/50 hover:bg-muted text-foreground font-medium' : 'hover:bg-muted/30 text-muted-foreground'}
                         `}>
                         {day}
                         {hasEvent && <div className={`absolute bottom-1 w-1 h-1 rounded-full ${isGodlyCircle ? 'bg-yellow-500' : 'bg-primary'}`} />}
                       </div>;
-                })}
+                    });
+                  })()}
                 </div>
                 
                 {/* Legend */}
