@@ -2631,7 +2631,7 @@ const Dashboard = () => {
             </div>}
 
           {/* Navigation & Desktop User Greeting */}
-          <div className={`px-4 py-4 relative z-50 ${selectedContent?.includes("overview") ? "mt-[40px] md:mt-[50px]" : "mt-[40px] md:mt-[50px]"}`}>
+          <div className={`px-4 py-4 relative z-50 ${selectedContent?.includes("overview") ? "mt-[30px] md:mt-[50px]" : "mt-[30px] md:mt-[50px]"}`}>
             <div className="flex items-center justify-between w-full max-w-7xl mx-auto">
               {/* Left side - Navigation buttons */}
               <div className="flex flex-row items-center gap-2 sm:gap-6">
