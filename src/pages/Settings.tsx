@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ArrowLeft, User, Mail, Bell, Shield, CreditCard, Palette, Globe, Download } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -15,6 +15,7 @@ import { useToast } from "@/hooks/use-toast";
 import { PrivacySettings } from "@/components/PrivacySettings";
 const Settings = () => {
   const { toast } = useToast();
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("profile");
   const [notifications, setNotifications] = useState({
     newDrops: true,
@@ -397,21 +398,7 @@ const Settings = () => {
                   <Button 
                     variant="outline" 
                     className="w-full"
-                    onClick={async () => {
-                      try {
-                        const { data, error } = await supabase.functions.invoke('manage-payment-methods');
-                        if (error) throw error;
-                        if (data?.url) {
-                          window.open(data.url, '_blank');
-                        }
-                      } catch (error) {
-                        toast({
-                          title: "Error",
-                          description: "Failed to open payment management",
-                          variant: "destructive"
-                        });
-                      }
-                    }}
+                    onClick={() => navigate('/payment-methods')}
                   >
                     Add New Payment Method
                   </Button>

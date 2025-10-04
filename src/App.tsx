@@ -29,6 +29,7 @@ import TermsOfService from "./pages/TermsOfService";
 import ShippingReturns from "./pages/ShippingReturns";
 import Dashboard from "./pages/Dashboard";
 import Settings from "./pages/Settings";
+import PaymentMethods from "./pages/PaymentMethods";
 import ProductDetail from "./pages/ProductDetail";
 import FAQ from "./pages/FAQ";
 import MadeToOrder from "./pages/MadeToOrder";
@@ -70,6 +71,7 @@ const App = () => (
           <Route path="/shipping-returns" element={<ShippingReturns />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/settings" element={<Settings />} />
+          <Route path="/payment-methods" element={<PaymentMethods />} />
           <Route path="/product/:id" element={<ProductDetail />} />
           <Route path="/faq" element={<FAQ />} />
           <Route path="/made-to-order" element={<MadeToOrder />} />
