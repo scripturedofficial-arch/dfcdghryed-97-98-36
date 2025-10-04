@@ -1977,7 +1977,7 @@ const Dashboard = () => {
                 title: "Ethereal Veil Drop",
                 type: "Limited Release",
                 isGodly: false,
-                pieces: "12 pieces"
+                pieces: "365 pieces"
               }, {
                 date: "Jan 12",
                 time: "11:00 AM EST",
