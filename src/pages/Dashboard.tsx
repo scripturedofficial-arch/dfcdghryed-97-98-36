@@ -1856,7 +1856,64 @@ const Dashboard = () => {
               </h2>
               <p className="text-muted-foreground text-sm tracking-wide uppercase mb-4">Divine Schedule of Sacred Releases</p>
               <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-3">
-                <Button variant="outline" size="sm" className="group hover:shadow-lg transition-all duration-300 border-muted-foreground/20 hover:border-foreground/40">
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="group hover:shadow-lg transition-all duration-300 border-muted-foreground/20 hover:border-foreground/40"
+                  onClick={() => {
+                    const events = [
+                      {
+                        date: "2025-01-05",
+                        time: "12:00",
+                        title: "Ethereal Veil Drop",
+                        type: "Limited Release",
+                        pieces: "365 pieces"
+                      },
+                      {
+                        date: "2025-01-12",
+                        time: "11:00",
+                        title: "Godly Circle Access",
+                        type: "Member Exclusive",
+                        pieces: "Early access"
+                      },
+                      {
+                        date: "2025-01-18",
+                        time: "14:00",
+                        title: "Divine Symposium",
+                        type: "Virtual Event",
+                        pieces: "Live stream"
+                      }
+                    ];
+
+                    const icsContent = [
+                      'BEGIN:VCALENDAR',
+                      'VERSION:2.0',
+                      'PRODID:-//Divine Calendar//EN',
+                      'CALSCALE:GREGORIAN',
+                      ...events.map(event => {
+                        const startDateTime = `${event.date.replace(/-/g, '')}T${event.time.replace(/:/g, '')}00`;
+                        return [
+                          'BEGIN:VEVENT',
+                          `DTSTART:${startDateTime}`,
+                          `SUMMARY:${event.title}`,
+                          `DESCRIPTION:${event.type} - ${event.pieces}`,
+                          `UID:${event.date}-${event.title.replace(/\s+/g, '-')}@divine-calendar.com`,
+                          'END:VEVENT'
+                        ].join('\r\n');
+                      }),
+                      'END:VCALENDAR'
+                    ].join('\r\n');
+
+                    const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+                    const link = document.createElement('a');
+                    link.href = URL.createObjectURL(blob);
+                    link.download = 'divine-calendar.ics';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    URL.revokeObjectURL(link.href);
+                  }}
+                >
                   <Calendar className="h-4 w-4 mr-2" />
                   Export Calendar
                 </Button>
