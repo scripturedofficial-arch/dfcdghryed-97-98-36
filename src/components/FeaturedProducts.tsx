@@ -28,7 +28,6 @@ const FeaturedProducts = ({
   const [currentSlide, setCurrentSlide] = useState(0);
   const [selectedProduct, setSelectedProduct] = useState<typeof products[0] | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [likedProducts, setLikedProducts] = useState<Set<number>>(new Set());
   const [catalogueIndex, setCatalogueIndex] = useState(0);
   const [slideDirection, setSlideDirection] = useState<'left' | 'right'>('right');
   const [isHeaderHovered, setIsHeaderHovered] = useState(false);
@@ -122,18 +121,6 @@ const FeaturedProducts = ({
     setIsModalOpen(false);
     setSelectedProduct(null);
   };
-  const toggleLike = (productId: number, e: React.MouseEvent) => {
-    e.stopPropagation();
-    setLikedProducts(prev => {
-      const newSet = new Set(prev);
-      if (newSet.has(productId)) {
-        newSet.delete(productId);
-      } else {
-        newSet.add(productId);
-      }
-      return newSet;
-    });
-  };
   return <>
       {/* CTA Buttons */}
       <div className="flex flex-row gap-4 justify-center items-center bg-background pt-0 md:pt-8 pb-8 transition-all duration-300 safe-area-spacing">
@@ -181,15 +168,6 @@ const FeaturedProducts = ({
                                 {/* Product Image */}
                                 <div className="relative aspect-square bg-gray-50 overflow-hidden">
                                   <img src={product.image} alt={product.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
-                                  
-                                  {/* Heart Icon Overlay - Hidden on mobile, visible on md+ hover */}
-                                  <button
-                                    onClick={(e) => toggleLike(product.id, e)}
-                                    className="hidden md:group-hover:flex absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-12 h-12 backdrop-blur-sm rounded-full items-center justify-center hover:scale-110 transition-all duration-200 shadow-lg z-10"
-                                    aria-label={likedProducts.has(product.id) ? "Remove from wishlist" : "Add to wishlist"}
-                                  >
-                                    <Heart className={`w-6 h-6 transition-colors ${likedProducts.has(product.id) ? 'text-red-500 fill-red-500' : 'text-black'}`} />
-                                  </button>
                                 </div>
 
                                 {/* Product Info */}

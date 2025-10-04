@@ -167,12 +167,9 @@ const The12Products = () => {
                         />
                         
                         {/* Hover Actions */}
-                        <div className={`absolute inset-0 bg-black/20 flex items-center justify-center space-x-4 transition-opacity duration-300 ${hoveredProduct === product.id ? 'opacity-100' : 'opacity-0'}`}>
+                        <div className={`absolute inset-0 bg-black/20 flex items-center justify-center transition-opacity duration-300 ${hoveredProduct === product.id ? 'opacity-100' : 'opacity-0'}`}>
                           <button className="bg-white p-2 rounded-full hover:bg-gray-100 transition-colors duration-200">
                             <Eye className="w-4 h-4" />
-                          </button>
-                          <button className="bg-white p-2 rounded-full hover:bg-gray-100 transition-colors duration-200">
-                            <Heart className="w-4 h-4" />
                           </button>
                         </div>
                       </div>

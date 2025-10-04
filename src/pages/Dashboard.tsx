@@ -85,29 +85,6 @@ const Dashboard = () => {
     } : pref));
   };
 
-  // Dynamic wishlist count based on actual product cards
-  const wishlistItems = [{
-    id: 1,
-    name: "Divine Essence Pendant",
-    image: "https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?w=400&h=400&fit=crop"
-  }, {
-    id: 2,
-    name: "Sacred Light Hoodie",
-    image: "https://images.unsplash.com/photo-1500673922987-e212871fec22?w=400&h=400&fit=crop"
-  }, {
-    id: 3,
-    name: "Celestial Ring",
-    image: "https://images.unsplash.com/photo-1470813740244-df37b8c1edcb?w=400&h=400&fit=crop"
-  }, {
-    id: 4,
-    name: "Divine Grace Tee",
-    image: "https://images.unsplash.com/photo-1582562124811-c09040d0a901?w=400&h=400&fit=crop"
-  }, {
-    id: 5,
-    name: "Sanctuary Cap",
-    image: "https://images.unsplash.com/photo-1535268647677-300dbf3d78d1?w=400&h=400&fit=crop"
-  }];
-  const wishlistCount = wishlistItems.length;
 
   // TODO: Replace with real data from orders and NFT APIs
   const orderCount = 3; // Mock order count
@@ -150,12 +127,6 @@ const Dashboard = () => {
     return cleanup;
   }, []);
   const quickAccessItems = [{
-    title: "Wishlist",
-    subtitle: "Saved items across all drops",
-    icon: Heart,
-    count: `${wishlistCount} items`,
-    href: "/wishlist"
-  }, {
     title: "My Orders",
     subtitle: "View your past Scriptured pieces",
     icon: Package,
@@ -2735,7 +2706,7 @@ const Dashboard = () => {
         </div>
         
         <div className="flex flex-1 w-full max-w-full overflow-hidden">
-          <DashboardSidebar isGodlyCircleMember={isGodlyCircleMember} activeView={activeView} onSelectContent={setSelectedContent} wishlistCount={wishlistCount} hasNFTs={true} />
+          <DashboardSidebar isGodlyCircleMember={isGodlyCircleMember} activeView={activeView} onSelectContent={setSelectedContent} hasNFTs={true} />
           
           <main className="flex-1 bg-muted p-6 overflow-y-auto max-w-full">
             <div className="animate-fade-in">

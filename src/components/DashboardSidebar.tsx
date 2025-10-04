@@ -17,22 +17,14 @@ interface DashboardSidebarProps {
   isGodlyCircleMember: boolean;
   activeView: "quick-access" | "my-profile";
   onSelectContent: (href: string) => void;
-  wishlistCount?: number;
   hasNFTs?: boolean;
 }
 
-export function DashboardSidebar({ isGodlyCircleMember, activeView, onSelectContent, wishlistCount = 5, hasNFTs = false }: DashboardSidebarProps) {
+export function DashboardSidebar({ isGodlyCircleMember, activeView, onSelectContent, hasNFTs = false }: DashboardSidebarProps) {
   const { state } = useSidebar();
   const isMobile = useIsMobile();
 
   const quickAccessItems = [
-    {
-      title: "Wishlist",
-      subtitle: "Saved items across all drops",
-      icon: Heart,
-      count: `${wishlistCount} items`,
-      href: "/wishlist"
-    },
     {
       title: "My Orders",
       subtitle: "View all orders and track active status",

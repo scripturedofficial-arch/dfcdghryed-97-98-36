@@ -11,7 +11,6 @@ const Shop = () => {
     formatPrice
   } = useCurrency();
   const [hoveredProduct, setHoveredProduct] = useState<number | null>(null);
-  const [likedProducts, setLikedProducts] = useState<Set<number>>(new Set());
   const [selectedProduct, setSelectedProduct] = useState<any>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [catalogueIndex, setCatalogueIndex] = useState(0);
@@ -99,18 +98,6 @@ const Shop = () => {
     setIsModalOpen(false);
     setSelectedProduct(null);
   };
-  const toggleLike = (productId: number, e: React.MouseEvent) => {
-    e.stopPropagation();
-    setLikedProducts(prev => {
-      const newLiked = new Set(prev);
-      if (newLiked.has(productId)) {
-        newLiked.delete(productId);
-      } else {
-        newLiked.add(productId);
-      }
-      return newLiked;
-    });
-  };
   const handlePrevCatalogue = () => {
     setSlideDirection('left');
     setCatalogueIndex(prev => (prev - 1 + catalogueNames.length) % catalogueNames.length);
@@ -186,15 +173,12 @@ const Shop = () => {
                     <img src={product.image} alt={product.name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
                     
                     {/* Hover Overlay */}
-                    {hoveredProduct === product.id && <div className="absolute inset-0 bg-black/10 flex items-center justify-center space-x-4 transition-all duration-300">
+                    {hoveredProduct === product.id && <div className="absolute inset-0 bg-black/10 flex items-center justify-center transition-all duration-300">
                         <button onClick={e => {
                     e.stopPropagation();
                     handleProductClick(product);
                   }} className="w-12 h-12 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white hover:scale-110 transition-all duration-200 shadow-lg" aria-label="View product">
                           <Eye className="w-5 h-5 text-black" />
-                        </button>
-                        <button onClick={e => toggleLike(product.id, e)} className="w-12 h-12 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white hover:scale-110 transition-all duration-200 shadow-lg" aria-label={likedProducts.has(product.id) ? "Unlike product" : "Like product"}>
-                          <Heart className={`w-5 h-5 transition-colors ${likedProducts.has(product.id) ? 'text-red-500 fill-red-500' : 'text-black'}`} />
                         </button>
                       </div>}
                   </div>
@@ -244,15 +228,12 @@ const Shop = () => {
                     <img src={product.image} alt={product.name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
                     
                     {/* Hover Overlay */}
-                    {hoveredProduct === product.id && <div className="absolute inset-0 bg-black/10 flex items-center justify-center space-x-4 transition-all duration-300">
+                    {hoveredProduct === product.id && <div className="absolute inset-0 bg-black/10 flex items-center justify-center transition-all duration-300">
                         <button onClick={e => {
                     e.stopPropagation();
                     handleProductClick(product);
                   }} className="w-12 h-12 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white hover:scale-110 transition-all duration-200 shadow-lg" aria-label="View product">
                           <Eye className="w-5 h-5 text-black" />
-                        </button>
-                        <button onClick={e => toggleLike(product.id, e)} className="w-12 h-12 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white hover:scale-110 transition-all duration-200 shadow-lg" aria-label={likedProducts.has(product.id) ? "Unlike product" : "Like product"}>
-                          <Heart className={`w-5 h-5 transition-colors ${likedProducts.has(product.id) ? 'text-red-500 fill-red-500' : 'text-black'}`} />
                         </button>
                       </div>}
                   </div>
