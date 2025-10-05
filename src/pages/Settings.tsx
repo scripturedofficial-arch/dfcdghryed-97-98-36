@@ -465,10 +465,19 @@ const Settings = () => {
                         <SelectTrigger>
                           <SelectValue />
                         </SelectTrigger>
-                        <SelectContent>
+                        <SelectContent className="max-h-60 overflow-y-auto">
                           <SelectItem value="ZAR">ZAR (R)</SelectItem>
                           <SelectItem value="USD">USD ($)</SelectItem>
+                          <SelectItem value="GBP">GBP (£)</SelectItem>
                           <SelectItem value="EUR">EUR (€)</SelectItem>
+                          <SelectItem value="CAD">CAD (C$)</SelectItem>
+                          <SelectItem value="AUD">AUD (A$)</SelectItem>
+                          <SelectItem value="JPY">JPY (¥)</SelectItem>
+                          <SelectItem value="BRL">BRL (R$)</SelectItem>
+                          <SelectItem value="SAR">SAR (﷼)</SelectItem>
+                          <SelectItem value="INR">INR (₹)</SelectItem>
+                          <SelectItem value="CNY">CNY (¥)</SelectItem>
+                          <SelectItem value="KRW">KRW (₩)</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
