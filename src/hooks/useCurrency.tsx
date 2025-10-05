@@ -12,9 +12,17 @@ const CURRENCY_MAP: Record<string, CurrencyInfo> = {
   US: { code: 'USD', symbol: '$', rate: 0.054, name: 'US Dollar' },
   GB: { code: 'GBP', symbol: '£', rate: 0.043, name: 'British Pound' },
   EU: { code: 'EUR', symbol: '€', rate: 0.049, name: 'Euro' },
+  ES: { code: 'EUR', symbol: '€', rate: 0.049, name: 'Euro' },
+  FR: { code: 'EUR', symbol: '€', rate: 0.049, name: 'Euro' },
+  IT: { code: 'EUR', symbol: '€', rate: 0.049, name: 'Euro' },
   CA: { code: 'CAD', symbol: 'C$', rate: 0.074, name: 'Canadian Dollar' },
   AU: { code: 'AUD', symbol: 'A$', rate: 0.082, name: 'Australian Dollar' },
   JP: { code: 'JPY', symbol: '¥', rate: 8.1, name: 'Japanese Yen' },
+  BR: { code: 'BRL', symbol: 'R$', rate: 0.27, name: 'Brazilian Real' },
+  SA: { code: 'SAR', symbol: '﷼', rate: 0.20, name: 'Saudi Riyal' },
+  IN: { code: 'INR', symbol: '₹', rate: 4.50, name: 'Indian Rupee' },
+  CN: { code: 'CNY', symbol: '¥', rate: 0.39, name: 'Chinese Yuan' },
+  KR: { code: 'KRW', symbol: '₩', rate: 72.5, name: 'South Korean Won' },
   DEFAULT: { code: 'ZAR', symbol: 'R', rate: 1, name: 'South African Rand' }
 };
 
@@ -75,7 +83,7 @@ export const useCurrency = () => {
     const convertedPrice = convertPrice(zarPrice);
     
     // Handle special formatting for different currencies
-    if (currency.code === 'JPY') {
+    if (currency.code === 'JPY' || currency.code === 'KRW') {
       return `${currency.symbol}${Math.round(convertedPrice)}`;
     }
     
