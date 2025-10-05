@@ -202,7 +202,10 @@ const FeaturedProducts = ({
 
               {/* View All Button */}
               <div className="text-center mt-16">
-                <button onClick={() => navigate('/shop')} className="border-2 border-primary text-primary px-8 py-4 text-lg font-medium hover:bg-primary hover:text-primary-foreground transition-all duration-300">
+                <button onClick={() => {
+                  window.scrollTo(0, 0);
+                  navigate('/shop');
+                }} className="border-2 border-primary text-primary px-8 py-4 text-lg font-medium hover:bg-primary hover:text-primary-foreground transition-all duration-300">
                   VIEW FULL COLLECTION
                 </button>
               </div>
