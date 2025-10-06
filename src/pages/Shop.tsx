@@ -162,7 +162,7 @@ const Shop = () => {
       </div>
 
       {/* Best Sellers Section */}
-      <div className="px-[12px] sm:px-[20px] lg:px-[28px] pb-8">
+      <div className="px-[6px] sm:px-[14px] lg:px-[22px] pb-8">
         <div className="max-w-7xl mx-auto">
                 <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-y-4 gap-x-1 px-[11px]">
             {products.slice(0, 4).map(product => <div key={product.id} className="h-full group cursor-pointer transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl" onClick={() => handleProductClick(product)} onMouseEnter={() => setHoveredProduct(product.id)} onMouseLeave={() => setHoveredProduct(null)}>
