@@ -828,7 +828,7 @@ const Dashboard = () => {
                       <p className="text-xs text-muted-foreground">1 Divine Piece</p>
                     </div>
                   </div>
-                  <Button variant="outline" size="sm">
+                  <Button variant="outline" size="sm" onClick={() => navigate('/order-history')}>
                     Show Order History
                   </Button>
                 </div>
