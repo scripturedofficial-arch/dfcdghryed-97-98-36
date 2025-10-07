@@ -14,36 +14,6 @@ const Dashboard = () => {
   const [activeView, setActiveView] = useState<"quick-access" | "my-profile">("quick-access");
   const [selectedContent, setSelectedContent] = useState<string | null>("quick-access-overview");
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
-  const [heightMetric, setHeightMetric] = useState<"imperial" | "metric">("imperial");
-  const [weightMetric, setWeightMetric] = useState<"imperial" | "metric">("imperial");
-  const [heightFeet, setHeightFeet] = useState(5);
-  const [heightInches, setHeightInches] = useState(9);
-  const [heightCm, setHeightCm] = useState(175);
-  const [weight, setWeight] = useState(165);
-
-  // Calculate recommended size based on height and weight
-  const calculateRecommendedSize = () => {
-    const heightInCm = heightMetric === "imperial" 
-      ? (heightFeet * 30.48) + (heightInches * 2.54)
-      : heightCm;
-    
-    const weightInKg = weightMetric === "imperial" 
-      ? weight * 0.453592 
-      : weight;
-
-    // BMI-based size recommendation logic
-    const bmi = weightInKg / ((heightInCm / 100) ** 2);
-    
-    if (heightInCm < 165) {
-      return bmi < 20 ? "XS" : bmi < 25 ? "S" : bmi < 30 ? "M" : "L";
-    } else if (heightInCm < 175) {
-      return bmi < 20 ? "S" : bmi < 25 ? "M" : bmi < 30 ? "L" : "XL";
-    } else if (heightInCm < 185) {
-      return bmi < 20 ? "M" : bmi < 25 ? "L" : bmi < 30 ? "XL" : "XXL";
-    } else {
-      return bmi < 20 ? "L" : bmi < 25 ? "XL" : bmi < 30 ? "XXL" : "XXXL";
-    }
-  };
   const [activityFilter, setActivityFilter] = useState<"all" | "purchases" | "godly-circle" | "nft">("all");
   const userName = "Divine Soul"; // This would come from user context
 
@@ -147,11 +117,6 @@ const Dashboard = () => {
     href: "/nft-vault"
   }];
   const optionalPanels = [{
-    title: "Fit Profile",
-    subtitle: "Your preferred size for future drops",
-    icon: User,
-    href: "/fit-profile"
-  }, {
     title: "Drop Calendar",
     subtitle: "Upcoming Releases",
     icon: Calendar,
@@ -266,16 +231,6 @@ const Dashboard = () => {
               {/* Sidebar Content */}
               <div className="p-2 space-y-1 pt-4">
                 <div className="flex items-center justify-between p-4 hover:bg-muted/50 rounded-md cursor-pointer transition-colors" onClick={() => {
-                setSelectedContent('/fit-profile');
-                setIsMobileSidebarOpen(false);
-              }}>
-                  <div className="flex items-center gap-3">
-                    <User className="h-5 w-5 text-muted-foreground" />
-                    <span className="text-foreground font-medium">Fit Profile</span>
-                  </div>
-                  <span className="text-sm font-medium text-muted-foreground">3</span>
-                </div>
-                <div className="flex items-center justify-between p-4 hover:bg-muted/50 rounded-md cursor-pointer transition-colors" onClick={() => {
                 setSelectedContent('/calendar');
                 setIsMobileSidebarOpen(false);
               }}>
@@ -327,24 +282,6 @@ const Dashboard = () => {
           
           {/* Desktop: Grid layout */}
           <div className="hidden md:grid grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-            <Card className="group cursor-pointer transition-all duration-300 hover:shadow-xl hover:-translate-y-1 rounded-2xl border-0 shadow-lg bg-card" onClick={() => setSelectedContent('/fit-profile')}>
-              <CardContent className="p-6 relative pb-12">
-                <div className="flex items-start mb-4">
-                  <div className="flex items-center gap-3">
-                    <div className="p-2 rounded-lg bg-transparent">
-                      <User className="h-6 w-6 text-foreground" />
-                    </div>
-                    <div>
-                      <CardTitle className="text-lg font-semibold text-foreground">Fit Profile</CardTitle>
-                    </div>
-                  </div>
-                </div>
-                <CardDescription className="text-sm leading-relaxed text-muted-foreground pr-16">
-                  Your preferred size for future drops
-                </CardDescription>
-                <span className="absolute bottom-6 right-6 text-sm font-medium text-muted-foreground">3 sizes</span>
-              </CardContent>
-            </Card>
             <Card className="group cursor-pointer transition-all duration-300 hover:shadow-xl hover:-translate-y-1 rounded-2xl border-0 shadow-lg bg-card" onClick={() => setSelectedContent('/calendar')}>
               <CardContent className="p-6 relative pb-12">
                 <div className="flex items-start mb-4">
@@ -1614,209 +1551,6 @@ const Dashboard = () => {
                 </div>
               </div>
             </div>
-          </div>
-        </div>,
-      '/fit-profile': <div className="animate-fade-in">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 sm:mb-8 gap-4">
-            <div>
-              <h2 className="text-2xl sm:text-3xl font-serif mb-2 bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">
-                CORPORIS FORMA
-              </h2>
-              <p className="text-muted-foreground text-xs sm:text-sm tracking-wide uppercase">Sacred Measurements & Divine Proportions</p>
-            </div>
-            <Button variant="outline" size="sm" className="group hover:shadow-lg transition-all duration-300 border-muted-foreground/20 hover:border-foreground/40 w-full sm:w-auto">
-              <Plus className="h-4 w-4 mr-2 group-hover:rotate-90 transition-transform duration-300" />
-              Edit Profile
-            </Button>
-          </div>
-
-          <div className="grid gap-4 sm:gap-6 lg:grid-cols-2">
-            {/* Current Measurements */}
-            <Card className="group hover:shadow-xl transition-all duration-500 border-0 bg-gradient-to-br from-card/80 to-muted/20 backdrop-blur-sm">
-              <CardHeader className="pb-3 sm:pb-4">
-                <CardTitle className="text-lg sm:text-xl font-serif flex items-center gap-2 sm:gap-3">
-                  <div className="w-2 h-6 sm:h-8 bg-gradient-to-b from-primary to-primary/60 rounded-full"></div>
-                  Sacred Measurements
-                </CardTitle>
-                <CardDescription className="text-muted-foreground/80 text-sm">Your divine proportions</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-3 sm:space-y-4">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-                  <div className="p-3 sm:p-4 rounded-lg bg-background/50 border border-muted/30 hover:border-muted/60 transition-colors">
-                    <div className="flex items-center justify-between mb-2">
-                      <label className="text-xs uppercase tracking-wider text-muted-foreground">Height</label>
-                      <Select value={heightMetric} onValueChange={(value: "imperial" | "metric") => setHeightMetric(value)}>
-                        <SelectTrigger className="w-16 sm:w-20 h-6 text-xs">
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="imperial">ft/in</SelectItem>
-                          <SelectItem value="metric">cm</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                    <div className="flex items-center gap-1 sm:gap-2">
-                      {heightMetric === "imperial" ? <>
-                          <div className="flex-1">
-                            <Input type="number" value={heightFeet} onChange={(e) => setHeightFeet(parseInt(e.target.value) || 5)} min="3" max="8" className="text-3xl sm:text-5xl font-mono text-center border-0 bg-transparent p-0 h-10 sm:h-14 focus:ring-0 focus:border-0" />
-                          </div>
-                          <span className="text-3xl sm:text-5xl font-mono text-muted-foreground">'</span>
-                          <div className="flex-1">
-                            <Input type="number" value={heightInches} onChange={(e) => setHeightInches(parseInt(e.target.value) || 9)} min="0" max="11" className="text-3xl sm:text-5xl font-mono text-center border-0 bg-transparent p-0 h-10 sm:h-14 focus:ring-0 focus:border-0" />
-                          </div>
-                          <span className="text-3xl sm:text-5xl font-mono text-muted-foreground">"</span>
-                        </> : <>
-                          <Input type="number" value={heightCm} onChange={(e) => setHeightCm(parseInt(e.target.value) || 175)} min="100" max="250" className="text-3xl sm:text-5xl font-mono text-center border-0 bg-transparent p-0 h-10 sm:h-14 focus:ring-0 focus:border-0 flex-1" />
-                          <span className="text-sm sm:text-lg font-mono text-muted-foreground">cm</span>
-                        </>}
-                    </div>
-                  </div>
-                  <div className="p-3 sm:p-4 rounded-lg bg-background/50 border border-muted/30 hover:border-muted/60 transition-colors">
-                    <div className="flex items-center justify-between mb-2">
-                      <label className="text-xs uppercase tracking-wider text-muted-foreground">Weight</label>
-                      <Select value={weightMetric} onValueChange={(value: "imperial" | "metric") => setWeightMetric(value)}>
-                        <SelectTrigger className="w-14 sm:w-16 h-6 text-xs">
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="imperial">lbs</SelectItem>
-                          <SelectItem value="metric">kg</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                    <div className="flex items-center gap-1 sm:gap-2">
-                      <Input type="number" value={weight} onChange={(e) => setWeight(parseInt(e.target.value) || 165)} min="50" max="500" className="text-xl sm:text-2xl font-mono text-center border-0 bg-transparent p-0 h-7 sm:h-8 focus:ring-0 focus:border-0" />
-                      <span className="text-sm sm:text-lg font-mono text-muted-foreground">{weightMetric === "imperial" ? "lbs" : "kg"}</span>
-                    </div>
-                  </div>
-                </div>
-                <div className="p-4 rounded-lg bg-background/50 border border-muted/30">
-                  <label className="text-xs uppercase tracking-wider text-muted-foreground mb-2 block">RECOMMENDED SIZE</label>
-                  <div className="flex items-center gap-2">
-                    <span className="px-3 py-1 bg-primary/20 text-primary rounded-full text-sm font-medium">M</span>
-                    <span className="text-xs text-muted-foreground">Medium</span>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Fit Preferences */}
-            <Card className="group hover:shadow-xl transition-all duration-500 border-0 bg-gradient-to-br from-card/80 to-muted/20 backdrop-blur-sm">
-              <CardHeader className="pb-3 sm:pb-4">
-                <CardTitle className="text-lg sm:text-xl font-serif flex items-center gap-2 sm:gap-3">
-                  <div className="w-2 h-6 sm:h-8 bg-gradient-to-b from-secondary to-secondary/60 rounded-full"></div>
-                  Fit Preferences
-                </CardTitle>
-                <CardDescription className="text-muted-foreground/80 text-sm">How you like your garments to fit</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-3 sm:space-y-4">
-                <div className="space-y-3">
-                  <div className="flex justify-between items-center p-3 rounded-lg border border-muted/30 hover:border-muted/60 transition-colors">
-                    <span className="text-sm font-medium">RECOMMENDED SIZE</span>
-                    <select className="px-2 py-1 bg-muted/40 rounded text-xs border-0 focus:outline-none focus:ring-1 focus:ring-primary">
-                      <option value="fitted">Fitted</option>
-                      <option value="regular">Regular</option>
-                      <option value="relaxed">Relaxed</option>
-                    </select>
-                  </div>
-                  <div className="flex justify-between items-center p-3 rounded-lg border border-muted/30 hover:border-muted/60 transition-colors">
-                    <span className="text-sm font-medium">Hoodies</span>
-                    <select className="px-2 py-1 bg-muted/40 rounded text-xs border-0 focus:outline-none focus:ring-1 focus:ring-primary">
-                      <option value="fitted">Fitted</option>
-                      <option value="regular">Regular</option>
-                      <option value="relaxed" selected>Relaxed</option>
-                    </select>
-                  </div>
-                  <div className="flex justify-between items-center p-3 rounded-lg border border-muted/30 hover:border-muted/60 transition-colors">
-                    <span className="text-sm font-medium">Jackets</span>
-                    <select className="px-2 py-1 bg-muted/40 rounded text-xs border-0 focus:outline-none focus:ring-1 focus:ring-primary">
-                      <option value="fitted">Fitted</option>
-                      <option value="regular" selected>Regular</option>
-                      <option value="relaxed">Relaxed</option>
-                    </select>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Sizing History */}
-            <Card className="lg:col-span-2 group hover:shadow-xl transition-all duration-500 border-0 bg-gradient-to-br from-card/80 to-muted/20 backdrop-blur-sm">
-              <CardHeader className="pb-3 sm:pb-4">
-                <CardTitle className="text-lg sm:text-xl font-serif flex items-center gap-2 sm:gap-3">
-                  <div className="w-2 h-6 sm:h-8 bg-gradient-to-b from-accent to-accent/60 rounded-full"></div>
-                  Sizing History
-                </CardTitle>
-                <CardDescription className="text-muted-foreground/80 text-sm">Your past purchases and how they fit</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  {[{
-                  item: "Divine Essence Tee",
-                  size: "M",
-                  fit: "Perfect",
-                  date: "Jan 2024",
-                  satisfaction: "Excellent"
-                }, {
-                  item: "Sacred Geometry Hoodie",
-                  size: "L",
-                  fit: "Too Loose",
-                  date: "Dec 2023",
-                  satisfaction: "Good"
-                }, {
-                  item: "Ethereal Bomber",
-                  size: "M",
-                  fit: "Perfect",
-                  date: "Nov 2023",
-                  satisfaction: "Excellent"
-                }].map((entry, i) => <div key={i} className="flex flex-col sm:flex-row sm:items-center justify-between p-3 sm:p-4 rounded-lg border border-muted/30 hover:border-muted/60 transition-all duration-300 hover:bg-muted/20 gap-2 sm:gap-0">
-                      <div className="flex-1">
-                        <h4 className="font-medium text-foreground text-sm sm:text-base">{entry.item}</h4>
-                        <p className="text-xs sm:text-sm text-muted-foreground">{entry.date}</p>
-                      </div>
-                      <div className="flex items-center gap-2 sm:gap-4 text-xs sm:text-sm">
-                        <span className="px-2 py-1 bg-background rounded border text-xs">Size {entry.size}</span>
-                        <span className={`px-2 py-1 rounded text-xs ${entry.fit === 'Perfect' ? 'bg-green-500/20 text-green-300' : 'bg-yellow-500/20 text-yellow-300'}`}>
-                          {entry.fit}
-                        </span>
-                        <span className="text-muted-foreground hidden sm:inline">{entry.satisfaction}</span>
-                      </div>
-                    </div>)}
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Size Recommendation Engine */}
-            <Card className="lg:col-span-2 group hover:shadow-xl transition-all duration-500 border-0 bg-gradient-to-br from-primary/5 to-secondary/5 backdrop-blur-sm border-primary/20">
-              <CardHeader className="pb-3 sm:pb-4">
-                <CardTitle className="text-lg sm:text-xl font-serif flex items-center gap-2 sm:gap-3">
-                  <div className="w-2 h-6 sm:h-8 bg-gradient-to-b from-primary to-secondary rounded-full"></div>
-                  Future Drop Recommendations
-                </CardTitle>
-                <CardDescription className="text-muted-foreground/80 text-sm">AI-powered sizing for upcoming releases</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="bg-gradient-to-r from-primary/10 to-secondary/10 rounded-lg p-4 sm:p-6 border border-primary/20">
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-3 sm:mb-4 gap-2 sm:gap-0">
-                    <div>
-                      <h4 className="font-medium text-foreground mb-1 text-sm sm:text-base">Next Drop: "Celestial Collection"</h4>
-                      <p className="text-xs sm:text-sm text-muted-foreground">Based on your history and measurements</p>
-                    </div>
-                    <div className="text-left sm:text-right">
-                      <span className="text-xl sm:text-2xl font-mono text-primary">M</span>
-                      <p className="text-xs text-muted-foreground">Recommended</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-2 text-sm">
-                    <span className="w-2 h-2 bg-green-500 rounded-full"></span>
-                    <span className="text-muted-foreground">95% confidence • Perfect fit expected</span>
-                  </div>
-                  <Button variant="outline" size="sm" className="mt-4 w-full group hover:bg-primary/10 hover:border-primary/40 transition-all duration-300">
-                    Enable Auto-Size for Future Drops
-                    <Crown className="h-3 w-3 ml-2 group-hover:text-primary transition-colors" />
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
           </div>
         </div>,
       '/calendar': <div className="animate-fade-in">
