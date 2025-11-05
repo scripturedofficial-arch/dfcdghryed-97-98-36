@@ -97,13 +97,6 @@ const Dashboard = () => {
     return cleanup;
   }, []);
   const quickAccessItems = [{
-    title: "Godly Circle",
-    subtitle: isGodlyCircleMember ? "Access: Active – January" : "You're not selected this month",
-    icon: Crown,
-    count: isGodlyCircleMember ? "Member" : "Waitlist",
-    href: "/godly-circle",
-    special: true
-  }, {
     title: "NFT Vault",
     subtitle: "Your digital twins and authenticity tokens",
     icon: Gem,
@@ -809,224 +802,6 @@ const Dashboard = () => {
                 </button>
               </div>
             </div>
-          </div>
-        </div>,
-      '/godly-circle': <div className="animate-fade-in">
-          <h2 className="text-3xl font-serif mb-6 bg-gradient-to-r from-primary via-primary/80 to-primary bg-clip-text text-transparent">
-            GODLY CIRCLE
-          </h2>
-          <p className="text-muted-foreground mb-8 text-lg">
-            Exclusive monthly access to sacred content and divine experiences
-          </p>
-          
-          <div className="space-y-8">
-            {/* Status Header */}
-            <div className={`relative overflow-hidden rounded-2xl border-2 p-8 ${isGodlyCircleMember ? "border-primary/30 bg-gradient-to-br from-primary/10 via-primary/5 to-background" : "border-border bg-gradient-to-br from-card to-card/50"}`}>
-              <div className="relative z-10">
-                <div className="flex items-center justify-between mb-6">
-                  <div className="flex items-center gap-4">
-                    <div className={`w-12 h-12 rounded-full flex items-center justify-center ${isGodlyCircleMember ? "bg-primary/20" : "bg-muted"}`}>
-                      <Crown className={`h-6 w-6 ${isGodlyCircleMember ? "text-primary" : "text-muted-foreground"}`} />
-                    </div>
-                    <div>
-                      <h3 className="text-2xl font-serif text-foreground">
-                        {isGodlyCircleMember ? "Divine Access Granted" : "Awaiting Selection"}
-                      </h3>
-                      <p className="text-sm text-muted-foreground">
-                        {isGodlyCircleMember ? "January 2025 • Member #47" : "Application Status"}
-                      </p>
-                    </div>
-                  </div>
-                  <div className={`px-4 py-2 rounded-full text-sm font-medium ${isGodlyCircleMember ? "bg-green-500/10 text-green-500 border border-green-500/20" : "bg-yellow-500/10 text-yellow-600 border border-yellow-500/20"}`}>
-                    {isGodlyCircleMember ? "SELECTED" : "PENDING"}
-                  </div>
-                </div>
-
-                {/* Countdown Timer */}
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-                  <div className="text-center">
-                    <div className="text-2xl font-bold text-foreground">7</div>
-                    <div className="text-xs text-muted-foreground uppercase tracking-wider">Days</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-2xl font-bold text-foreground">14</div>
-                    <div className="text-xs text-muted-foreground uppercase tracking-wider">Hours</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-2xl font-bold text-foreground">23</div>
-                    <div className="text-xs text-muted-foreground uppercase tracking-wider">Minutes</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-2xl font-bold text-foreground">45</div>
-                    <div className="text-xs text-muted-foreground uppercase tracking-wider">Seconds</div>
-                  </div>
-                </div>
-
-                <p className="text-center text-sm text-muted-foreground">
-                  {isGodlyCircleMember ? "Until February selection opens" : "Until next monthly selection"}
-                </p>
-              </div>
-
-              {/* Background decoration */}
-              <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full -translate-y-16 translate-x-16"></div>
-              <div className="absolute bottom-0 left-0 w-24 h-24 bg-primary/5 rounded-full translate-y-12 -translate-x-12"></div>
-            </div>
-
-            {isGodlyCircleMember ? (/* Member Content */
-          <div className="space-y-8">
-                {/* Monthly Content */}
-                <div className="bg-card rounded-2xl border border-border/20 p-6">
-                  <div className="flex items-center gap-3 mb-6">
-                    <div className="w-8 h-8 bg-primary/20 rounded-lg flex items-center justify-center">
-                      <Eye className="h-4 w-4 text-primary" />
-                    </div>
-                    <h4 className="text-lg font-semibold text-foreground">January Sacred Content</h4>
-                  </div>
-
-                  {/* Featured Video */}
-                  <div className="bg-gradient-to-br from-muted to-muted/50 rounded-xl p-6 mb-6">
-                    <div className="flex items-center gap-4 mb-4">
-                      <div className="w-16 h-16 bg-gradient-to-br from-primary/20 to-primary/5 rounded-lg flex items-center justify-center">
-                        <Eye className="h-8 w-8 text-primary" />
-                      </div>
-                      <div>
-                        <h5 className="font-semibold text-foreground">Behind the Divine Design</h5>
-                        <p className="text-sm text-muted-foreground">Exclusive creation process • 24 min</p>
-                      </div>
-                    </div>
-                    <p className="text-sm text-muted-foreground mb-4">
-                      Go behind the scenes as we craft this month's sacred pieces. Witness the divine inspiration, 
-                      the meticulous attention to detail, and the spiritual significance embedded in each creation.
-                    </p>
-                    <button className="w-full bg-primary text-primary-foreground py-3 rounded-lg font-medium hover:bg-primary/90 transition-colors">
-                      Watch Exclusive Content
-                    </button>
-                  </div>
-
-                  {/* Additional Perks */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="p-4 bg-primary/5 rounded-xl border border-primary/10">
-                      <div className="flex items-center gap-2 mb-2">
-                        <Gift className="h-4 w-4 text-primary" />
-                        <span className="text-sm font-medium text-foreground">Early Access</span>
-                      </div>
-                      <p className="text-xs text-muted-foreground">
-                        3-day head start on all new drops
-                      </p>
-                    </div>
-                    <div className="p-4 bg-primary/5 rounded-xl border border-primary/10">
-                      <div className="flex items-center gap-2 mb-2">
-                        <Gem className="h-4 w-4 text-primary" />
-                        <span className="text-sm font-medium text-foreground">Member Pricing</span>
-                      </div>
-                      <p className="text-xs text-muted-foreground">
-                        15% discount on all sacred pieces
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>) : (/* Non-Member Content */
-          <div className="space-y-8">
-                {/* Application Stats */}
-                <div className="bg-card rounded-2xl border border-border/20 p-6">
-                  <div className="flex items-center gap-3 mb-6">
-                    <div className="w-8 h-8 bg-muted rounded-lg flex items-center justify-center">
-                      <User className="h-4 w-4 text-muted-foreground" />
-                    </div>
-                    <h4 className="text-lg font-semibold text-foreground">February 2025 Selection</h4>
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-                    <div className="text-center">
-                      <div className="text-3xl font-bold text-primary mb-2">847</div>
-                      <div className="text-sm text-muted-foreground">Total Applicants</div>
-                    </div>
-                    <div className="text-center">
-                      <div className="text-3xl font-bold text-foreground mb-2">{new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0).getDate()}</div>
-                      <div className="text-sm text-muted-foreground">Available Spots</div>
-                    </div>
-                    <div className="text-center">
-                      <div className="text-3xl font-bold text-yellow-500 mb-2">{(new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0).getDate() / 847 * 100).toFixed(1)}%</div>
-                      <div className="text-sm text-muted-foreground">Selection Rate</div>
-                    </div>
-                  </div>
-
-                  {/* How it Works */}
-                  <div className="bg-muted/30 rounded-xl p-6 mb-6">
-                    <h5 className="font-semibold text-foreground mb-4">How Godly Circle Works</h5>
-                    <div className="space-y-3">
-                      <div className="flex items-start gap-3">
-                        <div className="w-6 h-6 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                          <span className="text-xs font-bold text-primary">1</span>
-                        </div>
-                        <div>
-                          <p className="text-sm font-medium text-foreground">Monthly Selection</p>
-                          <p className="text-xs text-muted-foreground"><span>{new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0).getDate()}</span> divine souls chosen each month based on spiritual alignment and community engagement</p>
-                        </div>
-                      </div>
-                      <div className="flex items-start gap-3">
-                        <div className="w-6 h-6 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                          <span className="text-xs font-bold text-primary">2</span>
-                        </div>
-                        <div>
-                          <p className="text-sm font-medium text-foreground">Sacred Access</p>
-                          <p className="text-xs text-muted-foreground">Exclusive behind-the-scenes content and access to drops 'The 12' exclusive drop</p>
-                        </div>
-                      </div>
-                      <div className="flex items-start gap-3">
-                        <div className="w-6 h-6 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                          <span className="text-xs font-bold text-primary">3</span>
-                        </div>
-                        <div>
-                          <p className="text-sm font-medium text-foreground">Divine Community</p>
-                          <p className="text-xs text-muted-foreground">Connect with Scriptured team members in our sacred digital sanctuary</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Application Button */}
-                  <button className="w-full bg-gradient-to-r from-primary to-primary/80 text-primary-foreground py-4 rounded-xl font-semibold text-lg hover:from-primary/90 hover:to-primary/70 transition-all duration-300 hover:shadow-lg hover:shadow-primary/25">
-                    Apply for Divine Selection
-                  </button>
-                  
-                  <p className="text-center text-xs text-muted-foreground mt-3">
-                    Applications close in 7 days • Selection announced January 31st
-                  </p>
-                </div>
-
-                {/* Preview of Member Benefits */}
-                <div className="bg-gradient-to-br from-primary/5 to-background rounded-2xl border border-primary/10 p-6">
-                  <div className="text-center mb-6">
-                    <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <Crown className="h-8 w-8 text-primary" />
-                    </div>
-                    <h4 className="text-lg font-serif text-foreground mb-2">What Awaits the Few</h4>
-                    <p className="text-sm text-muted-foreground">
-                      A glimpse into the divine privileges reserved for Godly Circle members
-                    </p>
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="p-4 bg-background/50 rounded-xl border border-border/20">
-                      <Eye className="h-5 w-5 text-primary mb-2" />
-                      <h6 className="font-medium text-foreground mb-1">Sacred Archives</h6>
-                      <p className="text-xs text-muted-foreground">Monthly exclusive videos revealing the divine process behind each creation</p>
-                    </div>
-                    <div className="p-4 bg-background/50 rounded-xl border border-border/20">
-                      <Gift className="h-5 w-5 text-primary mb-2" />
-                      <h6 className="font-medium text-foreground mb-1">Divine Priority</h6>
-                      <p className="text-xs text-muted-foreground">Early access to all drops and exclusive member-only pieces</p>
-                    </div>
-                    
-                    <div className="p-4 bg-background/50 rounded-xl border border-border/20">
-                      <Heart className="h-5 w-5 text-primary mb-2" />
-                      <h6 className="font-medium text-foreground mb-1">Divine Community</h6>
-                      <p className="text-xs text-muted-foreground">Connect with fellow chosen souls in our private sanctuary</p>
-                    </div>
-                  </div>
-                </div>
-              </div>)}
           </div>
         </div>,
       '/nft-vault': <div className="animate-fade-in">
@@ -2261,24 +2036,24 @@ const Dashboard = () => {
                         {quickAccessItems.map((item) => (
                           <Card 
                             key={item.title} 
-                            className={`group cursor-pointer transition-all duration-300 hover:shadow-xl hover:-translate-y-1 rounded-2xl border-0 shadow-lg ${item.special && isGodlyCircleMember ? "bg-primary text-primary-foreground" : "bg-card hover:shadow-xl"}`}
+                            className="group cursor-pointer transition-all duration-300 hover:shadow-xl hover:-translate-y-1 rounded-2xl border-0 shadow-lg bg-card hover:shadow-xl"
                             onClick={() => setSelectedContent(item.href)}
                           >
                             <CardContent className="p-6">
                               <div className="flex items-start justify-between mb-4">
                                 <div className="flex items-center gap-3">
-                                  <div className={`p-2 rounded-lg ${item.special && isGodlyCircleMember ? "bg-primary-foreground/10" : ""}`}>
-                                    <item.icon className={`h-6 w-6 ${item.special && isGodlyCircleMember ? "text-primary-foreground" : "text-foreground"}`} />
+                                  <div className="p-2 rounded-lg">
+                                    <item.icon className="h-6 w-6 text-foreground" />
                                   </div>
-                                  <CardTitle className={`text-lg font-semibold ${item.special && isGodlyCircleMember ? "text-primary-foreground" : "text-foreground"}`}>
+                                  <CardTitle className="text-lg font-semibold text-foreground">
                                     {item.title}
                                   </CardTitle>
                                 </div>
-                                <span className={`text-sm font-medium ${item.special && isGodlyCircleMember ? "text-primary-foreground/80" : "text-muted-foreground"}`}>
+                                <span className="text-sm font-medium text-muted-foreground">
                                   {item.count}
                                 </span>
                               </div>
-                              <CardDescription className={`text-sm leading-relaxed ${item.special && isGodlyCircleMember ? "text-primary-foreground/80" : "text-muted-foreground"}`}>
+                              <CardDescription className="text-sm leading-relaxed text-muted-foreground">
                                 {item.subtitle}
                               </CardDescription>
                             </CardContent>
