@@ -38,7 +38,61 @@ const Settings = () => {
     newPassword: "",
     confirmPassword: ""
   });
+  const [passwordErrors, setPasswordErrors] = useState({
+    currentPassword: "",
+    newPassword: "",
+    confirmPassword: ""
+  });
+  const [passwordStrength, setPasswordStrength] = useState<"weak" | "medium" | "strong" | null>(null);
   const [isPasswordDialogOpen, setIsPasswordDialogOpen] = useState(false);
+
+  const calculatePasswordStrength = (password: string): "weak" | "medium" | "strong" => {
+    let strength = 0;
+    
+    if (password.length >= 8) strength++;
+    if (password.length >= 12) strength++;
+    if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength++;
+    if (/\d/.test(password)) strength++;
+    if (/[^a-zA-Z0-9]/.test(password)) strength++;
+    
+    if (strength <= 2) return "weak";
+    if (strength <= 4) return "medium";
+    return "strong";
+  };
+
+  const validatePasswordForm = () => {
+    const errors = {
+      currentPassword: "",
+      newPassword: "",
+      confirmPassword: ""
+    };
+    
+    let isValid = true;
+    
+    if (!passwordData.currentPassword.trim()) {
+      errors.currentPassword = "Current password is required";
+      isValid = false;
+    }
+    
+    if (!passwordData.newPassword.trim()) {
+      errors.newPassword = "New password is required";
+      isValid = false;
+    } else if (passwordData.newPassword.length < 8) {
+      errors.newPassword = "Password must be at least 8 characters long";
+      isValid = false;
+    }
+    
+    if (!passwordData.confirmPassword.trim()) {
+      errors.confirmPassword = "Please confirm your new password";
+      isValid = false;
+    } else if (passwordData.newPassword !== passwordData.confirmPassword) {
+      errors.confirmPassword = "Passwords do not match";
+      isValid = false;
+    }
+    
+    setPasswordErrors(errors);
+    return isValid;
+  };
 
   const tabNames = {
     profile: "Profile",
@@ -62,21 +116,7 @@ const Settings = () => {
   };
 
   const handlePasswordChange = async () => {
-    if (passwordData.newPassword !== passwordData.confirmPassword) {
-      toast({
-        title: "Error",
-        description: "New passwords don't match",
-        variant: "destructive"
-      });
-      return;
-    }
-
-    if (passwordData.newPassword.length < 6) {
-      toast({
-        title: "Error",
-        description: "Password must be at least 6 characters long",
-        variant: "destructive"
-      });
+    if (!validatePasswordForm()) {
       return;
     }
 
@@ -97,6 +137,12 @@ const Settings = () => {
         newPassword: "",
         confirmPassword: ""
       });
+      setPasswordErrors({
+        currentPassword: "",
+        newPassword: "",
+        confirmPassword: ""
+      });
+      setPasswordStrength(null);
       setIsPasswordDialogOpen(false);
     } catch (error: any) {
       toast({
@@ -283,7 +329,13 @@ const Settings = () => {
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <Dialog open={isPasswordDialogOpen} onOpenChange={setIsPasswordDialogOpen}>
+                  <Dialog open={isPasswordDialogOpen} onOpenChange={(open) => {
+                    setIsPasswordDialogOpen(open);
+                    if (!open) {
+                      setPasswordErrors({ currentPassword: "", newPassword: "", confirmPassword: "" });
+                      setPasswordStrength(null);
+                    }
+                  }}>
                     <DialogTrigger asChild>
                       <Button variant="outline" className="w-full justify-start">
                         Change Password
@@ -303,8 +355,15 @@ const Settings = () => {
                             id="currentPassword"
                             type="password"
                             value={passwordData.currentPassword}
-                            onChange={(e) => setPasswordData(prev => ({ ...prev, currentPassword: e.target.value }))}
+                            onChange={(e) => {
+                              setPasswordData(prev => ({ ...prev, currentPassword: e.target.value }));
+                              setPasswordErrors(prev => ({ ...prev, currentPassword: "" }));
+                            }}
+                            className={passwordErrors.currentPassword ? "border-destructive" : ""}
                           />
+                          {passwordErrors.currentPassword && (
+                            <p className="text-sm text-destructive mt-1">{passwordErrors.currentPassword}</p>
+                          )}
                         </div>
                         <div>
                           <Label htmlFor="newPassword">New Password *</Label>
@@ -312,8 +371,29 @@ const Settings = () => {
                             id="newPassword"
                             type="password"
                             value={passwordData.newPassword}
-                            onChange={(e) => setPasswordData(prev => ({ ...prev, newPassword: e.target.value }))}
+                            onChange={(e) => {
+                              const value = e.target.value;
+                              setPasswordData(prev => ({ ...prev, newPassword: value }));
+                              setPasswordErrors(prev => ({ ...prev, newPassword: "" }));
+                              setPasswordStrength(value ? calculatePasswordStrength(value) : null);
+                            }}
+                            className={passwordErrors.newPassword ? "border-destructive" : ""}
                           />
+                          {passwordErrors.newPassword && (
+                            <p className="text-sm text-destructive mt-1">{passwordErrors.newPassword}</p>
+                          )}
+                          {passwordStrength && (
+                            <div className="mt-2 space-y-1">
+                              <div className="flex gap-1">
+                                <div className={`h-1 flex-1 rounded ${passwordStrength === "weak" ? "bg-destructive" : passwordStrength === "medium" ? "bg-yellow-500" : "bg-green-500"}`} />
+                                <div className={`h-1 flex-1 rounded ${passwordStrength === "medium" || passwordStrength === "strong" ? passwordStrength === "medium" ? "bg-yellow-500" : "bg-green-500" : "bg-muted"}`} />
+                                <div className={`h-1 flex-1 rounded ${passwordStrength === "strong" ? "bg-green-500" : "bg-muted"}`} />
+                              </div>
+                              <p className={`text-xs ${passwordStrength === "weak" ? "text-destructive" : passwordStrength === "medium" ? "text-yellow-600" : "text-green-600"}`}>
+                                Password strength: {passwordStrength.charAt(0).toUpperCase() + passwordStrength.slice(1)}
+                              </p>
+                            </div>
+                          )}
                         </div>
                         <div>
                           <Label htmlFor="confirmPassword">Confirm New Password *</Label>
@@ -321,8 +401,15 @@ const Settings = () => {
                             id="confirmPassword"
                             type="password"
                             value={passwordData.confirmPassword}
-                            onChange={(e) => setPasswordData(prev => ({ ...prev, confirmPassword: e.target.value }))}
+                            onChange={(e) => {
+                              setPasswordData(prev => ({ ...prev, confirmPassword: e.target.value }));
+                              setPasswordErrors(prev => ({ ...prev, confirmPassword: "" }));
+                            }}
+                            className={passwordErrors.confirmPassword ? "border-destructive" : ""}
                           />
+                          {passwordErrors.confirmPassword && (
+                            <p className="text-sm text-destructive mt-1">{passwordErrors.confirmPassword}</p>
+                          )}
                         </div>
                         <div className="flex gap-2">
                           <Button onClick={handlePasswordChange} className="flex-1">
