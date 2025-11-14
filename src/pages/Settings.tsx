@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ArrowLeft, User, Mail, Bell, Shield, CreditCard, Palette, Globe, Download } from "lucide-react";
+import { ArrowLeft, User, Mail, Bell, Shield, CreditCard, Palette, Globe, Download, Eye, EyeOff } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -44,6 +44,11 @@ const Settings = () => {
     confirmPassword: ""
   });
   const [passwordStrength, setPasswordStrength] = useState<"weak" | "medium" | "strong" | null>(null);
+  const [showPasswords, setShowPasswords] = useState({
+    current: false,
+    new: false,
+    confirm: false
+  });
   const [isPasswordDialogOpen, setIsPasswordDialogOpen] = useState(false);
 
   const calculatePasswordStrength = (password: string): "weak" | "medium" | "strong" => {
@@ -334,6 +339,7 @@ const Settings = () => {
                     if (!open) {
                       setPasswordErrors({ currentPassword: "", newPassword: "", confirmPassword: "" });
                       setPasswordStrength(null);
+                      setShowPasswords({ current: false, new: false, confirm: false });
                     }
                   }}>
                     <DialogTrigger asChild>
@@ -351,34 +357,67 @@ const Settings = () => {
                       <div className="space-y-4">
                         <div>
                           <Label htmlFor="currentPassword">Current Password</Label>
-                          <Input
-                            id="currentPassword"
-                            type="password"
-                            value={passwordData.currentPassword}
-                            onChange={(e) => {
-                              setPasswordData(prev => ({ ...prev, currentPassword: e.target.value }));
-                              setPasswordErrors(prev => ({ ...prev, currentPassword: "" }));
-                            }}
-                            className={passwordErrors.currentPassword ? "border-destructive" : ""}
-                          />
+                          <div className="relative">
+                            <Input
+                              id="currentPassword"
+                              type={showPasswords.current ? "text" : "password"}
+                              value={passwordData.currentPassword}
+                              onChange={(e) => {
+                                setPasswordData(prev => ({ ...prev, currentPassword: e.target.value }));
+                                setPasswordErrors(prev => ({ ...prev, currentPassword: "" }));
+                              }}
+                              className={passwordErrors.currentPassword ? "border-destructive pr-10" : "pr-10"}
+                            />
+                            <Button
+                              type="button"
+                              variant="ghost"
+                              size="sm"
+                              className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                              onClick={() => setShowPasswords(prev => ({ ...prev, current: !prev.current }))}
+                            >
+                              {showPasswords.current ? (
+                                <EyeOff className="h-4 w-4 text-muted-foreground" />
+                              ) : (
+                                <Eye className="h-4 w-4 text-muted-foreground" />
+                              )}
+                            </Button>
+                          </div>
                           {passwordErrors.currentPassword && (
                             <p className="text-sm text-destructive mt-1">{passwordErrors.currentPassword}</p>
                           )}
                         </div>
                         <div>
                           <Label htmlFor="newPassword">New Password *</Label>
-                          <Input
-                            id="newPassword"
-                            type="password"
-                            value={passwordData.newPassword}
-                            onChange={(e) => {
-                              const value = e.target.value;
-                              setPasswordData(prev => ({ ...prev, newPassword: value }));
-                              setPasswordErrors(prev => ({ ...prev, newPassword: "" }));
-                              setPasswordStrength(value ? calculatePasswordStrength(value) : null);
-                            }}
-                            className={passwordErrors.newPassword ? "border-destructive" : ""}
-                          />
+                          <div className="relative">
+                            <Input
+                              id="newPassword"
+                              type={showPasswords.new ? "text" : "password"}
+                              value={passwordData.newPassword}
+                              onChange={(e) => {
+                                const value = e.target.value;
+                                setPasswordData(prev => ({ ...prev, newPassword: value }));
+                                setPasswordErrors(prev => ({ ...prev, newPassword: "" }));
+                                setPasswordStrength(value ? calculatePasswordStrength(value) : null);
+                              }}
+                              className={passwordErrors.newPassword ? "border-destructive pr-10" : "pr-10"}
+                            />
+                            <Button
+                              type="button"
+                              variant="ghost"
+                              size="sm"
+                              className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                              onClick={() => setShowPasswords(prev => ({ ...prev, new: !prev.new }))}
+                            >
+                              {showPasswords.new ? (
+                                <EyeOff className="h-4 w-4 text-muted-foreground" />
+                              ) : (
+                                <Eye className="h-4 w-4 text-muted-foreground" />
+                              )}
+                            </Button>
+                          </div>
+                          <p className="text-xs text-muted-foreground mt-1">
+                            Must be at least 8 characters with uppercase, lowercase, numbers, and special characters
+                          </p>
                           {passwordErrors.newPassword && (
                             <p className="text-sm text-destructive mt-1">{passwordErrors.newPassword}</p>
                           )}
@@ -397,16 +436,31 @@ const Settings = () => {
                         </div>
                         <div>
                           <Label htmlFor="confirmPassword">Confirm New Password *</Label>
-                          <Input
-                            id="confirmPassword"
-                            type="password"
-                            value={passwordData.confirmPassword}
-                            onChange={(e) => {
-                              setPasswordData(prev => ({ ...prev, confirmPassword: e.target.value }));
-                              setPasswordErrors(prev => ({ ...prev, confirmPassword: "" }));
-                            }}
-                            className={passwordErrors.confirmPassword ? "border-destructive" : ""}
-                          />
+                          <div className="relative">
+                            <Input
+                              id="confirmPassword"
+                              type={showPasswords.confirm ? "text" : "password"}
+                              value={passwordData.confirmPassword}
+                              onChange={(e) => {
+                                setPasswordData(prev => ({ ...prev, confirmPassword: e.target.value }));
+                                setPasswordErrors(prev => ({ ...prev, confirmPassword: "" }));
+                              }}
+                              className={passwordErrors.confirmPassword ? "border-destructive pr-10" : "pr-10"}
+                            />
+                            <Button
+                              type="button"
+                              variant="ghost"
+                              size="sm"
+                              className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                              onClick={() => setShowPasswords(prev => ({ ...prev, confirm: !prev.confirm }))}
+                            >
+                              {showPasswords.confirm ? (
+                                <EyeOff className="h-4 w-4 text-muted-foreground" />
+                              ) : (
+                                <Eye className="h-4 w-4 text-muted-foreground" />
+                              )}
+                            </Button>
+                          </div>
                           {passwordErrors.confirmPassword && (
                             <p className="text-sm text-destructive mt-1">{passwordErrors.confirmPassword}</p>
                           )}
