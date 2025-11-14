@@ -307,7 +307,7 @@ const Settings = () => {
                           />
                         </div>
                         <div>
-                          <Label htmlFor="newPassword">New Password</Label>
+                          <Label htmlFor="newPassword">New Password *</Label>
                           <Input
                             id="newPassword"
                             type="password"
@@ -316,7 +316,7 @@ const Settings = () => {
                           />
                         </div>
                         <div>
-                          <Label htmlFor="confirmPassword">Confirm New Password</Label>
+                          <Label htmlFor="confirmPassword">Confirm New Password *</Label>
                           <Input
                             id="confirmPassword"
                             type="password"
