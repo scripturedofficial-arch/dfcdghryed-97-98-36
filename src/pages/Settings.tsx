@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ArrowLeft, User, Mail, Bell, Shield, CreditCard, Palette, Globe, Download, Eye, EyeOff } from "lucide-react";
+import { ArrowLeft, User, Mail, Bell, Shield, CreditCard, Palette, Globe, Download, Eye, EyeOff, Copy, RefreshCw } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -50,6 +50,29 @@ const Settings = () => {
     confirm: false
   });
   const [isPasswordDialogOpen, setIsPasswordDialogOpen] = useState(false);
+
+  const generateStrongPassword = (): string => {
+    const uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const lowercase = 'abcdefghijklmnopqrstuvwxyz';
+    const numbers = '0123456789';
+    const special = '!@#$%^&*()_+-=[]{}|;:,.<>?';
+    const allChars = uppercase + lowercase + numbers + special;
+    
+    let password = '';
+    // Ensure at least one of each type
+    password += uppercase[Math.floor(Math.random() * uppercase.length)];
+    password += lowercase[Math.floor(Math.random() * lowercase.length)];
+    password += numbers[Math.floor(Math.random() * numbers.length)];
+    password += special[Math.floor(Math.random() * special.length)];
+    
+    // Fill the rest randomly (total length 16)
+    for (let i = password.length; i < 16; i++) {
+      password += allChars[Math.floor(Math.random() * allChars.length)];
+    }
+    
+    // Shuffle the password
+    return password.split('').sort(() => Math.random() - 0.5).join('');
+  };
 
   const calculatePasswordStrength = (password: string): "weak" | "medium" | "strong" => {
     let strength = 0;
@@ -105,6 +128,35 @@ const Settings = () => {
     privacy: "Privacy",
     billing: "Billing",
     preferences: "Preferences"
+  };
+
+  const handleGeneratePassword = () => {
+    const newPassword = generateStrongPassword();
+    setPasswordData(prev => ({ 
+      ...prev, 
+      newPassword,
+      confirmPassword: newPassword 
+    }));
+    setPasswordStrength(calculatePasswordStrength(newPassword));
+    setPasswordErrors(prev => ({ 
+      ...prev, 
+      newPassword: "", 
+      confirmPassword: "" 
+    }));
+    toast({
+      title: "Password Generated",
+      description: "A strong password has been generated and filled in both fields",
+    });
+  };
+
+  const handleCopyPassword = async () => {
+    if (passwordData.newPassword) {
+      await navigator.clipboard.writeText(passwordData.newPassword);
+      toast({
+        title: "Copied",
+        description: "Password copied to clipboard",
+      });
+    }
   };
 
   const handleNotificationChange = (key: string, value: boolean) => {
@@ -387,7 +439,33 @@ const Settings = () => {
                           )}
                         </div>
                         <div>
-                          <Label htmlFor="newPassword">New Password *</Label>
+                          <div className="flex items-center justify-between mb-2">
+                            <Label htmlFor="newPassword">New Password *</Label>
+                            <div className="flex gap-2">
+                              <Button
+                                type="button"
+                                variant="outline"
+                                size="sm"
+                                onClick={handleGeneratePassword}
+                                className="h-7 text-xs"
+                              >
+                                <RefreshCw className="h-3 w-3 mr-1" />
+                                Generate
+                              </Button>
+                              {passwordData.newPassword && (
+                                <Button
+                                  type="button"
+                                  variant="outline"
+                                  size="sm"
+                                  onClick={handleCopyPassword}
+                                  className="h-7 text-xs"
+                                >
+                                  <Copy className="h-3 w-3 mr-1" />
+                                  Copy
+                                </Button>
+                              )}
+                            </div>
+                          </div>
                           <div className="relative">
                             <Input
                               id="newPassword"
