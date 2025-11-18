@@ -21,6 +21,8 @@ import ThirtySixFive from "./pages/36Five";
 import Application from "./pages/Application";
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
 import SizeGuide from "./pages/SizeGuide";
 import Contact from "./pages/Contact";
 import SizeExchange from "./pages/SizeExchange";
@@ -64,6 +66,8 @@ const App = () => (
           <Route path="/36five" element={<ThirtySixFive />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/signin" element={<SignIn />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/size-guide" element={<SizeGuide />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/size-return" element={<SizeExchange />} />
