@@ -18,6 +18,24 @@ const ResetPassword = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
 
+  const getPasswordStrength = (password: string) => {
+    if (password.length === 0) return { strength: "none", label: "", color: "" };
+    if (password.length < 6) return { strength: "weak", label: "Weak", color: "text-red-500" };
+    
+    let score = 0;
+    if (password.length >= 8) score++;
+    if (password.length >= 12) score++;
+    if (/[a-z]/.test(password) && /[A-Z]/.test(password)) score++;
+    if (/\d/.test(password)) score++;
+    if (/[^a-zA-Z0-9]/.test(password)) score++;
+
+    if (score <= 2) return { strength: "weak", label: "Weak", color: "text-red-500" };
+    if (score <= 3) return { strength: "medium", label: "Medium", color: "text-yellow-500" };
+    return { strength: "strong", label: "Strong", color: "text-green-500" };
+  };
+
+  const passwordStrength = getPasswordStrength(password);
+
   useEffect(() => {
     // Check if user has a valid session from the password reset link
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -126,6 +144,11 @@ const ResetPassword = () => {
                   {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                 </button>
               </div>
+              {passwordStrength.strength !== "none" && (
+                <p className={`text-sm font-medium ${passwordStrength.color}`}>
+                  Password strength: {passwordStrength.label}
+                </p>
+              )}
             </div>
 
             <div className="space-y-2">
