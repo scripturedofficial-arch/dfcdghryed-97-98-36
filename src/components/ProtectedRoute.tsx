@@ -9,15 +9,19 @@ interface ProtectedRouteProps {
 const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
 
+  const [user, setUser] = useState<any>(null);
+
   useEffect(() => {
     // Check initial session
     supabase.auth.getSession().then(({ data: { session } }) => {
       setIsAuthenticated(!!session);
+      setUser(session?.user || null);
     });
 
     // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setIsAuthenticated(!!session);
+      setUser(session?.user || null);
     });
 
     return () => subscription.unsubscribe();
@@ -31,6 +35,11 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   // Redirect to signin if not authenticated
   if (!isAuthenticated) {
     return <Navigate to="/signin" replace />;
+  }
+
+  // Redirect to verify email if email not confirmed
+  if (user && !user.email_confirmed_at) {
+    return <Navigate to="/verify-email" replace />;
   }
 
   return <>{children}</>;
