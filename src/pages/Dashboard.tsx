@@ -8,6 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Input } from "@/components/ui/input";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { DashboardSidebar } from "@/components/DashboardSidebar";
+import { supabase } from "@/integrations/supabase/client";
 const Dashboard = () => {
   const navigate = useNavigate();
   const [isGodlyCircleMember] = useState(false); // This would come from user data
@@ -15,7 +16,30 @@ const Dashboard = () => {
   const [selectedContent, setSelectedContent] = useState<string | null>("quick-access-overview");
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   const [activityFilter, setActivityFilter] = useState<"all" | "purchases" | "godly-circle" | "nft">("all");
-  const userName = "Divine Soul"; // This would come from user context
+  const [userName, setUserName] = useState<string>("Divine Soul");
+  const [userId, setUserId] = useState<string | null>(null);
+
+  // Fetch user profile data
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        setUserId(user.id);
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('first_name, last_name')
+          .eq('id', user.id)
+          .maybeSingle();
+        
+        if (profile) {
+          const name = [profile.first_name, profile.last_name].filter(Boolean).join(' ');
+          setUserName(name || profile.first_name || "Divine Soul");
+        }
+      }
+    };
+    
+    fetchUserProfile();
+  }, []);
 
   // Notification preferences state
   const [notificationPrefs, setNotificationPrefs] = useState([{
