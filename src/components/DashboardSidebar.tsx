@@ -1,4 +1,4 @@
-import { Heart, Package, Clock, Crown, Gem, Gift, User, Calendar, Mail, History, Eye } from "lucide-react";
+import { History, Settings } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -26,63 +26,21 @@ export function DashboardSidebar({ isGodlyCircleMember, activeView, onSelectCont
 
   const quickAccessItems = [
     {
-      title: "My Orders",
-      subtitle: "View all orders and track active status",
-      icon: Package,
-      count: "5 total",
-      href: "/orders"
-    },
-    {
-      title: "Membership",
-      subtitle: isGodlyCircleMember ? "Access: Active – January" : "You're not selected this month",
-      icon: Crown,
-      count: isGodlyCircleMember ? "Member" : "Waitlist",
-      href: "/godly-circle",
-      special: true
-    },
-    ...(hasNFTs ? [{
-      title: "NFT Vault",
-      subtitle: "Your digital twins and authenticity tokens",
-      icon: Gem,
-      count: "5 tokens",
-      href: "/nft-vault"
-    }] : [])
+      title: "Order History",
+      subtitle: "View your past orders and purchases",
+      icon: History,
+      href: "/order-history"
+    }
   ];
 
   const myProfileItems = [
     {
-      title: "Fit Profile",
-      subtitle: "Your preferred size for future drops",
-      icon: User,
-      count: "3 sizes",
-      href: "/fit-profile"
-    },
-    {
-      title: "Drop Calendar",
-      subtitle: "Upcoming Releases",
-      icon: Calendar,
-      count: "8 events",
-      href: "/calendar"
-    },
-    {
-      title: "Email Settings",
-      subtitle: "Customize your notifications",
-      icon: Mail,
-      count: "5 types",
+      title: "Account Settings",
+      subtitle: "Manage your account and preferences",
+      icon: Settings,
       href: "/settings"
     }
   ];
-
-  // Add behind-the-scenes for Godly Circle members
-  if (isGodlyCircleMember) {
-    myProfileItems.push({
-      title: "Behind-the-Scenes",
-      subtitle: "Exclusive member content",
-      icon: Eye,
-      count: "6 videos",
-      href: "/bts"
-    });
-  }
 
   const currentItems = activeView === "quick-access" ? quickAccessItems : myProfileItems;
 
@@ -105,29 +63,16 @@ export function DashboardSidebar({ isGodlyCircleMember, activeView, onSelectCont
                         e.preventDefault();
                         onSelectContent(item.href);
                       }}
-                      className={`flex items-center ${isCollapsed ? "justify-center p-2 w-10 h-10" : "gap-3 p-3"} rounded-lg transition-all duration-200 hover:bg-accent group text-left ${
-                        'special' in item && item.special && isGodlyCircleMember 
-                          ? "bg-primary text-primary-foreground hover:bg-primary/90" 
-                          : "hover:bg-accent"
-                      } ${isCollapsed ? "" : "w-full"}`}
+                      className={`flex items-center ${isCollapsed ? "justify-center p-2 w-10 h-10" : "gap-3 p-3"} rounded-lg transition-all duration-200 hover:bg-accent group text-left ${isCollapsed ? "" : "w-full"}`}
                     >
                       <div className={`flex items-center justify-center ${isCollapsed ? "w-5 h-5" : "w-6 h-6"} relative`}>
-                        <item.icon className={`${isCollapsed ? "h-5 w-5" : "h-6 w-6"} ${
-                          'special' in item && item.special && isGodlyCircleMember ? "text-primary-foreground" : "text-muted-foreground group-hover:text-foreground"
-                        }`} />
+                        <item.icon className={`${isCollapsed ? "h-5 w-5" : "h-6 w-6"} text-muted-foreground group-hover:text-foreground`} />
                       </div>
                       {!isCollapsed && (
                         <div className="flex items-center justify-between flex-1">
-                          <span className={`font-medium text-sm ${
-                            'special' in item && item.special && isGodlyCircleMember ? "text-primary-foreground" : "text-foreground"
-                          }`}>
+                          <span className="font-medium text-sm text-foreground">
                             {item.title}
                           </span>
-                          {'count' in item && item.count && (
-                            <span className="bg-muted text-black text-xs rounded-full px-2 py-1 font-bold">
-                              {String(item.count).match(/\d+/)?.[0] || '0'}
-                            </span>
-                          )}
                         </div>
                       )}
                     </button>
