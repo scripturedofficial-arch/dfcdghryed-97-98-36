@@ -1,13 +1,15 @@
+import { useState } from "react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Package, Clock, CheckCircle2, XCircle } from "lucide-react";
+import { ArrowLeft, Package, Clock, CheckCircle2, XCircle, ChevronDown, ChevronUp } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const OrderHistory = () => {
   const navigate = useNavigate();
+  const [expandedOrder, setExpandedOrder] = useState<string | null>(null);
 
   // Mock order data
   const orders = [
@@ -117,20 +119,22 @@ const OrderHistory = () => {
                 </div>
               </div>
 
-              {/* Order Items */}
-              <div className="space-y-3 mb-4">
-                {order.items.map((item, idx) => (
-                  <div key={idx} className="flex justify-between items-center">
-                    <div>
-                      <p className="font-medium">{item.name}</p>
-                      <p className="text-sm text-muted-foreground">
-                        Size: {item.size} | Qty: {item.quantity}
-                      </p>
+              {/* Order Items - Only shown when expanded */}
+              {expandedOrder === order.id && (
+                <div className="space-y-3 mb-4 animate-in slide-in-from-top-2">
+                  {order.items.map((item, idx) => (
+                    <div key={idx} className="flex justify-between items-center p-3 bg-muted/30 rounded-lg">
+                      <div>
+                        <p className="font-medium">{item.name}</p>
+                        <p className="text-sm text-muted-foreground">
+                          Size: {item.size} | Qty: {item.quantity}
+                        </p>
+                      </div>
+                      <p className="font-semibold">${item.price}</p>
                     </div>
-                    <p className="font-semibold">${item.price}</p>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+              )}
 
               {/* Tracking Info */}
               {order.trackingNumber && (
@@ -146,8 +150,22 @@ const OrderHistory = () => {
 
               {/* Actions */}
               <div className="flex gap-3 mt-4 pt-4 border-t">
-                <Button variant="outline" size="sm">
-                  View Details
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  onClick={() => setExpandedOrder(expandedOrder === order.id ? null : order.id)}
+                >
+                  {expandedOrder === order.id ? (
+                    <>
+                      Hide Details
+                      <ChevronUp className="w-4 h-4 ml-2" />
+                    </>
+                  ) : (
+                    <>
+                      View Details
+                      <ChevronDown className="w-4 h-4 ml-2" />
+                    </>
+                  )}
                 </Button>
                 {order.status === "delivered" && (
                   <Button variant="outline" size="sm">
