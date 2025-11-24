@@ -1,7 +1,6 @@
 import { useState, useMemo, useEffect, useRef } from "react";
-// Updated import to fix X icon reference error
-import { Menu, X, ShoppingBag, Search, User } from "lucide-react";
-import ShoppingCart from "@/components/ShoppingCart";
+import { Menu, X, ShoppingBag, Search, User, Globe } from "lucide-react";
+import { CartDrawer } from "@/components/CartDrawer";
 import LanguageSelector from "@/components/LanguageSelector";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { supabase } from "@/integrations/supabase/client";
@@ -176,14 +175,11 @@ const Navigation = () => {
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:block">
+            <div className="hidden md:block">
             <div className="ml-10 flex items-center space-x-8">
               {navItems.map(item => <a key={item.name} href={item.href} className="text-sm font-medium hover:text-gray-600 transition-colors duration-200">
                   {item.name}
                 </a>)}
-              <div className="hidden md:hidden lg:block">
-                <LanguageSelector />
-              </div>
             </div>
           </div>
 
@@ -203,7 +199,7 @@ const Navigation = () => {
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-56 p-4 bg-white border border-gray-200 shadow-lg z-50" sideOffset={8}>
                 <div className="space-y-3">
-                  <div className="hidden md:block lg:hidden">
+                  <div className="md:block">
                     <LanguageSelector />
                   </div>
                   {user ? (
@@ -234,15 +230,7 @@ const Navigation = () => {
                 </div>
               </DropdownMenuContent>
             </DropdownMenu>
-            <ShoppingCart>
-              <button className="p-2 hover:bg-gray-100 rounded-full transition-colors duration-200 relative">
-                <ShoppingBag className="w-5 h-5" />
-                {/* Cart notification badge */}
-                <span className="absolute -top-1 -right-1 bg-black text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-medium">
-                  2
-                </span>
-              </button>
-            </ShoppingCart>
+            <CartDrawer />
             
             {/* Mobile menu button */}
             <div className="md:hidden">
