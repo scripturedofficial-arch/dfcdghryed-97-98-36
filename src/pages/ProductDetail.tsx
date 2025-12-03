@@ -3,149 +3,36 @@ import { useParams, useNavigate } from "react-router-dom";
 import { ArrowLeft, Minus, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { useCurrency } from "@/hooks/useCurrency";
+import ShoppingCart from "@/components/ShoppingCart";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { useScrollPosition } from "@/hooks/useScrollPosition";
-import { storefrontApiRequest, type ShopifyProduct } from "@/lib/shopify";
-import { useCartStore } from "@/stores/cartStore";
-import { toast } from "sonner";
-
-const PRODUCT_BY_HANDLE_QUERY = `
-  query GetProductByHandle($handle: String!) {
-    productByHandle(handle: $handle) {
-      id
-      title
-      description
-      handle
-      priceRange {
-        minVariantPrice {
-          amount
-          currencyCode
-        }
-      }
-      images(first: 10) {
-        edges {
-          node {
-            url
-            altText
-          }
-        }
-      }
-      variants(first: 20) {
-        edges {
-          node {
-            id
-            title
-            price {
-              amount
-              currencyCode
-            }
-            availableForSale
-            selectedOptions {
-              name
-              value
-            }
-          }
-        }
-      }
-      options {
-        name
-        values
-      }
-    }
-  }
-`;
+import { getProductById, type Product } from "@/data/products";
 
 const ProductDetail = () => {
-  const { handle } = useParams();
+  const { id } = useParams();
   const navigate = useNavigate();
+  const { formatPrice } = useCurrency();
   const { clearScrollPosition } = useScrollPosition();
-  const addItem = useCartStore((state) => state.addItem);
-  
-  const [product, setProduct] = useState<ShopifyProduct | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [selectedColor, setSelectedColor] = useState("Black Yellow");
+  const [selectedSize, setSelectedSize] = useState("S");
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [quantity, setQuantity] = useState(1);
-  const [selectedOptions, setSelectedOptions] = useState<Record<string, string>>({});
+  const [product, setProduct] = useState<Product | null>(null);
 
+  // Scroll to top when component mounts
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'auto' });
   }, []);
 
   useEffect(() => {
-    const fetchProduct = async () => {
-      if (!handle) return;
-      
-      setIsLoading(true);
-      try {
-        const response = await storefrontApiRequest(PRODUCT_BY_HANDLE_QUERY, { handle });
-        if (response?.data?.productByHandle) {
-          const shopifyProduct: ShopifyProduct = { node: response.data.productByHandle };
-          setProduct(shopifyProduct);
-          
-          // Initialize selected options with first available values
-          const initialOptions: Record<string, string> = {};
-          response.data.productByHandle.options?.forEach((option: { name: string; values: string[] }) => {
-            if (option.values.length > 0) {
-              initialOptions[option.name] = option.values[0];
-            }
-          });
-          setSelectedOptions(initialOptions);
-        }
-      } catch (error) {
-        console.error('Error fetching product:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchProduct();
-  }, [handle]);
-
-  const getSelectedVariant = () => {
-    if (!product?.node.variants?.edges) return null;
-    
-    return product.node.variants.edges.find((variant) => {
-      return variant.node.selectedOptions.every(
-        (option) => selectedOptions[option.name] === option.value
-      );
-    })?.node;
-  };
-
-  const handleAddToCart = () => {
-    if (!product) return;
-    
-    const selectedVariant = getSelectedVariant();
-    if (!selectedVariant) {
-      toast.error("Please select all options");
-      return;
+    if (id) {
+      const productId = parseInt(id, 10);
+      const foundProduct = getProductById(productId);
+      setProduct(foundProduct || null);
     }
-
-    addItem({
-      product,
-      variantId: selectedVariant.id,
-      variantTitle: selectedVariant.title,
-      price: selectedVariant.price,
-      quantity,
-      selectedOptions: selectedVariant.selectedOptions,
-    });
-
-    toast.success(`${product.node.title} added to cart`, {
-      position: "top-center",
-    });
-  };
-
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-background">
-        <Navigation />
-        <div className="flex items-center justify-center h-96">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-foreground"></div>
-        </div>
-        <Footer />
-      </div>
-    );
-  }
+  }, [id]);
 
   if (!product) {
     return (
@@ -159,10 +46,22 @@ const ProductDetail = () => {
     );
   }
 
-  const images = product.node.images?.edges || [];
-  const selectedImage = images[selectedImageIndex]?.node.url || "/placeholder.svg";
-  const selectedVariant = getSelectedVariant();
-  const price = selectedVariant?.price || product.node.priceRange?.minVariantPrice;
+  const colors = [
+    { name: "Black Yellow", image: "/api/placeholder/50/50" },
+    { name: "Black Red", image: "/api/placeholder/50/50" },
+    { name: "Black Z", image: "/api/placeholder/50/50" },
+    { name: "Red", image: "/api/placeholder/50/50" },
+    { name: "Red Black Z", image: "/api/placeholder/50/50" },
+    { name: "Black Rose Gold", image: "/api/placeholder/50/50" },
+    { name: "Red Rose Gold", image: "/api/placeholder/50/50" }
+  ];
+
+  const thumbnails = [
+    product.image,
+    "/api/placeholder/80/80"
+  ];
+
+  const selectedImage = thumbnails[selectedImageIndex];
 
   return (
     <div className="min-h-screen bg-background">
@@ -171,8 +70,11 @@ const ProductDetail = () => {
       <div className="container mx-auto px-4 py-8 pt-24">
         {/* Back button */}
         <button
-          onClick={() => navigate('/shop')}
-          className="flex items-center gap-2 text-foreground hover:text-primary transition-colors mb-8"
+          onClick={() => {
+            // Don't clear scroll position when going back to preserve position
+            navigate('/36five');
+          }}
+          className="flex items-center gap-2 text-foreground hover:text-gold transition-colors mb-8"
         >
           <ArrowLeft className="w-5 h-5" />
           Back
@@ -185,57 +87,53 @@ const ProductDetail = () => {
               <div className="aspect-square bg-muted rounded-lg overflow-hidden">
                 <img
                   src={selectedImage}
-                  alt={product.node.title}
+                  alt={product.name}
                   className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
                 />
               </div>
               
               {/* Thumbnail Images - Desktop */}
-              {images.length > 1 && (
-                <div className="hidden md:flex gap-2 justify-center mt-4">
-                  {images.map((img, index) => (
+              <div className="hidden md:flex gap-2 justify-center mt-4">
+                {thumbnails.map((thumb, index) => (
+                  <div
+                    key={index}
+                    onClick={() => setSelectedImageIndex(index)}
+                    className={`w-16 h-16 md:w-20 md:h-20 rounded-lg overflow-hidden border-2 cursor-pointer transition-colors ${
+                      index === selectedImageIndex ? 'border-foreground' : 'border-border hover:border-foreground/50'
+                    }`}
+                  >
+                    <img
+                      src={thumb}
+                      alt={`Thumbnail ${index + 1}`}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                ))}
+              </div>
+              
+              {/* Scroll Indicator - Mobile */}
+              <div className="flex md:hidden justify-center mt-2">
+                <div className="flex gap-1 w-full px-4">
+                  {thumbnails.map((_, index) => (
                     <div
                       key={index}
                       onClick={() => setSelectedImageIndex(index)}
-                      className={`w-16 h-16 md:w-20 md:h-20 rounded-lg overflow-hidden border-2 cursor-pointer transition-colors ${
-                        index === selectedImageIndex ? 'border-foreground' : 'border-border hover:border-foreground/50'
+                      className={`h-0.5 rounded-full cursor-pointer transition-all duration-300 flex-1 ${
+                        index === selectedImageIndex 
+                          ? 'bg-foreground' 
+                          : 'bg-muted-foreground/30'
                       }`}
-                    >
-                      <img
-                        src={img.node.url}
-                        alt={img.node.altText || `Thumbnail ${index + 1}`}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
+                    />
                   ))}
                 </div>
-              )}
-              
-              {/* Scroll Indicator - Mobile */}
-              {images.length > 1 && (
-                <div className="flex md:hidden justify-center mt-2">
-                  <div className="flex gap-1 w-full px-4">
-                    {images.map((_, index) => (
-                      <div
-                        key={index}
-                        onClick={() => setSelectedImageIndex(index)}
-                        className={`h-0.5 rounded-full cursor-pointer transition-all duration-300 flex-1 ${
-                          index === selectedImageIndex 
-                            ? 'bg-foreground' 
-                            : 'bg-muted-foreground/30'
-                        }`}
-                      />
-                    ))}
-                  </div>
-                </div>
-              )}
+              </div>
             </div>
 
             {/* Product Details */}
             <div className="space-y-3 md:space-y-5">
               <div>
                 <h1 className="text-xl md:text-2xl font-bold text-foreground mb-4">
-                  {product.node.title}
+                  {product.name}
                 </h1>
                 
                 {/* Made to Order Badge */}
@@ -244,35 +142,37 @@ const ProductDetail = () => {
                 </div>
                 
                 <div className="flex items-center gap-4 mb-6">
-                  <span className="text-lg md:text-xl font-bold text-foreground">
-                    {price?.currencyCode} {parseFloat(price?.amount || "0").toFixed(2)}
-                  </span>
+                  <span className="text-lg md:text-xl font-bold text-foreground">{formatPrice(product.price)}</span>
                 </div>
               </div>
 
-              {/* Dynamic Options */}
-              {product.node.options?.map((option) => (
-                <div key={option.name} className="space-y-3">
-                  <span className="text-base text-foreground font-medium">
-                    {option.name}: {selectedOptions[option.name]}
-                  </span>
-                  <div className="flex flex-wrap gap-2">
-                    {option.values.map((value) => (
-                      <button
-                        key={value}
-                        onClick={() => setSelectedOptions(prev => ({ ...prev, [option.name]: value }))}
-                        className={`px-4 py-2 rounded-full border-2 text-sm font-medium transition-colors ${
-                          selectedOptions[option.name] === value
-                            ? 'bg-foreground text-background border-foreground' 
-                            : 'border-border text-foreground hover:border-foreground/50'
-                        }`}
-                      >
-                        {value}
-                      </button>
-                    ))}
-                  </div>
+              {/* Color Selection */}
+              <div className="space-y-3">
+                <span className="text-base text-foreground font-medium">Colour: Black</span>
+                <div className="flex gap-2">
+                  <div className="w-8 h-8 bg-foreground rounded-full border-2 border-border cursor-pointer"></div>
                 </div>
-              ))}
+              </div>
+
+              {/* Size Selection */}
+              <div className="space-y-3">
+                <span className="text-base text-foreground font-medium">size : {selectedSize}</span>
+                <div className="flex gap-2">
+                  {['XS', 'S', 'M', 'L', 'XL', 'XXL'].map((size) => (
+                    <button
+                      key={size}
+                      onClick={() => setSelectedSize(size)}
+                      className={`w-12 h-12 rounded-full border-2 text-sm font-medium transition-colors ${
+                        size === selectedSize 
+                          ? 'bg-foreground text-background border-foreground' 
+                          : 'border-border text-foreground hover:border-foreground/50'
+                      }`}
+                    >
+                      {size}
+                    </button>
+                  ))}
+                </div>
+              </div>
 
               {/* Quantity Selection */}
               <div className="space-y-3">
@@ -295,14 +195,11 @@ const ProductDetail = () => {
               </div>
 
               {/* Add to Cart Button */}
-              <Button 
-                size="lg" 
-                className="w-full bg-foreground text-background hover:bg-foreground/90 text-base md:text-lg font-medium mt-6"
-                onClick={handleAddToCart}
-                disabled={!selectedVariant?.availableForSale}
-              >
-                {selectedVariant?.availableForSale ? 'Add to cart' : 'Out of stock'}
-              </Button>
+              <ShoppingCart>
+                <Button size="lg" className="w-full bg-foreground text-background hover:bg-foreground/90 text-base md:text-lg font-medium mt-6">
+                  Add to cart
+                </Button>
+              </ShoppingCart>
             </div>
           </div>
         </div>
@@ -324,7 +221,7 @@ const ProductDetail = () => {
             </TabsTrigger>
           </TabsList>
           <TabsContent value="details" className="mt-6">
-            <p className="text-foreground">{product.node.description || "Product details coming soon..."}</p>
+            <p className="text-foreground">Product details content goes here...</p>
           </TabsContent>
           <TabsContent value="care" className="mt-6">
             <p className="text-foreground">Materials and care information goes here...</p>

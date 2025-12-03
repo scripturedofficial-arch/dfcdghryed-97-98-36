@@ -9,6 +9,8 @@ import Index from "./pages/Index";
 import About from "./pages/About";
 import Manifesto from "./pages/Manifesto";
 import Shop from "./pages/Shop";
+import Cart from "./pages/Cart";
+import Checkout from "./pages/Checkout";
 import Journal from "./pages/Journal";
 import ArticleDetail from "./pages/ArticleDetail";
 import Philosophy from "./pages/Philosophy";
@@ -53,7 +55,9 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/about" element={<About />} />
             <Route path="/manifesto" element={<Manifesto />} />
-          <Route path="/shop" element={<Shop />} />
+            <Route path="/shop" element={<Shop />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/checkout" element={<Checkout />} />
           <Route path="/journal" element={<Journal />} />
           <Route path="/article" element={<ArticleDetail />} />
           <Route path="/philosophy" element={<Philosophy />} />
@@ -76,7 +80,7 @@ const App = () => (
           <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
           <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
           <Route path="/payment-methods" element={<ProtectedRoute><PaymentMethods /></ProtectedRoute>} />
-          <Route path="/product/:handle" element={<ProductDetail />} />
+          <Route path="/product/:id" element={<ProductDetail />} />
           <Route path="/faq" element={<FAQ />} />
           <Route path="/made-to-order" element={<MadeToOrder />} />
           <Route path="/order-history" element={<ProtectedRoute><OrderHistory /></ProtectedRoute>} />

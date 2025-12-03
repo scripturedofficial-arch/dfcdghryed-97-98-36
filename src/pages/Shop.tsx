@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { ShoppingCart, Package } from "lucide-react";
@@ -9,7 +8,6 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 
 const Shop = () => {
-  const navigate = useNavigate();
   const [hoveredProduct, setHoveredProduct] = useState<string | null>(null);
   const [products, setProducts] = useState<ShopifyProduct[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -92,7 +90,6 @@ const Shop = () => {
                 className="group cursor-pointer"
                 onMouseEnter={() => setHoveredProduct(product.node.id)}
                 onMouseLeave={() => setHoveredProduct(null)}
-                onClick={() => navigate(`/product/${product.node.handle}`)}
               >
                 <div className="relative aspect-[3/4] mb-4 overflow-hidden bg-secondary/20 rounded-lg">
                   {product.node.images.edges[0] ? (
