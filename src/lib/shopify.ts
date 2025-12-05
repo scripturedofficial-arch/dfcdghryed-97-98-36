@@ -5,6 +5,53 @@ export const SHOPIFY_STORE_PERMANENT_DOMAIN = 'dfcdghryed-97-98-36-if9i6.myshopi
 export const SHOPIFY_STOREFRONT_URL = `https://${SHOPIFY_STORE_PERMANENT_DOMAIN}/api/${SHOPIFY_API_VERSION}/graphql.json`;
 export const SHOPIFY_STOREFRONT_TOKEN = '4708d8c4055031fa11b5d8771b130290';
 
+export const PRODUCT_BY_HANDLE_QUERY = `
+  query GetProductByHandle($handle: String!) {
+    productByHandle(handle: $handle) {
+      id
+      title
+      description
+      descriptionHtml
+      handle
+      priceRange {
+        minVariantPrice {
+          amount
+          currencyCode
+        }
+      }
+      images(first: 10) {
+        edges {
+          node {
+            url
+            altText
+          }
+        }
+      }
+      variants(first: 50) {
+        edges {
+          node {
+            id
+            title
+            price {
+              amount
+              currencyCode
+            }
+            availableForSale
+            selectedOptions {
+              name
+              value
+            }
+          }
+        }
+      }
+      options {
+        name
+        values
+      }
+    }
+  }
+`;
+
 export interface ShopifyProduct {
   node: {
     id: string;
