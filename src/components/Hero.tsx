@@ -90,7 +90,7 @@ const Hero = ({
       subtitle: "Godly"
     });
   };
-  return <section className="relative h-[85vh] flex flex-col justify-center items-center overflow-hidden">
+  return <section className="relative h-screen flex flex-col justify-center items-center overflow-hidden">
       {/* Parallax Background */}
       <div 
         className="absolute inset-0 parallax hero-background transition-all duration-1000 ease-in-out"
