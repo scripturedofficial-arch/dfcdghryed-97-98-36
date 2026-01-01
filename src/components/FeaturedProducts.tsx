@@ -123,26 +123,22 @@ const FeaturedProducts = ({
   };
   return <>
       {/* CTA Buttons */}
-      <div className="flex flex-row gap-4 justify-center items-center bg-background pt-0 md:pt-8 pb-8 transition-all duration-300 safe-area-spacing">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/50 to-background pointer-events-none"></div>
-        <button onClick={handle36FiveClick} className={`relative z-10 px-8 py-4 text-lg font-medium transition-all duration-300 transform hover:scale-105 rounded-lg safe-touch-target ${activeButton === "36Five" ? "bg-black text-white hover:bg-gray-800" : "border-2 border-black text-black bg-white hover:bg-black hover:text-white"}`}>
+      <div className="flex flex-row gap-4 justify-center items-center bg-background py-6 transition-all duration-300">
+        <button onClick={handle36FiveClick} className={`px-8 py-3 text-lg font-medium transition-all duration-300 transform hover:scale-105 rounded-lg safe-touch-target ${activeButton === "36Five" ? "bg-primary text-primary-foreground hover:bg-primary/90" : "border-2 border-primary text-primary bg-background hover:bg-primary hover:text-primary-foreground"}`}>
           36Five
         </button>
-        <button onClick={handleThe12Click} className={`relative z-10 px-8 py-4 text-lg font-medium transition-all duration-300 transform hover:scale-105 rounded-lg safe-touch-target ${activeButton === "The12" ? "bg-black text-white hover:bg-gray-800" : "border-2 border-black text-black bg-white hover:bg-black hover:text-white"}`}>
+        <button onClick={handleThe12Click} className={`px-8 py-3 text-lg font-medium transition-all duration-300 transform hover:scale-105 rounded-lg safe-touch-target ${activeButton === "The12" ? "bg-primary text-primary-foreground hover:bg-primary/90" : "border-2 border-primary text-primary bg-background hover:bg-primary hover:text-primary-foreground"}`}>
           The 12
         </button>
       </div>
 
-      <section className={`pt-8 pb-20 bg-background transition-all duration-300 safe-area-bottom ${isMobile && !isMainHeaderVisible ? 'pt-16' : ''}`}>
+      <section className={`pb-16 bg-background transition-all duration-300 safe-area-bottom`}>
         <div className="max-w-7xl mx-auto px-0">
           {activeButton === "36Five" ? <div>
-              <h2 className="text-4xl font-bold text-center text-black tracking-tight">New Arrivals</h2>
-              {/* Section Header */}
-              <div className="text-center mb-16">
-                <p className="text-xl text-muted-foreground max-w-3xl mx-auto mt-4">
-                  Each piece is <Link to="/made-to-order" className="text-primary hover:underline">made-to-order</Link>.
-                </p>
-              </div>
+              <h2 className="text-4xl font-bold text-center text-foreground tracking-tight mb-2">New Arrivals</h2>
+              <p className="text-lg text-muted-foreground text-center mb-10">
+                Each piece is <Link to="/made-to-order" className="text-primary hover:underline">made-to-order</Link>.
+              </p>
 
               {/* Best Sellers Carousel */}
               <div className="relative">
@@ -201,11 +197,11 @@ const FeaturedProducts = ({
               </div>
 
               {/* View All Button */}
-              <div className="text-center mt-16">
+              <div className="text-center mt-10">
                 <button onClick={() => {
                   window.scrollTo(0, 0);
                   navigate('/shop');
-                }} className="border-2 border-primary text-primary px-8 py-4 text-lg font-medium hover:bg-primary hover:text-primary-foreground transition-all duration-300">
+                }} className="border-2 border-primary text-primary px-8 py-3 text-lg font-medium hover:bg-primary hover:text-primary-foreground transition-all duration-300">
                   VIEW FULL COLLECTION
                 </button>
               </div>
