@@ -9,7 +9,7 @@ const OrderHistory = () => {
   const navigate = useNavigate();
 
   const handleViewShopifyOrders = () => {
-    window.open("https://admin.shopify.com/store/orders", "_blank");
+    window.open(`https://dfcdghryed-97-98-36-if9i6.myshopify.com/account/orders`, "_blank");
   };
 
   return (
