@@ -126,57 +126,96 @@ const OrderHistory = () => {
           </Card>
         )}
 
-        {!loading && !error && orders.length > 0 && (
-          <div className="space-y-4">
-            {orders.map((order) => (
-              <Card key={order.id} className="p-6">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 gap-2">
-                  <div>
-                    <h3 className="text-lg font-semibold">{order.name}</h3>
-                    <p className="text-sm text-muted-foreground">
-                      {new Date(order.created_at).toLocaleDateString("en-US", {
-                        year: "numeric",
-                        month: "long",
-                        day: "numeric",
-                      })}
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <Badge variant="outline" className={statusColor(order.financial_status)}>
-                      {formatStatus(order.financial_status)}
-                    </Badge>
-                    <Badge variant="outline" className={statusColor(order.fulfillment_status || "")}>
-                      {formatStatus(order.fulfillment_status)}
-                    </Badge>
-                  </div>
-                </div>
+        {!loading && !error && orders.length > 0 && (() => {
+          const totalPages = Math.ceil(orders.length / ORDERS_PER_PAGE);
+          const paginatedOrders = orders.slice(
+            (currentPage - 1) * ORDERS_PER_PAGE,
+            currentPage * ORDERS_PER_PAGE
+          );
 
-                <div className="border-t pt-4 space-y-2">
-                  {order.line_items.map((item, idx) => (
-                    <div key={idx} className="flex justify-between items-center text-sm">
+          return (
+            <>
+              <p className="text-sm text-muted-foreground mb-4">
+                Showing {(currentPage - 1) * ORDERS_PER_PAGE + 1}–{Math.min(currentPage * ORDERS_PER_PAGE, orders.length)} of {orders.length} orders
+              </p>
+              <div className="space-y-4">
+                {paginatedOrders.map((order) => (
+                  <Card key={order.id} className="p-6">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 gap-2">
                       <div>
-                        <span className="font-medium">{item.title}</span>
-                        {item.variant_title && (
-                          <span className="text-muted-foreground ml-2">— {item.variant_title}</span>
-                        )}
-                        <span className="text-muted-foreground ml-2">×{item.quantity}</span>
+                        <h3 className="text-lg font-semibold">{order.name}</h3>
+                        <p className="text-sm text-muted-foreground">
+                          {new Date(order.created_at).toLocaleDateString("en-US", {
+                            year: "numeric",
+                            month: "long",
+                            day: "numeric",
+                          })}
+                        </p>
                       </div>
-                      <span className="font-medium">
-                        {order.currency} {parseFloat(item.price).toFixed(2)}
-                      </span>
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <Badge variant="outline" className={statusColor(order.financial_status)}>
+                          {formatStatus(order.financial_status)}
+                        </Badge>
+                        <Badge variant="outline" className={statusColor(order.fulfillment_status || "")}>
+                          {formatStatus(order.fulfillment_status)}
+                        </Badge>
+                      </div>
                     </div>
-                  ))}
-                </div>
 
-                <div className="border-t mt-4 pt-4 flex justify-end">
-                  <p className="text-lg font-semibold">
-                    Total: {order.currency} {parseFloat(order.total_price).toFixed(2)}
-                  </p>
+                    <div className="border-t pt-4 space-y-2">
+                      {order.line_items.map((item, idx) => (
+                        <div key={idx} className="flex justify-between items-center text-sm">
+                          <div>
+                            <span className="font-medium">{item.title}</span>
+                            {item.variant_title && (
+                              <span className="text-muted-foreground ml-2">— {item.variant_title}</span>
+                            )}
+                            <span className="text-muted-foreground ml-2">×{item.quantity}</span>
+                          </div>
+                          <span className="font-medium">
+                            {order.currency} {parseFloat(item.price).toFixed(2)}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="border-t mt-4 pt-4 flex justify-end">
+                      <p className="text-lg font-semibold">
+                        Total: {order.currency} {parseFloat(order.total_price).toFixed(2)}
+                      </p>
+                    </div>
+                  </Card>
+                ))}
+              </div>
+
+              {totalPages > 1 && (
+                <div className="flex items-center justify-center gap-2 mt-8">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                    disabled={currentPage === 1}
+                  >
+                    <ChevronLeft className="w-4 h-4 mr-1" />
+                    Previous
+                  </Button>
+                  <span className="text-sm text-muted-foreground px-3">
+                    Page {currentPage} of {totalPages}
+                  </span>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                    disabled={currentPage === totalPages}
+                  >
+                    Next
+                    <ChevronRight className="w-4 h-4 ml-1" />
+                  </Button>
                 </div>
-              </Card>
-            ))}
-          </div>
-        )}
+              )}
+            </>
+          );
+        })()}
       </main>
 
       <Footer />
