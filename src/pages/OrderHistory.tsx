@@ -1,16 +1,81 @@
+import { useEffect, useState } from "react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Package, ExternalLink } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { ArrowLeft, Package, Loader2, ShoppingBag } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
+
+interface OrderLineItem {
+  title: string;
+  quantity: number;
+  price: string;
+  variant_title: string | null;
+}
+
+interface Order {
+  id: number;
+  name: string;
+  created_at: string;
+  financial_status: string;
+  fulfillment_status: string | null;
+  total_price: string;
+  currency: string;
+  line_items: OrderLineItem[];
+}
+
+const statusColor = (status: string) => {
+  switch (status) {
+    case "paid": return "bg-green-100 text-green-800 border-green-200";
+    case "fulfilled": return "bg-green-100 text-green-800 border-green-200";
+    case "partially_fulfilled": return "bg-yellow-100 text-yellow-800 border-yellow-200";
+    case "pending": return "bg-yellow-100 text-yellow-800 border-yellow-200";
+    case "refunded": return "bg-red-100 text-red-800 border-red-200";
+    case "voided": return "bg-muted text-muted-foreground";
+    default: return "bg-muted text-muted-foreground";
+  }
+};
+
+const formatStatus = (status: string | null) => {
+  if (!status) return "Unfulfilled";
+  return status.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase());
+};
 
 const OrderHistory = () => {
   const navigate = useNavigate();
+  const [orders, setOrders] = useState<Order[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleViewShopifyOrders = () => {
-    window.open(`https://dfcdghryed-97-98-36-if9i6.myshopify.com/account/orders`, "_blank");
-  };
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (!session) {
+          setError("Please sign in to view your orders.");
+          setLoading(false);
+          return;
+        }
+
+        const res = await supabase.functions.invoke("get-shopify-orders");
+
+        if (res.error) {
+          throw new Error(res.error.message || "Failed to fetch orders");
+        }
+
+        setOrders(res.data?.orders || []);
+      } catch (err: any) {
+        console.error("Error fetching orders:", err);
+        setError("Unable to load your orders. Please try again later.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchOrders();
+  }, []);
 
   return (
     <div className="min-h-screen bg-background">
@@ -32,22 +97,83 @@ const OrderHistory = () => {
           </p>
         </div>
 
-        <Card className="p-12 text-center">
-          <Package className="w-16 h-16 text-muted-foreground mx-auto mb-6" />
-          <h3 className="text-2xl font-semibold mb-3">Orders Managed by Shopify</h3>
-          <p className="text-muted-foreground mb-6 max-w-md mx-auto">
-            All your order history, tracking, and fulfillment are managed through your Shopify dashboard for a seamless e-commerce experience.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Button onClick={handleViewShopifyOrders} size="lg">
-              <ExternalLink className="w-4 h-4 mr-2" />
-              View Orders in Shopify
-            </Button>
-            <Button variant="outline" onClick={() => navigate("/shop")} size="lg">
-              Continue Shopping
-            </Button>
+        {loading && (
+          <div className="flex items-center justify-center py-20">
+            <Loader2 className="w-8 h-8 animate-spin text-muted-foreground" />
           </div>
-        </Card>
+        )}
+
+        {error && (
+          <Card className="p-12 text-center">
+            <Package className="w-16 h-16 text-muted-foreground mx-auto mb-6" />
+            <p className="text-muted-foreground">{error}</p>
+          </Card>
+        )}
+
+        {!loading && !error && orders.length === 0 && (
+          <Card className="p-12 text-center">
+            <ShoppingBag className="w-16 h-16 text-muted-foreground mx-auto mb-6" />
+            <h3 className="text-2xl font-semibold mb-3">No orders yet</h3>
+            <p className="text-muted-foreground mb-6 max-w-md mx-auto">
+              Once you place an order, it will appear here.
+            </p>
+            <Button onClick={() => navigate("/shop")} size="lg">
+              Start Shopping
+            </Button>
+          </Card>
+        )}
+
+        {!loading && !error && orders.length > 0 && (
+          <div className="space-y-4">
+            {orders.map((order) => (
+              <Card key={order.id} className="p-6">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 gap-2">
+                  <div>
+                    <h3 className="text-lg font-semibold">{order.name}</h3>
+                    <p className="text-sm text-muted-foreground">
+                      {new Date(order.created_at).toLocaleDateString("en-US", {
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                      })}
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <Badge variant="outline" className={statusColor(order.financial_status)}>
+                      {formatStatus(order.financial_status)}
+                    </Badge>
+                    <Badge variant="outline" className={statusColor(order.fulfillment_status || "")}>
+                      {formatStatus(order.fulfillment_status)}
+                    </Badge>
+                  </div>
+                </div>
+
+                <div className="border-t pt-4 space-y-2">
+                  {order.line_items.map((item, idx) => (
+                    <div key={idx} className="flex justify-between items-center text-sm">
+                      <div>
+                        <span className="font-medium">{item.title}</span>
+                        {item.variant_title && (
+                          <span className="text-muted-foreground ml-2">— {item.variant_title}</span>
+                        )}
+                        <span className="text-muted-foreground ml-2">×{item.quantity}</span>
+                      </div>
+                      <span className="font-medium">
+                        {order.currency} {parseFloat(item.price).toFixed(2)}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="border-t mt-4 pt-4 flex justify-end">
+                  <p className="text-lg font-semibold">
+                    Total: {order.currency} {parseFloat(order.total_price).toFixed(2)}
+                  </p>
+                </div>
+              </Card>
+            ))}
+          </div>
+        )}
       </main>
 
       <Footer />
