@@ -187,6 +187,42 @@ const OrderHistory = () => {
                       ))}
                     </div>
 
+                    {order.fulfillments.length > 0 && (
+                      <div className="border-t mt-4 pt-4 space-y-2">
+                        <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground mb-1">
+                          <Truck className="w-4 h-4" />
+                          <span>Tracking</span>
+                        </div>
+                        {order.fulfillments.map((f, idx) => (
+                          <div key={idx} className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3 text-sm">
+                            {f.tracking_company && (
+                              <span className="font-medium">{f.tracking_company}</span>
+                            )}
+                            {f.tracking_number && (
+                              f.tracking_url ? (
+                                <a
+                                  href={f.tracking_url}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="text-primary hover:underline inline-flex items-center gap-1"
+                                >
+                                  {f.tracking_number}
+                                  <ExternalLink className="w-3 h-3" />
+                                </a>
+                              ) : (
+                                <span>{f.tracking_number}</span>
+                              )
+                            )}
+                            {f.status && (
+                              <Badge variant="outline" className={statusColor(f.status)}>
+                                {formatStatus(f.status)}
+                              </Badge>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
                     <div className="border-t mt-4 pt-4 flex justify-end">
                       <p className="text-lg font-semibold">
                         Total: {order.currency} {parseFloat(order.total_price).toFixed(2)}
