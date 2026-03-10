@@ -15,6 +15,13 @@ interface OrderLineItem {
   variant_title: string | null;
 }
 
+interface Fulfillment {
+  tracking_number: string | null;
+  tracking_url: string | null;
+  tracking_company: string | null;
+  status: string | null;
+}
+
 interface Order {
   id: number;
   name: string;
@@ -24,6 +31,7 @@ interface Order {
   total_price: string;
   currency: string;
   line_items: OrderLineItem[];
+  fulfillments: Fulfillment[];
 }
 
 const statusColor = (status: string) => {
