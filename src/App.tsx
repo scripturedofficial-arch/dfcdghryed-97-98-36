@@ -5,6 +5,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { LanguageProvider } from "@/hooks/useLanguage";
+import { useCartSync } from "@/hooks/useCartSync";
 import Index from "./pages/Index";
 import About from "./pages/About";
 import Manifesto from "./pages/Manifesto";
@@ -42,6 +43,10 @@ import ProtectedRoute from "./components/ProtectedRoute";
 
 const queryClient = new QueryClient();
 
+function CartSyncProvider({ children }: { children: React.ReactNode }) {
+  useCartSync();
+  return <>{children}</>;
+}
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -49,6 +54,7 @@ const App = () => (
       <TooltipProvider>
         <Toaster />
         <Sonner />
+        <CartSyncProvider>
         <BrowserRouter>
         
         <Routes>
@@ -88,6 +94,7 @@ const App = () => (
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
+      </CartSyncProvider>
       </TooltipProvider>
     </LanguageProvider>
   </QueryClientProvider>
