@@ -90,6 +90,12 @@ serve(async (req) => {
         price: item.price,
         variant_title: item.variant_title,
       })),
+      fulfillments: (order.fulfillments || []).map((f: any) => ({
+        tracking_number: f.tracking_number || null,
+        tracking_url: f.tracking_url || null,
+        tracking_company: f.tracking_company || null,
+        status: f.status || null,
+      })),
     }));
 
     return new Response(JSON.stringify({ orders }), {
