@@ -5,6 +5,7 @@ import Navigation from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { DashboardSidebar } from "@/components/DashboardSidebar";
+import { DigitalTwins } from "@/components/DigitalTwins";
 import { supabase } from "@/integrations/supabase/client";
 
 const Dashboard = () => {
