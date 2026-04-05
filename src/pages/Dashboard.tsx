@@ -36,7 +36,12 @@ const Dashboard = () => {
   }, []);
 
   const handleContentSelect = (href: string) => {
-    navigate(href);
+    if (href === "/digital-twins") {
+      setInlineView("digital-twins");
+    } else {
+      setInlineView(null);
+      navigate(href);
+    }
   };
 
   return (
