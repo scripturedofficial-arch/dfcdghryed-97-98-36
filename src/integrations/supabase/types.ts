@@ -14,6 +14,48 @@ export type Database = {
   }
   public: {
     Tables: {
+      nft_digital_twins: {
+        Row: {
+          claimed_at: string | null
+          created_at: string
+          id: string
+          metadata: Json | null
+          order_id: string
+          product_image_url: string | null
+          product_title: string
+          status: string
+          token_id: string | null
+          user_id: string
+          variant_title: string | null
+        }
+        Insert: {
+          claimed_at?: string | null
+          created_at?: string
+          id?: string
+          metadata?: Json | null
+          order_id: string
+          product_image_url?: string | null
+          product_title: string
+          status?: string
+          token_id?: string | null
+          user_id: string
+          variant_title?: string | null
+        }
+        Update: {
+          claimed_at?: string | null
+          created_at?: string
+          id?: string
+          metadata?: Json | null
+          order_id?: string
+          product_image_url?: string | null
+          product_title?: string
+          status?: string
+          token_id?: string | null
+          user_id?: string
+          variant_title?: string | null
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           created_at: string

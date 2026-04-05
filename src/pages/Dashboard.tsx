@@ -5,11 +5,13 @@ import Navigation from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { DashboardSidebar } from "@/components/DashboardSidebar";
+import { DigitalTwins } from "@/components/DigitalTwins";
 import { supabase } from "@/integrations/supabase/client";
 
 const Dashboard = () => {
   const navigate = useNavigate();
   const [activeView, setActiveView] = useState<"quick-access" | "my-profile">("quick-access");
+  const [inlineView, setInlineView] = useState<string | null>(null);
   const [userName, setUserName] = useState<string>("Divine Soul");
 
   // Fetch user profile data
@@ -34,7 +36,12 @@ const Dashboard = () => {
   }, []);
 
   const handleContentSelect = (href: string) => {
-    navigate(href);
+    if (href === "/digital-twins") {
+      setInlineView("digital-twins");
+    } else {
+      setInlineView(null);
+      navigate(href);
+    }
   };
 
   return (
@@ -118,11 +125,15 @@ const Dashboard = () => {
                   </p>
                 </div>
 
-                <div className="text-center py-12">
-                  <p className="text-muted-foreground mb-6">
-                    Select an option from the sidebar to continue
-                  </p>
-                </div>
+                {inlineView === "digital-twins" ? (
+                  <DigitalTwins />
+                ) : (
+                  <div className="text-center py-12">
+                    <p className="text-muted-foreground mb-6">
+                      Select an option from the sidebar to continue
+                    </p>
+                  </div>
+                )}
               </div>
             </div>
           </main>

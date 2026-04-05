@@ -1,4 +1,4 @@
-import { History, Settings } from "lucide-react";
+import { History, Settings, Diamond } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -30,6 +30,12 @@ export function DashboardSidebar({ isGodlyCircleMember, activeView, onSelectCont
       subtitle: "View your past orders and purchases",
       icon: History,
       href: "/order-history"
+    },
+    {
+      title: "Digital Twins",
+      subtitle: "View and claim your NFT digital twins",
+      icon: Diamond,
+      href: "/digital-twins"
     }
   ];
 
