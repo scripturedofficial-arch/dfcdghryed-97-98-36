@@ -1,4 +1,4 @@
-import { History, Settings } from "lucide-react";
+import { History, Settings, Diamond } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
