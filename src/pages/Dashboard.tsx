@@ -11,6 +11,7 @@ import { supabase } from "@/integrations/supabase/client";
 const Dashboard = () => {
   const navigate = useNavigate();
   const [activeView, setActiveView] = useState<"quick-access" | "my-profile">("quick-access");
+  const [inlineView, setInlineView] = useState<string | null>(null);
   const [userName, setUserName] = useState<string>("Divine Soul");
 
   // Fetch user profile data
