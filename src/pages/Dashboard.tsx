@@ -125,11 +125,15 @@ const Dashboard = () => {
                   </p>
                 </div>
 
-                <div className="text-center py-12">
-                  <p className="text-muted-foreground mb-6">
-                    Select an option from the sidebar to continue
-                  </p>
-                </div>
+                {inlineView === "digital-twins" ? (
+                  <DigitalTwins />
+                ) : (
+                  <div className="text-center py-12">
+                    <p className="text-muted-foreground mb-6">
+                      Select an option from the sidebar to continue
+                    </p>
+                  </div>
+                )}
               </div>
             </div>
           </main>
