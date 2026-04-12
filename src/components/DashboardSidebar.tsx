@@ -1,54 +1,40 @@
-import { History, Settings, Diamond } from "lucide-react";
+import { History, Diamond } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
   SidebarGroup,
   SidebarGroupContent,
-  SidebarGroupLabel,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
-import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 interface DashboardSidebarProps {
   isGodlyCircleMember: boolean;
-  activeView: "quick-access" | "my-profile";
   onSelectContent: (href: string) => void;
   hasNFTs?: boolean;
 }
 
-export function DashboardSidebar({ isGodlyCircleMember, activeView, onSelectContent, hasNFTs = false }: DashboardSidebarProps) {
+const quickAccessItems = [
+  {
+    title: "Order History",
+    subtitle: "View your past orders and purchases",
+    icon: History,
+    href: "/order-history"
+  },
+  {
+    title: "Digital Twins",
+    subtitle: "View and claim your NFT digital twins",
+    icon: Diamond,
+    href: "/digital-twins"
+  }
+];
+
+export function DashboardSidebar({ isGodlyCircleMember, onSelectContent, hasNFTs = false }: DashboardSidebarProps) {
   const { state } = useSidebar();
   const isMobile = useIsMobile();
-
-  const quickAccessItems = [
-    {
-      title: "Order History",
-      subtitle: "View your past orders and purchases",
-      icon: History,
-      href: "/order-history"
-    },
-    {
-      title: "Digital Twins",
-      subtitle: "View and claim your NFT digital twins",
-      icon: Diamond,
-      href: "/digital-twins"
-    }
-  ];
-
-  const myProfileItems = [
-    {
-      title: "Account Settings",
-      subtitle: "Manage your account and preferences",
-      icon: Settings,
-      href: "/settings"
-    }
-  ];
-
-  const currentItems = activeView === "quick-access" ? quickAccessItems : myProfileItems;
 
   const isCollapsed = state === "collapsed" || isMobile;
 
@@ -61,7 +47,7 @@ export function DashboardSidebar({ isGodlyCircleMember, activeView, onSelectCont
         <SidebarGroup className={`flex-1 overflow-y-auto min-h-0 ${isCollapsed ? "flex flex-col justify-start items-center" : "flex flex-col justify-center"}`}>
           <SidebarGroupContent>
             <SidebarMenu className={`${isCollapsed ? "space-y-6 flex flex-col items-center" : "space-y-4"}`}>
-              {currentItems.map((item) => (
+              {quickAccessItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
                     <button 
