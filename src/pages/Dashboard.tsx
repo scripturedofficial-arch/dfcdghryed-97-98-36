@@ -36,17 +36,20 @@ const Dashboard = () => {
       if (user) {
         const { data: profile } = await supabase
           .from('profiles')
-          .select('first_name, last_name')
+          .select('username, first_name, last_name')
           .eq('id', user.id)
           .maybeSingle();
         if (profile) {
+          if (profile.username) {
+            setUserName(profile.username);
+            return;
+          }
           const name = [profile.first_name, profile.last_name].filter(Boolean).join(' ');
           if (name) {
             setUserName(name);
             return;
           }
         }
-        // Fallback to email username
         const email = user.email;
         if (email) {
           setUserName(email.split('@')[0]);
