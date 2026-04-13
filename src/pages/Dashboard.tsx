@@ -41,7 +41,15 @@ const Dashboard = () => {
           .maybeSingle();
         if (profile) {
           const name = [profile.first_name, profile.last_name].filter(Boolean).join(' ');
-          setUserName(name || profile.first_name || "Divine Soul");
+          if (name) {
+            setUserName(name);
+            return;
+          }
+        }
+        // Fallback to email username
+        const email = user.email;
+        if (email) {
+          setUserName(email.split('@')[0]);
         }
       }
     };
