@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 
 interface ProtectedRouteProps {
@@ -8,38 +8,55 @@ interface ProtectedRouteProps {
 
 const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
-
   const [user, setUser] = useState<any>(null);
+  const [hasUsername, setHasUsername] = useState<boolean | null>(null);
+  const location = useLocation();
 
   useEffect(() => {
-    // Check initial session
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    const checkAuth = async (session: any) => {
       setIsAuthenticated(!!session);
       setUser(session?.user || null);
+
+      if (session?.user) {
+        const { data: profile } = await supabase
+          .from("profiles")
+          .select("username")
+          .eq("id", session.user.id)
+          .maybeSingle();
+
+        setHasUsername(!!profile?.username);
+      } else {
+        setHasUsername(null);
+      }
+    };
+
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      checkAuth(session);
     });
 
-    // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setIsAuthenticated(!!session);
-      setUser(session?.user || null);
+      checkAuth(session);
     });
 
     return () => subscription.unsubscribe();
   }, []);
 
-  // Show nothing while checking authentication
-  if (isAuthenticated === null) {
+  // Show nothing while checking
+  if (isAuthenticated === null || (isAuthenticated && hasUsername === null)) {
     return null;
   }
 
-  // Redirect to signin if not authenticated
   if (!isAuthenticated) {
     return <Navigate to="/signin" replace />;
   }
 
-  // Redirect to verify email if email not confirmed
   if (user && !user.email_confirmed_at) {
     return <Navigate to="/verify-email" replace />;
+  }
+
+  // Redirect to username setup if no username (avoid loop on setup page)
+  if (!hasUsername && location.pathname !== "/setup-username") {
+    return <Navigate to="/setup-username" replace />;
   }
 
   return <>{children}</>;
