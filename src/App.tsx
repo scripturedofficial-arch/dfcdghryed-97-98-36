@@ -39,6 +39,7 @@ import FAQ from "./pages/FAQ";
 import MadeToOrder from "./pages/MadeToOrder";
 import OrderHistory from "./pages/OrderHistory";
 import NotFound from "./pages/NotFound";
+import SetupUsername from "./pages/SetupUsername";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 const queryClient = new QueryClient();
@@ -83,6 +84,7 @@ const App = () => (
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/terms-of-service" element={<TermsOfService />} />
           <Route path="/shipping-returns" element={<ShippingReturns />} />
+          <Route path="/setup-username" element={<ProtectedRoute><SetupUsername /></ProtectedRoute>} />
           <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
           <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
           <Route path="/payment-methods" element={<ProtectedRoute><PaymentMethods /></ProtectedRoute>} />
