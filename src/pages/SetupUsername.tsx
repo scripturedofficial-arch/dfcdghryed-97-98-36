@@ -95,7 +95,7 @@ const SetupUsername = () => {
       }
     }
 
-    const updateData: Record<string, string> = { id: user.id, username };
+    const updateData: { id: string; username: string; avatar_url?: string } = { id: user.id, username };
     if (avatarUrl) updateData.avatar_url = avatarUrl;
 
     const { error } = await supabase
