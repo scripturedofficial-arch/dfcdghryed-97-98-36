@@ -17,6 +17,7 @@ import { PrivacySettings } from "@/components/PrivacySettings";
 const Settings = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
+  const avatarInputRef = useRef<HTMLInputElement>(null);
   const [activeTab, setActiveTab] = useState("profile");
   const [notifications, setNotifications] = useState({
     newDrops: true,
@@ -27,13 +28,126 @@ const Settings = () => {
     smsNotifications: false
   });
   const [profile, setProfile] = useState({
-    firstName: "Divine",
-    lastName: "Soul",
-    email: "divine.soul@example.com",
-    phone: "+27 123 456 789",
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
     language: "en",
     currency: "ZAR"
   });
+  const [username, setUsername] = useState("");
+  const [originalUsername, setOriginalUsername] = useState("");
+  const [usernameChecking, setUsernameChecking] = useState(false);
+  const [usernameAvailable, setUsernameAvailable] = useState<boolean | null>(null);
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
+  const [avatarUploading, setAvatarUploading] = useState(false);
+  const [profileLoading, setProfileLoading] = useState(true);
+  const [profileSaving, setProfileSaving] = useState(false);
+
+  // Load profile on mount
+  useEffect(() => {
+    const loadProfile = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+      const { data: p } = await supabase
+        .from("profiles")
+        .select("first_name, last_name, username, avatar_url")
+        .eq("id", user.id)
+        .maybeSingle();
+      if (p) {
+        setProfile(prev => ({ ...prev, firstName: p.first_name || "", lastName: p.last_name || "", email: user.email || "" }));
+        setUsername(p.username || "");
+        setOriginalUsername(p.username || "");
+        setAvatarUrl(p.avatar_url || null);
+      }
+      setProfileLoading(false);
+    };
+    loadProfile();
+  }, []);
+
+  // Debounced username availability check
+  useEffect(() => {
+    if (!username || username.length < 3 || username === originalUsername) {
+      setUsernameAvailable(null);
+      return;
+    }
+    const timer = setTimeout(async () => {
+      setUsernameChecking(true);
+      const { data } = await supabase
+        .from("profiles")
+        .select("id")
+        .ilike("username", username)
+        .maybeSingle();
+      setUsernameAvailable(!data);
+      setUsernameChecking(false);
+    }, 400);
+    return () => clearTimeout(timer);
+  }, [username, originalUsername]);
+
+  const handleAvatarUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (!file.type.startsWith("image/") || file.size > 2 * 1024 * 1024) {
+      toast({ title: "Invalid file", description: "Please select an image under 2MB.", variant: "destructive" });
+      return;
+    }
+    setAvatarUploading(true);
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return;
+    const ext = file.name.split(".").pop();
+    const filePath = `${user.id}/avatar.${ext}`;
+    const { error } = await supabase.storage.from("avatars").upload(filePath, file, { upsert: true });
+    if (error) {
+      toast({ title: "Upload failed", description: error.message, variant: "destructive" });
+      setAvatarUploading(false);
+      return;
+    }
+    const { data: urlData } = supabase.storage.from("avatars").getPublicUrl(filePath);
+    const newUrl = `${urlData.publicUrl}?t=${Date.now()}`;
+    await supabase.from("profiles").update({ avatar_url: urlData.publicUrl }).eq("id", user.id);
+    setAvatarUrl(newUrl);
+    setAvatarUploading(false);
+    toast({ title: "Avatar updated" });
+  };
+
+  const handleSaveProfile = async () => {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return;
+
+    // Validate username if changed
+    if (username !== originalUsername) {
+      if (username.length < 3 || !/^[a-zA-Z0-9_-]+$/.test(username)) {
+        toast({ title: "Invalid username", description: "Min 3 chars, letters/numbers/underscores/hyphens only.", variant: "destructive" });
+        return;
+      }
+      if (!usernameAvailable) {
+        toast({ title: "Username unavailable", variant: "destructive" });
+        return;
+      }
+    }
+
+    setProfileSaving(true);
+    const updateData: Record<string, string | null> = {
+      first_name: profile.firstName || null,
+      last_name: profile.lastName || null,
+    };
+    if (username !== originalUsername) updateData.username = username;
+
+    const { error } = await supabase.from("profiles").update(updateData).eq("id", user.id);
+    if (error) {
+      if (error.code === "23505") {
+        setUsernameAvailable(false);
+        toast({ title: "Username taken", variant: "destructive" });
+      } else {
+        toast({ title: "Error", description: "Failed to save profile.", variant: "destructive" });
+      }
+      setProfileSaving(false);
+      return;
+    }
+    setOriginalUsername(username);
+    toast({ title: "Profile saved" });
+    setProfileSaving(false);
+  };
   const [passwordData, setPasswordData] = useState({
     currentPassword: "",
     newPassword: "",
@@ -265,10 +379,59 @@ const Settings = () => {
                   Profile Information
                 </CardTitle>
                 <CardDescription>
-                  Update your personal information and contact details.
+                  Update your personal information, username, and avatar.
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
+                {/* Avatar */}
+                <div className="flex items-center gap-4">
+                  <button type="button" onClick={() => avatarInputRef.current?.click()} className="relative group" disabled={avatarUploading}>
+                    <Avatar className="h-20 w-20 border-2 border-border">
+                      {avatarUrl ? (
+                        <AvatarImage src={avatarUrl} alt="Avatar" />
+                      ) : (
+                        <AvatarFallback className="bg-muted"><User className="h-8 w-8 text-muted-foreground" /></AvatarFallback>
+                      )}
+                    </Avatar>
+                    <div className="absolute inset-0 flex items-center justify-center bg-black/40 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+                      {avatarUploading ? <Loader2 className="h-5 w-5 text-white animate-spin" /> : <Camera className="h-5 w-5 text-white" />}
+                    </div>
+                  </button>
+                  <input ref={avatarInputRef} type="file" accept="image/*" onChange={handleAvatarUpload} className="hidden" />
+                  <div>
+                    <p className="text-sm font-medium text-foreground">Profile Picture</p>
+                    <p className="text-xs text-muted-foreground">Click to change · Max 2MB</p>
+                  </div>
+                </div>
+
+                {/* Username */}
+                <div className="space-y-2">
+                  <Label htmlFor="settings-username">Username</Label>
+                  <div className="relative">
+                    <Input
+                      id="settings-username"
+                      value={username}
+                      onChange={(e) => setUsername(e.target.value.toLowerCase().replace(/\s/g, ""))}
+                      maxLength={30}
+                      className="pr-10"
+                    />
+                    {username.length >= 3 && username !== originalUsername && (
+                      <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                        {usernameChecking ? (
+                          <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
+                        ) : usernameAvailable ? (
+                          <Check className="h-4 w-4 text-green-500" />
+                        ) : usernameAvailable === false ? (
+                          <X className="h-4 w-4 text-destructive" />
+                        ) : null}
+                      </div>
+                    )}
+                  </div>
+                  {username !== originalUsername && username.length >= 3 && !usernameChecking && usernameAvailable === false && (
+                    <p className="text-xs text-destructive">This username is already taken</p>
+                  )}
+                </div>
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <Label htmlFor="firstName">First Name</Label>
@@ -282,15 +445,14 @@ const Settings = () => {
 
                 <div>
                   <Label htmlFor="email">Email Address</Label>
-                  <Input id="email" type="email" value={profile.email} onChange={e => handleProfileChange("email", e.target.value)} />
+                  <Input id="email" type="email" value={profile.email} disabled className="bg-muted" />
+                  <p className="text-xs text-muted-foreground mt-1">Email cannot be changed here</p>
                 </div>
 
-                <div>
-                  <Label htmlFor="phone">Phone Number</Label>
-                  <Input id="phone" value={profile.phone} onChange={e => handleProfileChange("phone", e.target.value)} />
-                </div>
-
-                <Button>Save Changes</Button>
+                <Button onClick={handleSaveProfile} disabled={profileSaving}>
+                  {profileSaving ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
+                  Save Changes
+                </Button>
               </CardContent>
             </Card>
           </TabsContent>
