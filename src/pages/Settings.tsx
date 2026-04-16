@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { ArrowLeft, User, Mail, Bell, Shield, CreditCard, Palette, Globe, Download, Eye, EyeOff, Copy, RefreshCw } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
+import { ArrowLeft, User, Mail, Bell, Shield, CreditCard, Palette, Globe, Download, Eye, EyeOff, Copy, RefreshCw, Camera, Check, X, Loader2 } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -11,6 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { useToast } from "@/hooks/use-toast";
 import { PrivacySettings } from "@/components/PrivacySettings";
 const Settings = () => {
