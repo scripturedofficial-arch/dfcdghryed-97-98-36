@@ -95,13 +95,12 @@ const SetupUsername = () => {
       }
     }
 
-    const updateData: Record<string, string> = { username };
+    const updateData: { id: string; username: string; avatar_url?: string } = { id: user.id, username };
     if (avatarUrl) updateData.avatar_url = avatarUrl;
 
     const { error } = await supabase
       .from("profiles")
-      .update(updateData)
-      .eq("id", user.id);
+      .upsert(updateData, { onConflict: "id" });
 
     if (error) {
       if (error.code === "23505") {
