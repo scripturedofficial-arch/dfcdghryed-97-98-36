@@ -170,7 +170,7 @@ const SetupUsername = () => {
 
           {/* Username input */}
           <div className="space-y-2">
-            <Label htmlFor="username">Username</Label>
+            <Label htmlFor="username">Username <span className="text-destructive">*</span></Label>
             <div className="relative">
               <Input
                 id="username"
