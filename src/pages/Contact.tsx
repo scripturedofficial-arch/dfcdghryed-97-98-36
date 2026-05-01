@@ -125,8 +125,8 @@ const Contact = () => {
           </div>
 
           {/* Contact Form */}
-          <div>
-            <div className="bg-card p-8 rounded-lg -mt-8">
+          <div id="message">
+            <div className="bg-card p-8 rounded-lg -mt-8 scroll-mt-24">
               <div className="flex items-center mb-6">
                 <MessageSquare className="w-6 h-6 text-primary mr-3" />
                 <h2 className="font-serif text-2xl font-bold text-foreground">Send us a Message</h2>
