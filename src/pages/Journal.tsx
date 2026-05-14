@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import heroGenesis from "@/assets/hero-genesis.jpg";
 import heroFaith from "@/assets/hero-faith.jpg";
 import heroWisdom from "@/assets/hero-wisdom.jpg";
+import SEO from "@/components/SEO";
 const Journal = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -62,6 +63,11 @@ const Journal = () => {
     }
   };
   return <div className="min-h-screen bg-white text-black">
+      <SEO
+        title="The Scriptured Journal — Scripture, Design & Story"
+        description="Essays from Scriptured exploring scripture, design philosophy and the stories behind each drop in 36Five and The 12."
+        path="/journal"
+      />
       <Navigation />
       
       {/* Back Button for Category Views */}

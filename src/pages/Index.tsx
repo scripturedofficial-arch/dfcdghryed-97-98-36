@@ -5,6 +5,7 @@ import Hero from "@/components/Hero";
 import FeaturedProducts from "@/components/FeaturedProducts";
 import Mission from "@/components/Mission";
 import Footer from "@/components/Footer";
+import SEO from "@/components/SEO";
 const Index = () => {
   const [scrollY, setScrollY] = useState(0);
   const [activeButton, setActiveButton] = useState<"36Five" | "The12">("36Five");

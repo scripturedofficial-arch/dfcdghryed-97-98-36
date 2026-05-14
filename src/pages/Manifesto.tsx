@@ -1,10 +1,16 @@
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Link } from "react-router-dom";
+import SEO from "@/components/SEO";
 
 const Manifesto = () => {
   return (
     <div className="min-h-screen bg-white text-black">
+      <SEO
+        title="Manifesto — What Scriptured Stands For"
+        description="The Scriptured manifesto: faith, craft and purpose behind every piece across the 36Five and The 12 collections."
+        path="/manifesto"
+      />
       <Navigation />
       
       {/* Hero Section */}

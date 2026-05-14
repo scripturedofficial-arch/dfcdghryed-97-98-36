@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import SEO from "@/components/SEO";
 
 const MadeToOrder = () => {
   useEffect(() => {
@@ -12,6 +13,11 @@ const MadeToOrder = () => {
   }, []);
   return (
     <div className="min-h-screen bg-background">
+      <SEO
+        title="Made-to-Order — Crafted on Demand | Scriptured"
+        description="Scriptured's made-to-order program: each piece crafted after you order to reduce waste and guarantee fit."
+        path="/made-to-order"
+      />
       <Navigation />
       
       {/* Header */}

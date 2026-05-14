@@ -7,6 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { useState } from "react";
 import TikTokIcon from "@/assets/tiktok.svg";
+import SEO from "@/components/SEO";
 const Contact = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -26,6 +27,11 @@ const Contact = () => {
     });
   };
   return <div className="min-h-screen bg-background">
+      <SEO
+        title="Contact Scriptured — Get in Touch"
+        description="Questions about an order, a drop, or a partnership? Reach the Scriptured team by email, phone, or our contact form."
+        path="/contact"
+      />
       {/* Header */}
       <div className="bg-black text-white py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

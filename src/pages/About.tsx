@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import SEO from "@/components/SEO";
 
 const About = () => {
   useEffect(() => {
@@ -26,6 +27,11 @@ const About = () => {
     };
   }, []);
   return <div className="min-h-screen bg-white text-black">
+      <SEO
+        title="About Scriptured — Faith, Design & Purpose"
+        description="Scriptured is a faith-rooted clothing house behind the 36Five and The 12 lines. Discover our story, mission and values."
+        path="/about"
+      />
       <Navigation />
       
       {/* Hero Section */}

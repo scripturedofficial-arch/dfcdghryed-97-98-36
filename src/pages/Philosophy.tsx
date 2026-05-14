@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import heroGenesis from "@/assets/hero-genesis.jpg";
 import heroFaith from "@/assets/hero-faith.jpg";
 import heroWisdom from "@/assets/hero-wisdom.jpg";
+import SEO from "@/components/SEO";
 
 const Philosophy = () => {
   const navigate = useNavigate();
@@ -123,6 +124,11 @@ const Philosophy = () => {
 
   return (
     <div className="min-h-screen bg-white text-black">
+      <SEO
+        title="Philosophy — Scriptured's Design Foundations"
+        description="Scriptured's design philosophy: how scripture, craft and intention shape every piece in the 36Five and The 12 lines."
+        path="/philosophy"
+      />
       <Navigation />
       
       {/* Hero Section */}

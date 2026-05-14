@@ -4,6 +4,7 @@ import Hero from "@/components/Hero";
 import FeaturedProducts from "@/components/FeaturedProducts";
 import Mission from "@/components/Mission";
 import Footer from "@/components/Footer";
+import SEO from "@/components/SEO";
 import { useScrollPosition } from "@/hooks/useScrollPosition";
 
 const ThirtySixFive = () => {
