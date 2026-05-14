@@ -48,6 +48,11 @@ const ThirtySixFive = () => {
 
   return (
     <div className="min-h-screen bg-white text-black">
+      <SEO
+        title="36Five — Everyday Scripture Streetwear | Scriptured"
+        description="36Five is Scriptured's everyday clothing line: scripture-inspired essentials in limited drops, designed for daily wear."
+        path="/36five"
+      />
       <Navigation />
       <Hero scrollY={scrollY} activeButton={activeButton} setActiveButton={setActiveButton} currentQuote={currentQuote} setCurrentQuote={setCurrentQuote} />
       <FeaturedProducts activeButton={activeButton} setActiveButton={setActiveButton} currentQuote={currentQuote} />

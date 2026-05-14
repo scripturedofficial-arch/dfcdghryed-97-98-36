@@ -41,6 +41,11 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-white text-black">
+      <SEO
+        title="Scriptured — Divine by Design"
+        description="Scripture-inspired streetwear where ancient wisdom meets modern design. Limited drops with 70% of profits donated."
+        path="/"
+      />
       <Navigation />
       <Hero scrollY={scrollY} activeButton={activeButton} setActiveButton={setActiveButton} currentQuote={currentQuote} setCurrentQuote={setCurrentQuote} />
       <FeaturedProducts activeButton={activeButton} setActiveButton={setActiveButton} currentQuote={currentQuote} />
