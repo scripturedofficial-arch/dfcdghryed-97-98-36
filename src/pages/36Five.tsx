@@ -4,6 +4,7 @@ import Hero from "@/components/Hero";
 import FeaturedProducts from "@/components/FeaturedProducts";
 import Mission from "@/components/Mission";
 import Footer from "@/components/Footer";
+import SEO from "@/components/SEO";
 import { useScrollPosition } from "@/hooks/useScrollPosition";
 
 const ThirtySixFive = () => {
@@ -47,6 +48,11 @@ const ThirtySixFive = () => {
 
   return (
     <div className="min-h-screen bg-white text-black">
+      <SEO
+        title="36Five — Everyday Scripture Streetwear | Scriptured"
+        description="36Five is Scriptured's everyday clothing line: scripture-inspired essentials in limited drops, designed for daily wear."
+        path="/36five"
+      />
       <Navigation />
       <Hero scrollY={scrollY} activeButton={activeButton} setActiveButton={setActiveButton} currentQuote={currentQuote} setCurrentQuote={setCurrentQuote} />
       <FeaturedProducts activeButton={activeButton} setActiveButton={setActiveButton} currentQuote={currentQuote} />

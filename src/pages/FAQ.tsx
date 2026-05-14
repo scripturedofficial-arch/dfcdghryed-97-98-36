@@ -2,6 +2,7 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import { useState } from "react";
+import SEO from "@/components/SEO";
 
 const FAQ = () => {
   const [openItems, setOpenItems] = useState<number[]>([]);
@@ -112,6 +113,11 @@ const FAQ = () => {
 
   return (
     <div className="min-h-screen bg-white text-black">
+      <SEO
+        title="FAQ — Orders, Sizing & Drops | Scriptured"
+        description="Answers to common questions about Scriptured drops, sizing, shipping, returns and the 36Five and The 12 collections."
+        path="/faq"
+      />
       <Navigation />
       
       {/* Hero Section */}

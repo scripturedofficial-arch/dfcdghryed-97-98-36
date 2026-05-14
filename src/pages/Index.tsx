@@ -5,6 +5,7 @@ import Hero from "@/components/Hero";
 import FeaturedProducts from "@/components/FeaturedProducts";
 import Mission from "@/components/Mission";
 import Footer from "@/components/Footer";
+import SEO from "@/components/SEO";
 const Index = () => {
   const [scrollY, setScrollY] = useState(0);
   const [activeButton, setActiveButton] = useState<"36Five" | "The12">("36Five");
@@ -40,6 +41,11 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-white text-black">
+      <SEO
+        title="Scriptured — Divine by Design"
+        description="Scripture-inspired streetwear where ancient wisdom meets modern design. Limited drops with 70% of profits donated."
+        path="/"
+      />
       <Navigation />
       <Hero scrollY={scrollY} activeButton={activeButton} setActiveButton={setActiveButton} currentQuote={currentQuote} setCurrentQuote={setCurrentQuote} />
       <FeaturedProducts activeButton={activeButton} setActiveButton={setActiveButton} currentQuote={currentQuote} />

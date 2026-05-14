@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import heroGenesis from "@/assets/hero-genesis.jpg";
 import heroFaith from "@/assets/hero-faith.jpg";
 import heroWisdom from "@/assets/hero-wisdom.jpg";
+import SEO from "@/components/SEO";
 
 const Religion = () => {
   const navigate = useNavigate();
@@ -105,6 +106,11 @@ const Religion = () => {
 
   return (
     <div className="min-h-screen bg-white text-black">
+      <SEO
+        title="Religion — Scripture at the Heart of Scriptured"
+        description="How scripture and faith shape Scriptured: the texts, themes and convictions behind every drop in 36Five and The 12."
+        path="/religion"
+      />
       <Navigation />
       
       {/* Hero Section */}

@@ -7,6 +7,7 @@ import { storefrontApiRequest, STOREFRONT_QUERY, ShopifyProduct } from "@/lib/sh
 import { useCartStore } from "@/stores/cartStore";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
+import SEO from "@/components/SEO";
 
 const Shop = () => {
   const navigate = useNavigate();
@@ -58,6 +59,11 @@ const Shop = () => {
 
   return (
     <div className="min-h-screen bg-white text-black">
+      <SEO
+        title="Shop 36Five — Scripture-Inspired Streetwear | Scriptured"
+        description="Browse the 36Five collection by Scriptured: limited-drop, scripture-inspired streetwear. New pieces with each release."
+        path="/shop"
+      />
       <Navigation />
       
       <section className="relative h-[40vh] flex items-center justify-center overflow-hidden bg-gradient-to-b from-background to-secondary/10 mt-16">
