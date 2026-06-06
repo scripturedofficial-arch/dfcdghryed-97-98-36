@@ -104,9 +104,6 @@ const Navigation = () => {
     name: "36Five",
     href: "/shop"
   }, {
-    name: "The 12",
-    href: "/the-12"
-  }, {
     name: "Journal",
     href: "/journal"
   }, {
@@ -169,7 +166,7 @@ const Navigation = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <a href="/" className="font-serif text-2xl font-bold glitch-hover ml-[10px] md:ml-[15px] lg:ml-[20px]">
+            <a href="/" className="font-serif text-3xl font-black tracking-widest uppercase glitch-hover ml-[10px] md:ml-[15px] lg:ml-[20px]" style={{ letterSpacing: '0.12em', fontWeight: 900 }}>
               SCRIPTURED
             </a>
           </div>
