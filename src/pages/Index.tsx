@@ -48,7 +48,7 @@ const Index = () => {
       />
       <Navigation />
       <Hero scrollY={scrollY} activeButton={activeButton} setActiveButton={() => {}} currentQuote={currentQuote} setCurrentQuote={setCurrentQuote} />
-      <FeaturedProducts activeButton={activeButton} setActiveButton={setActiveButton} currentQuote={currentQuote} />
+      <FeaturedProducts activeButton={activeButton} setActiveButton={() => {}} currentQuote={currentQuote} />
       <Mission />
       <Footer />
     </div>
