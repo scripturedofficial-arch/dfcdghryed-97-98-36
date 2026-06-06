@@ -1,16 +1,10 @@
 import { useState, useEffect } from "react";
 import { ChevronDown } from "lucide-react";
-import heroInnovation from "../assets/hero-innovation.jpg";
-import heroCourage from "../assets/hero-courage.jpg";
-import heroDreams from "../assets/hero-dreams.jpg";
-import heroGenesis from "../assets/hero-genesis.jpg";
-import heroFaith from "../assets/hero-faith.jpg";
-import heroWisdom from "../assets/hero-wisdom.jpg";
+
 interface QuoteType {
   text: string;
-  verse: string;
+  attribution: string;
   collection: string;
-  background?: string;
 }
 
 interface HeroProps {
@@ -20,51 +14,31 @@ interface HeroProps {
   currentQuote: number;
   setCurrentQuote: (quote: number) => void;
 }
+
 const Hero = ({
   scrollY,
-  activeButton,
-  setActiveButton,
   currentQuote,
   setCurrentQuote
 }: HeroProps) => {
-  
-  const [heroText, setHeroText] = useState({
-    title: "The 12",
-    subtitle: "Divine by Design"
-  });
-  const quotes36Five: QuoteType[] = [{
-    text: "The only way to do great work is to love what you do.",
-    verse: "Steve Jobs",
-    collection: "Innovation Collection",
-    background: "/lovable-uploads/a087188b-d908-4335-8896-90acc637b974.png"
-  }, {
-    text: "Success is not final, failure is not fatal: it is the courage to continue that counts.",
-    verse: "Winston Churchill",
-    collection: "Courage Series",
-    background: heroCourage
-  }, {
-    text: "The future belongs to those who believe in the beauty of their dreams.",
-    verse: "Eleanor Roosevelt",
-    collection: "Dreams Line",
-    background: heroDreams
-  }];
-  const quotesThe12: QuoteType[] = [{
-    text: "In the beginning was the Word, and the Word was with God, and the Word was God.",
-    verse: "John 1:1",
-    collection: "Genesis Collection",
-    background: heroGenesis
-  }, {
-    text: "Now faith is the substance of things hoped for, the evidence of things not seen.",
-    verse: "Hebrews 11:1",
-    collection: "Faith Series",
-    background: heroFaith
-  }, {
-    text: "The fear of the Lord is the beginning of wisdom, and knowledge of the Holy One is understanding.",
-    verse: "Proverbs 9:10",
-    collection: "Wisdom Line",
-    background: heroWisdom
-  }];
-  const quotes = activeButton === "36Five" ? quotes36Five : quotesThe12;
+
+  const quotes: QuoteType[] = [
+    {
+      text: "We don't make clothes. We write them.",
+      attribution: "Scriptured",
+      collection: "36Five"
+    },
+    {
+      text: "365 days. Every one written. Which page are you on?",
+      attribution: "36Five",
+      collection: "The philosophical line"
+    },
+    {
+      text: "Every garment is a verse. Every collection, a chapter.",
+      attribution: "Scriptured",
+      collection: "36Five"
+    }
+  ];
+
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentQuote((currentQuote + 1) % quotes.length);
@@ -72,88 +46,74 @@ const Hero = ({
     return () => clearInterval(interval);
   }, [quotes.length, currentQuote, setCurrentQuote]);
 
-  // Reset to first quote when switching between collections
-  useEffect(() => {
-    setCurrentQuote(0);
-  }, [activeButton, setCurrentQuote]);
-  const handle36FiveClick = () => {
-    setActiveButton("36Five");
-    setHeroText({
-      title: "36Five",
-      subtitle: "Divine by Design"
-    });
-  };
-  const handleThe12Click = () => {
-    setActiveButton("The12");
-    setHeroText({
-      title: "The 12",
-      subtitle: "Godly"
-    });
-  };
-  return <section className="relative h-screen flex flex-col justify-center items-center overflow-hidden">
-      {/* Parallax Background */}
-      <div 
-        className="absolute inset-0 parallax hero-background transition-all duration-1000 ease-in-out"
+  return (
+    <section className="relative h-screen flex flex-col justify-center items-center overflow-hidden bg-black">
+      {/* Subtle dark overlay — no stock images */}
+      <div
+        className="absolute inset-0"
         style={{
           transform: `translateY(${scrollY * 0.3}px)`,
-          backgroundImage: quotes[currentQuote].background 
-            ? `linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(${quotes[currentQuote].background})`
-            : 'linear-gradient(135deg, hsl(var(--background)), hsl(var(--accent) / 0.1))',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat'
+          background: 'radial-gradient(ellipse at center, #1a1a1a 0%, #000000 100%)',
         }}
       />
-      
+
       {/* Content */}
-      <div className="relative z-10 max-w-6xl mx-auto px-4 text-center">
-        {/* Brand Header */}
-        <div className="fade-in-scroll">
-          <h1 className={`font-serif text-6xl md:text-8xl font-bold mb-2 glitch-hover ${
-            quotes[currentQuote].background ? 'text-white' : ''
-          }`}>
-            {activeButton === "36Five" ? "36Five" : "The 12"}
-          </h1>
-          <p className={`text-xl md:text-2xl font-light tracking-wide mb-8 ${
-            quotes[currentQuote].background ? 'text-white' : ''
-          }`}>
-            "{activeButton === "36Five" ? "Divine by Design" : "Godly"}"
+      <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
+
+        {/* Brand line */}
+        <div className="fade-in-scroll mb-12">
+          <p className="text-xs tracking-[0.3em] uppercase text-[#C8A96E] mb-6 font-medium">
+            36Five · The Philosophical Line
           </p>
         </div>
 
-        {/* Rotating Scripture */}
-        <div className="flex flex-col justify-center fade-in-scroll">
-          <blockquote className={`scripture-text max-w-4xl mx-auto transition-all duration-1000 ease-in-out ${
-            quotes[currentQuote].background ? 'text-white' : ''
-          }`}>
+        {/* Rotating quote */}
+        <div className="fade-in-scroll">
+          <blockquote
+            className="font-serif text-3xl md:text-5xl font-bold text-white leading-tight mb-6 transition-all duration-1000 ease-in-out"
+            style={{ letterSpacing: '0.02em' }}
+          >
             "{quotes[currentQuote].text}"
           </blockquote>
-          <cite className={`text-lg font-medium mt-4 ${
-            quotes[currentQuote].background ? 'text-white' : ''
-          }`}>
-            — {quotes[currentQuote].verse}
+          <div className="w-12 h-px bg-[#C8A96E] mx-auto mb-6" />
+          <cite className="text-sm tracking-[0.2em] uppercase text-[#C8A96E] not-italic font-medium">
+            {quotes[currentQuote].attribution}
           </cite>
-          <p className="text-sm mt-2 text-white/80">
-            From the {quotes[currentQuote].collection}
+          <p className="text-xs tracking-[0.15em] uppercase text-white/30 mt-2">
+            {quotes[currentQuote].collection}
           </p>
+        </div>
+
+        {/* CTA */}
+        <div className="mt-16 fade-in-scroll">
+          <a
+            href="/shop"
+            className="inline-block border border-white/30 text-white text-xs tracking-[0.25em] uppercase px-10 py-4 hover:bg-white hover:text-black transition-all duration-300 font-medium"
+          >
+            Explore 36Five
+          </a>
         </div>
       </div>
 
       {/* Scroll Indicator */}
       <div className="absolute bottom-16 left-1/2 transform -translate-x-1/2 animate-bounce">
-        <ChevronDown className="w-6 h-6 text-white/60" />
+        <ChevronDown className="w-5 h-5 text-white/30" />
       </div>
 
       {/* Quote Indicators */}
       <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-2">
         {quotes.map((_, index) => (
-          <button 
-            key={index} 
-            onClick={() => setCurrentQuote(index)} 
-            className={`w-2 h-2 rounded-full transition-all duration-300 cursor-pointer hover:scale-110 ${index === currentQuote ? 'bg-white' : 'bg-white/40'}`} 
+          <button
+            key={index}
+            onClick={() => setCurrentQuote(index)}
+            className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${
+              index === currentQuote ? 'bg-[#C8A96E]' : 'bg-white/20'
+            }`}
           />
         ))}
       </div>
-    </section>;
+    </section>
+  );
 };
+
 export default Hero;

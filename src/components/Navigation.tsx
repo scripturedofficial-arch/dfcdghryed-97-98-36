@@ -166,7 +166,7 @@ const Navigation = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <a href="/" className="font-serif text-3xl font-black tracking-widest uppercase glitch-hover ml-[10px] md:ml-[15px] lg:ml-[20px]" style={{ letterSpacing: '0.12em', fontWeight: 900 }}>
+            <a href="/" className="font-serif text-lg md:text-3xl font-black uppercase glitch-hover ml-[10px] md:ml-[15px] lg:ml-[20px]" style={{ letterSpacing: '0.08em', fontWeight: 900 }}>
               SCRIPTURED
             </a>
           </div>
