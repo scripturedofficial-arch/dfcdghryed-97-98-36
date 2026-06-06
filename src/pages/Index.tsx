@@ -8,7 +8,7 @@ import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
 const Index = () => {
   const [scrollY, setScrollY] = useState(0);
-  const [activeButton, setActiveButton] = useState<"36Five" | "The12">("36Five");
+  const [activeButton] = useState<"36Five" | "The12">("36Five");
   const [currentQuote, setCurrentQuote] = useState(0);
 
   useEffect(() => {
@@ -47,8 +47,8 @@ const Index = () => {
         path="/"
       />
       <Navigation />
-      <Hero scrollY={scrollY} activeButton={activeButton} setActiveButton={setActiveButton} currentQuote={currentQuote} setCurrentQuote={setCurrentQuote} />
-      <FeaturedProducts activeButton={activeButton} setActiveButton={setActiveButton} currentQuote={currentQuote} />
+      <Hero scrollY={scrollY} activeButton={activeButton} setActiveButton={() => {}} currentQuote={currentQuote} setCurrentQuote={setCurrentQuote} />
+      <FeaturedProducts activeButton={activeButton} setActiveButton={() => {}} currentQuote={currentQuote} />
       <Mission />
       <Footer />
     </div>
