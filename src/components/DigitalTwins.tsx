@@ -1,10 +1,7 @@
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Diamond, Sparkles } from "lucide-react";
+import { Diamond } from "lucide-react";
 import { toast } from "sonner";
 
 interface DigitalTwin {
@@ -60,59 +57,66 @@ export function DigitalTwins() {
             : t
         )
       );
-      toast.success("Digital Twin claimed!", {
-        description: `${twin.product_title} has been claimed successfully.`,
+      toast.success("The covenant is sealed.", {
+        description: `${twin.product_title} has been claimed.`,
       });
     } catch (err) {
       console.error("Claim error:", err);
-      toast.error("Failed to claim digital twin");
+      toast.error("Claim failed. Try again.");
     } finally {
       setClaimingId(null);
     }
   };
 
   const statusBadge = (status: string) => {
+    const base = "text-xs tracking-[0.12em] uppercase px-3 py-1 font-medium";
     switch (status) {
       case "claimable":
         return (
-          <Badge className="bg-amber-500/20 text-amber-400 border-amber-500/30 hover:bg-amber-500/30">
+          <span className={base} style={{ color: '#C8A96E', backgroundColor: 'rgba(200,169,110,0.1)', border: '0.5px solid rgba(200,169,110,0.3)', borderRadius: '2px' }}>
             Claimable
-          </Badge>
+          </span>
         );
       case "claimed":
         return (
-          <Badge className="bg-emerald-500/20 text-emerald-400 border-emerald-500/30 hover:bg-emerald-500/30">
+          <span className={base} style={{ color: '#6aaa88', backgroundColor: 'rgba(106,170,136,0.1)', border: '0.5px solid rgba(106,170,136,0.3)', borderRadius: '2px' }}>
             Claimed
-          </Badge>
+          </span>
         );
       case "pending":
         return (
-          <Badge className="bg-muted text-muted-foreground border-border hover:bg-muted">
+          <span className={base} style={{ color: '#555', backgroundColor: '#111', border: '0.5px solid #222', borderRadius: '2px' }}>
             Pending
-          </Badge>
+          </span>
         );
       default:
-        return <Badge variant="outline">{status}</Badge>;
+        return (
+          <span className={base} style={{ color: '#555', border: '0.5px solid #222', borderRadius: '2px' }}>
+            {status}
+          </span>
+        );
     }
   };
 
   if (loading) {
     return (
-      <div className="space-y-6">
+      <div className="space-y-8">
         <div>
-          <h2 className="text-3xl font-serif mb-2 text-foreground">Digital Twins</h2>
-          <p className="text-muted-foreground">Your NFT digital twins from purchased products</p>
+          <h2 className="font-serif text-2xl text-white mb-1">Digital Twins</h2>
+          <p className="text-xs tracking-[0.15em] uppercase" style={{ color: '#555' }}>
+            Your authenticated digital records
+          </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {[1, 2, 3].map((i) => (
-            <Card key={i} className="overflow-hidden">
-              <Skeleton className="h-48 w-full" />
-              <CardContent className="p-4 space-y-3">
-                <Skeleton className="h-5 w-3/4" />
-                <Skeleton className="h-4 w-1/2" />
-                <Skeleton className="h-9 w-full" />
-              </CardContent>
-            </Card>
+            <div key={i} style={{ backgroundColor: '#111', border: '0.5px solid #1a1a1a', borderRadius: '4px', overflow: 'hidden' }}>
+              <Skeleton className="h-48 w-full" style={{ backgroundColor: '#1a1a1a' }} />
+              <div className="p-4 space-y-3">
+                <Skeleton className="h-4 w-3/4" style={{ backgroundColor: '#1a1a1a' }} />
+                <Skeleton className="h-3 w-1/2" style={{ backgroundColor: '#1a1a1a' }} />
+                <Skeleton className="h-8 w-full" style={{ backgroundColor: '#1a1a1a' }} />
+              </div>
+            </div>
           ))}
         </div>
       </div>
@@ -120,70 +124,91 @@ export function DigitalTwins() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       <div>
-        <h2 className="text-3xl font-serif mb-2 text-foreground">Digital Twins</h2>
-        <p className="text-muted-foreground">Your NFT digital twins from purchased products</p>
+        <h2 className="font-serif text-2xl text-white mb-1">Digital Twins</h2>
+        <p className="text-xs tracking-[0.15em] uppercase" style={{ color: '#555' }}>
+          Your authenticated digital records
+        </p>
       </div>
 
       {twins.length === 0 ? (
-        <div className="text-center py-16 space-y-4">
-          <Diamond className="h-12 w-12 mx-auto text-muted-foreground/50" />
-          <p className="text-muted-foreground">No digital twins available yet</p>
-          <p className="text-sm text-muted-foreground/70">
-            Purchase a product to receive its NFT digital twin
+        <div className="flex flex-col items-center justify-center py-24 text-center">
+          <Diamond className="h-8 w-8 mb-6" style={{ color: '#1a1a1a' }} />
+          <p className="font-serif text-lg text-white mb-3">The covenant awaits.</p>
+          <div className="w-6 h-px mb-4" style={{ backgroundColor: '#C8A96E' }} />
+          <p className="text-xs tracking-[0.15em] uppercase" style={{ color: '#333' }}>
+            Acquire a Collection Box to receive your digital twin
           </p>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {twins.map((twin) => (
-            <Card key={twin.id} className="overflow-hidden group hover:shadow-lg transition-shadow">
-              <div className="relative h-48 bg-muted flex items-center justify-center overflow-hidden">
+            <div
+              key={twin.id}
+              style={{
+                backgroundColor: '#111',
+                border: '0.5px solid #1a1a1a',
+                borderRadius: '4px',
+                overflow: 'hidden',
+                transition: 'border-color 0.2s'
+              }}
+              onMouseEnter={e => ((e.currentTarget as HTMLDivElement).style.borderColor = '#2a2a2a')}
+              onMouseLeave={e => ((e.currentTarget as HTMLDivElement).style.borderColor = '#1a1a1a')}
+            >
+              <div className="relative h-48 flex items-center justify-center overflow-hidden" style={{ backgroundColor: '#0a0a0a' }}>
                 {twin.product_image_url ? (
                   <img
                     src={twin.product_image_url}
                     alt={twin.product_title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    className="w-full h-full object-cover"
                   />
                 ) : (
-                  <Diamond className="h-16 w-16 text-muted-foreground/30" />
+                  <Diamond className="h-12 w-12" style={{ color: '#1a1a1a' }} />
                 )}
                 <div className="absolute top-3 right-3">
                   {statusBadge(twin.status)}
                 </div>
               </div>
-              <CardContent className="p-4 space-y-3">
+
+              <div className="p-4 space-y-3">
                 <div>
-                  <h3 className="font-medium text-foreground text-sm leading-tight">
+                  <h3 className="text-sm font-medium text-white leading-tight">
                     {twin.product_title}
                   </h3>
                   {twin.variant_title && (
-                    <p className="text-xs text-muted-foreground mt-1">{twin.variant_title}</p>
+                    <p className="text-xs mt-1" style={{ color: '#555' }}>{twin.variant_title}</p>
                   )}
-                  <p className="text-xs text-muted-foreground mt-1">
-                    Order {twin.metadata?.order_name || `#${twin.order_id}`}
+                  <p className="text-xs mt-1" style={{ color: '#333' }}>
+                    {twin.metadata?.order_name || `Order #${twin.order_id}`}
                   </p>
                 </div>
 
                 {twin.status === "claimable" && (
-                  <Button
-                    size="sm"
-                    className="w-full gap-2"
+                  <button
                     onClick={() => handleClaim(twin)}
                     disabled={claimingId === twin.id}
+                    className="w-full py-2.5 text-xs tracking-[0.15em] uppercase font-medium transition-colors"
+                    style={{
+                      backgroundColor: '#C8A96E',
+                      color: '#0a0a0a',
+                      border: 'none',
+                      borderRadius: '2px',
+                      cursor: claimingId === twin.id ? 'not-allowed' : 'pointer',
+                      opacity: claimingId === twin.id ? 0.6 : 1
+                    }}
                   >
-                    <Sparkles className="h-4 w-4" />
-                    {claimingId === twin.id ? "Claiming..." : "Claim Digital Twin"}
-                  </Button>
+                    {claimingId === twin.id ? "Claiming..." : "Claim Yours"}
+                  </button>
                 )}
 
                 {twin.status === "claimed" && twin.claimed_at && (
-                  <p className="text-xs text-muted-foreground text-center">
-                    Claimed on {new Date(twin.claimed_at).toLocaleDateString()}
+                  <p className="text-xs text-center" style={{ color: '#333' }}>
+                    Sealed {new Date(twin.claimed_at).toLocaleDateString('en-ZA', { year: 'numeric', month: 'long', day: 'numeric' })}
                   </p>
                 )}
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           ))}
         </div>
       )}

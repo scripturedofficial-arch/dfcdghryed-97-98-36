@@ -17,55 +17,74 @@ interface DashboardSidebarProps {
   hasNFTs?: boolean;
 }
 
-const quickAccessItems = [
+const sidebarItems = [
   {
     title: "Order History",
-    subtitle: "View your past orders and purchases",
     icon: History,
     href: "/order-history"
   },
   {
     title: "Digital Twins",
-    subtitle: "View and claim your NFT digital twins",
     icon: Diamond,
     href: "/digital-twins"
   }
 ];
 
-export function DashboardSidebar({ isGodlyCircleMember, onSelectContent, hasNFTs = false }: DashboardSidebarProps) {
+export function DashboardSidebar({ onSelectContent }: DashboardSidebarProps) {
   const { state } = useSidebar();
   const isMobile = useIsMobile();
-
   const isCollapsed = state === "collapsed" || isMobile;
 
   return (
     <Sidebar
-      className={`${isCollapsed ? "w-16" : "w-64"} h-screen transition-all duration-300`}
+      className={`${isCollapsed ? "w-14" : "w-56"} h-screen transition-all duration-300`}
       collapsible="icon"
     >
-      <SidebarContent className={`${isCollapsed ? "p-2 pt-8" : "p-3 pt-4"} bg-background border-r flex flex-col h-full`}>
-        <SidebarGroup className={`flex-1 overflow-y-auto min-h-0 ${isCollapsed ? "flex flex-col justify-start items-center" : "flex flex-col justify-center"}`}>
+      <SidebarContent
+        className={`${isCollapsed ? "p-2 pt-10" : "p-4 pt-8"} flex flex-col h-full`}
+        style={{ backgroundColor: '#0a0a0a', borderRight: '0.5px solid #1a1a1a' }}
+      >
+        {!isCollapsed && (
+          <p
+            className="text-xs tracking-[0.2em] uppercase mb-6 px-1"
+            style={{ color: '#333' }}
+          >
+            Account
+          </p>
+        )}
+
+        <SidebarGroup className="flex-1">
           <SidebarGroupContent>
-            <SidebarMenu className={`${isCollapsed ? "space-y-6 flex flex-col items-center" : "space-y-4"}`}>
-              {quickAccessItems.map((item) => (
+            <SidebarMenu className="space-y-1">
+              {sidebarItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
-                    <button 
+                    <button
                       onClick={(e) => {
                         e.preventDefault();
                         onSelectContent(item.href);
                       }}
-                      className={`flex items-center ${isCollapsed ? "justify-center p-2 w-10 h-10" : "gap-3 p-3"} rounded-lg transition-all duration-200 hover:bg-accent group text-left ${isCollapsed ? "" : "w-full"}`}
+                      className={`flex items-center ${isCollapsed ? "justify-center w-10 h-10 p-0" : "gap-3 px-3 py-2.5 w-full"} rounded transition-all duration-200 group text-left`}
+                      style={{ backgroundColor: 'transparent' }}
+                      onMouseEnter={e => {
+                        (e.currentTarget as HTMLButtonElement).style.backgroundColor = '#111';
+                      }}
+                      onMouseLeave={e => {
+                        (e.currentTarget as HTMLButtonElement).style.backgroundColor = 'transparent';
+                      }}
                     >
-                      <div className={`flex items-center justify-center ${isCollapsed ? "w-5 h-5" : "w-6 h-6"} relative`}>
-                        <item.icon className={`${isCollapsed ? "h-5 w-5" : "h-6 w-6"} text-muted-foreground group-hover:text-foreground`} />
-                      </div>
+                      <item.icon
+                        className={`${isCollapsed ? "h-4 w-4" : "h-4 w-4"} transition-colors`}
+                        style={{ color: '#555' }}
+                        onMouseEnter={e => ((e.target as SVGElement).style.color = '#C8A96E')}
+                      />
                       {!isCollapsed && (
-                        <div className="flex items-center justify-between flex-1">
-                          <span className="font-medium text-sm text-foreground">
-                            {item.title}
-                          </span>
-                        </div>
+                        <span
+                          className="text-sm font-medium tracking-wide group-hover:text-white transition-colors"
+                          style={{ color: '#888' }}
+                        >
+                          {item.title}
+                        </span>
                       )}
                     </button>
                   </SidebarMenuButton>
