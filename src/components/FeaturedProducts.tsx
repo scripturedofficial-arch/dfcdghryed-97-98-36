@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { ChevronLeft, ChevronRight, ShoppingCart, Package, Loader2 } from "lucide-react";
-import The12Products from "@/components/The12Products";
+
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useScrollPosition } from "@/hooks/useScrollPosition";
 import { storefrontApiRequest, STOREFRONT_QUERY, ShopifyProduct } from "@/lib/shopify";
