@@ -209,9 +209,7 @@ const FeaturedProducts = ({
                 </button>
               </div>
             </div>
-          ) : (
-            <The12Products />
-          )}
+          </div>
         </div>
       </section>
     </>
