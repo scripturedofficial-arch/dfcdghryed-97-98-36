@@ -104,15 +104,6 @@ const FeaturedProducts = ({
 
   return (
     <>
-      {/* CTA Buttons */}
-      <div className="flex flex-row gap-4 justify-center items-center bg-background py-6 transition-all duration-300">
-        <button onClick={handle36FiveClick} className={`px-8 py-3 text-lg font-medium transition-all duration-300 transform hover:scale-105 rounded-lg safe-touch-target ${activeButton === "36Five" ? "bg-primary text-primary-foreground hover:bg-primary/90" : "border-2 border-primary text-primary bg-background hover:bg-primary hover:text-primary-foreground"}`}>
-          36Five
-        </button>
-        <button onClick={handleThe12Click} className={`px-8 py-3 text-lg font-medium transition-all duration-300 transform hover:scale-105 rounded-lg safe-touch-target ${activeButton === "The12" ? "bg-primary text-primary-foreground hover:bg-primary/90" : "border-2 border-primary text-primary bg-background hover:bg-primary hover:text-primary-foreground"}`}>
-          The 12
-        </button>
-      </div>
 
       <section className="pb-16 bg-background transition-all duration-300 safe-area-bottom">
         <div className="max-w-7xl mx-auto px-0">
