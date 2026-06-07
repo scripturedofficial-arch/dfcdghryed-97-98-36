@@ -9,10 +9,10 @@ import { DigitalTwins } from "@/components/DigitalTwins";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { supabase } from "@/integrations/supabase/client";
 
-const quickAccessItems = [
+const mobileNavItems = [
   {
     title: "Order History",
-    subtitle: "View your past orders",
+    subtitle: "Your past orders",
     icon: History,
     href: "/order-history",
   },
@@ -28,7 +28,7 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
   const [inlineView, setInlineView] = useState<string | null>(null);
-  const [userName, setUserName] = useState<string>("Divine Soul");
+  const [userName, setUserName] = useState<string>("Collector");
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -41,7 +41,7 @@ const Dashboard = () => {
           .maybeSingle();
         if (profile) {
           if (profile.username) {
-            setUserName(profile.username);
+            setUserName(profile.username.charAt(0).toUpperCase() + profile.username.slice(1));
             return;
           }
           const name = [profile.first_name, profile.last_name].filter(Boolean).join(' ');
@@ -52,7 +52,8 @@ const Dashboard = () => {
         }
         const email = user.email;
         if (email) {
-          setUserName(email.split('@')[0]);
+          const raw = email.split('@')[0];
+          setUserName(raw.charAt(0).toUpperCase() + raw.slice(1));
         }
       }
     };
@@ -69,7 +70,7 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen" style={{ backgroundColor: '#0a0a0a' }}>
       <Navigation />
 
       <SidebarProvider defaultOpen={true}>
@@ -82,25 +83,36 @@ const Dashboard = () => {
           )}
 
           <main className="flex-1 overflow-y-auto">
-            <div className="sticky top-0 z-10 bg-background/80 backdrop-blur-sm border-b border-border/20">
-              <div className="px-4 md:px-6 py-4 flex items-center justify-between">
+            {/* Header */}
+            <div
+              className="sticky top-0 z-10 backdrop-blur-sm"
+              style={{
+                backgroundColor: 'rgba(10,10,10,0.9)',
+                borderBottom: '0.5px solid #1a1a1a'
+              }}
+            >
+              <div className="px-4 md:px-8 py-5 flex items-center justify-between">
                 <div className="flex items-center gap-4">
                   {!isMobile && (
-                    <SidebarTrigger className="text-foreground hover:text-primary transition-colors" />
+                    <SidebarTrigger className="text-[#555] hover:text-[#C8A96E] transition-colors" />
                   )}
                   <div>
-                    <h1 className="text-xl md:text-2xl font-serif text-foreground">Welcome back, {userName}</h1>
-                    <p className="text-xs md:text-sm text-muted-foreground">Your personal Scriptured sanctuary</p>
+                    <h1 className="font-serif text-lg md:text-xl text-white" style={{ letterSpacing: '0.02em' }}>
+                      {userName}
+                    </h1>
+                    <p className="text-xs tracking-[0.15em] uppercase mt-0.5" style={{ color: '#C8A96E' }}>
+                      36Five Member
+                    </p>
                   </div>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1">
                   <Button
                     variant="ghost"
                     size="icon"
                     onClick={() => navigate("/settings")}
-                    className="text-muted-foreground hover:text-foreground"
+                    className="text-[#555] hover:text-white hover:bg-transparent"
                   >
-                    <Settings className="h-5 w-5" />
+                    <Settings className="h-4 w-4" />
                   </Button>
                   <Button
                     variant="ghost"
@@ -109,48 +121,65 @@ const Dashboard = () => {
                       await supabase.auth.signOut();
                       navigate("/signin");
                     }}
-                    className="text-muted-foreground hover:text-foreground"
+                    className="text-[#555] hover:text-white hover:bg-transparent"
                   >
-                    <LogOut className="h-5 w-5" />
+                    <LogOut className="h-4 w-4" />
                   </Button>
                 </div>
               </div>
             </div>
 
-            <div className="p-4 md:p-6">
+            {/* Content */}
+            <div className="p-4 md:p-8">
               <div className="max-w-4xl mx-auto">
-                <div className="mb-6 md:mb-8">
-                  <h2 className="text-2xl md:text-3xl font-serif mb-2 text-foreground">Quick Access</h2>
-                  <p className="text-sm text-muted-foreground">Access your orders and purchases</p>
-                </div>
 
                 {inlineView === "digital-twins" ? (
                   <DigitalTwins />
                 ) : isMobile ? (
-                  <div className="grid gap-3">
-                    {quickAccessItems.map((item) => (
+                  /* Mobile nav — sidebar not shown on mobile so cards serve as navigation */
+                  <div className="space-y-3 mt-4">
+                    {mobileNavItems.map((item) => (
                       <button
                         key={item.title}
                         onClick={() => handleContentSelect(item.href)}
-                        className="flex items-center gap-4 p-4 rounded-xl border border-border/40 bg-card hover:bg-accent transition-colors text-left w-full"
+                        className="flex items-center gap-4 p-5 w-full text-left transition-colors"
+                        style={{
+                          backgroundColor: '#111',
+                          border: '0.5px solid #1a1a1a',
+                          borderRadius: '4px'
+                        }}
+                        onMouseEnter={e => (e.currentTarget.style.borderColor = '#C8A96E')}
+                        onMouseLeave={e => (e.currentTarget.style.borderColor = '#1a1a1a')}
                       >
-                        <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-muted">
-                          <item.icon className="h-5 w-5 text-foreground" />
+                        <div
+                          className="flex items-center justify-center w-9 h-9 rounded"
+                          style={{ backgroundColor: '#1a1a1a' }}
+                        >
+                          <item.icon className="h-4 w-4" style={{ color: '#C8A96E' }} />
                         </div>
                         <div>
-                          <p className="font-medium text-sm text-foreground">{item.title}</p>
-                          <p className="text-xs text-muted-foreground">{item.subtitle}</p>
+                          <p className="text-sm font-medium text-white">{item.title}</p>
+                          <p className="text-xs mt-0.5" style={{ color: '#555' }}>{item.subtitle}</p>
                         </div>
                       </button>
                     ))}
                   </div>
                 ) : (
-                  <div className="text-center py-12">
-                    <p className="text-muted-foreground mb-6">
-                      Select an option from the sidebar to continue
+                  /* Desktop empty state — sidebar handles navigation, this is the landing view */
+                  <div className="flex flex-col items-center justify-center py-32 text-center">
+                    <p
+                      className="font-serif text-5xl font-black mb-6"
+                      style={{ color: '#1a1a1a', letterSpacing: '0.1em' }}
+                    >
+                      SCRIPTURED
+                    </p>
+                    <div className="w-8 h-px mb-6" style={{ backgroundColor: '#C8A96E' }} />
+                    <p className="text-xs tracking-[0.2em] uppercase" style={{ color: '#333' }}>
+                      Select a section from the sidebar
                     </p>
                   </div>
                 )}
+
               </div>
             </div>
           </main>
