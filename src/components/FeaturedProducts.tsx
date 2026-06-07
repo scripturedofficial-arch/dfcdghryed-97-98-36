@@ -107,7 +107,7 @@ const FeaturedProducts = ({
 
       <section className="pb-16 bg-background transition-all duration-300 safe-area-bottom">
         <div className="max-w-7xl mx-auto px-0">
-          {activeButton === "36Five" ? (
+          <div>
             <div>
               <h2 className="text-4xl font-bold text-center text-foreground tracking-tight mb-2">New Arrivals</h2>
               <p className="text-lg text-muted-foreground text-center mb-10">
