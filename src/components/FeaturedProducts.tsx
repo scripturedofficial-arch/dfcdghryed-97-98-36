@@ -101,8 +101,6 @@ const FeaturedProducts = ({
   const nextSlide = () => setCurrentSlide(prev => (prev + 1) % totalSlides);
   const prevSlide = () => setCurrentSlide(prev => (prev - 1 + totalSlides) % totalSlides);
 
-  const handle36FiveClick = () => setActiveButton("36Five");
-  const handleThe12Click = () => setActiveButton("The12");
 
   return (
     <>
