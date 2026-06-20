@@ -109,9 +109,9 @@ const FeaturedProducts = ({
         <div className="max-w-7xl mx-auto px-0">
           <div>
             <div>
-              <h2 className="text-4xl font-bold text-center text-foreground tracking-tight mb-2">New Arrivals</h2>
+              <h2 className="text-4xl font-bold text-center text-foreground tracking-tight mb-2">The Collection</h2>
               <p className="text-lg text-muted-foreground text-center mb-10">
-                Each piece is <Link to="/made-to-order" className="text-primary hover:underline">made-to-order</Link>.
+                Every piece is considered. Every piece is <Link to="/made-to-order" className="text-primary hover:underline">made to order</Link>.
               </p>
 
               {isLoading ? (
@@ -205,7 +205,7 @@ const FeaturedProducts = ({
 
               <div className="text-center mt-10">
                 <button onClick={() => { window.scrollTo(0, 0); navigate('/shop'); }} className="border-2 border-primary text-primary px-8 py-3 text-lg font-medium hover:bg-primary hover:text-primary-foreground transition-all duration-300">
-                  VIEW FULL COLLECTION
+                  VIEW THE COLLECTION
                 </button>
               </div>
             </div>

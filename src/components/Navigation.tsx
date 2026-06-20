@@ -11,6 +11,7 @@ const Navigation = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [user, setUser] = useState<SupabaseUser | null>(null);
+  const [isAtTop, setIsAtTop] = useState(true);
   
   // Mobile header hide/show state
   const isMobile = useIsMobile();
@@ -21,6 +22,13 @@ const Navigation = () => {
   // Refs for click outside detection
   const searchRef = useRef<HTMLDivElement>(null);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const onScroll = () => setIsAtTop(window.scrollY < 50);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   useEffect(() => {
     // Get initial session
@@ -159,14 +167,17 @@ const Navigation = () => {
       setSearchQuery("");
     }
   };
-  return <nav className={`fixed top-0 left-0 right-0 z-[100] bg-white/95 backdrop-blur-sm border-b border-gray-200 transition-transform duration-300 ease-in-out ${
+  const transparent = isAtTop;
+  const navBg = transparent ? 'bg-transparent border-transparent' : 'bg-white/95 backdrop-blur-sm border-b border-gray-200';
+  const textColor = transparent ? 'text-white' : 'text-black';
+  return <nav className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-300 ease-in-out ${navBg} ${textColor} ${
     !isHeaderVisible && window.innerWidth < 1024 ? '-translate-y-full' : 'translate-y-0'
   }`}>
       <div className="max-w-7xl mx-auto px-0">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <a href="/" className="font-serif text-lg md:text-3xl font-black uppercase glitch-hover ml-[10px] md:ml-[15px] lg:ml-[20px]" style={{ letterSpacing: '0.08em', fontWeight: 900 }}>
+            <a href="/" className={`font-serif text-lg md:text-3xl font-black uppercase glitch-hover ml-[10px] md:ml-[15px] lg:ml-[20px] transition-colors duration-300 ${transparent ? 'text-white' : 'text-black'}`} style={{ letterSpacing: '0.08em', fontWeight: 900 }}>
               SCRIPTURED
             </a>
           </div>
@@ -174,7 +185,7 @@ const Navigation = () => {
           {/* Desktop Navigation */}
             <div className="hidden md:block">
             <div className="ml-10 flex items-center space-x-8">
-              {navItems.map(item => <a key={item.name} href={item.href} className="text-sm font-medium hover:text-gray-600 transition-colors duration-200">
+              {navItems.map(item => <a key={item.name} href={item.href} className={`text-sm font-medium transition-colors duration-300 ${transparent ? 'text-white hover:text-white/70' : 'text-black hover:text-gray-600'}`}>
                   {item.name}
                 </a>)}
             </div>
@@ -185,17 +196,17 @@ const Navigation = () => {
             <button onClick={() => {
               setIsSearchOpen(true);
               setIsMenuOpen(false);
-            }} className="p-2 hover:bg-gray-100 rounded-full transition-colors duration-200">
+            }} className={`p-2 rounded-full transition-colors duration-200 ${transparent ? 'text-white hover:bg-white/10' : 'hover:bg-gray-100'}`}>
               <Search className="w-5 h-5" />
             </button>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <button className="p-2 hover:bg-gray-100 rounded-full transition-colors duration-200">
+                <button className={`p-2 rounded-full transition-colors duration-200 ${transparent ? 'text-white hover:bg-white/10' : 'hover:bg-gray-100'}`}>
                   <User className="w-5 h-5" />
                 </button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-56 p-4 bg-white border border-gray-200 shadow-lg z-50" sideOffset={8}>
-                <div className="space-y-3">
+                <div className="space-y-3 text-black">
                   <div className="md:block">
                     <LanguageSelector />
                   </div>
@@ -234,7 +245,7 @@ const Navigation = () => {
               <button onClick={() => {
                 setIsMenuOpen(!isMenuOpen);
                 setIsSearchOpen(false);
-              }} className="p-2 hover:bg-gray-100 rounded-full transition-colors duration-200">
+              }} className={`p-2 rounded-full transition-colors duration-200 ${transparent ? 'text-white hover:bg-white/10' : 'hover:bg-gray-100'}`}>
                 {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
               </button>
             </div>
@@ -287,7 +298,7 @@ const Navigation = () => {
               window.location.href = `/shop?search=${encodeURIComponent(searchQuery)}`;
               setIsSearchOpen(false);
               setSearchQuery("");
-            }} className="w-full text-center px-3 py-2 text-sm text-blue-600 hover:text-blue-800 font-medium">
+            }} className="w-full text-center px-3 py-2 text-sm text-[#C8A96E] hover:text-[#C8A96E]/80 font-medium">
                       View all {searchResults.length} results
                     </button>}
                 </div>
