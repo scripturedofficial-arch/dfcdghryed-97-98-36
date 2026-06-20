@@ -58,7 +58,13 @@ const Settings = () => {
         setProfile(prev => ({ ...prev, firstName: p.first_name || "", lastName: p.last_name || "", email: user.email || "" }));
         setUsername(p.username || "");
         setOriginalUsername(p.username || "");
-        setAvatarUrl(p.avatar_url || null);
+        if (p.avatar_url) {
+          const path = p.avatar_url.includes("/avatars/")
+            ? p.avatar_url.split("/avatars/")[1].split("?")[0]
+            : p.avatar_url;
+          const { data: signed } = await supabase.storage.from("avatars").createSignedUrl(path, 3600);
+          setAvatarUrl(signed?.signedUrl || null);
+        }
       }
       setProfileLoading(false);
     };
@@ -102,10 +108,9 @@ const Settings = () => {
       setAvatarUploading(false);
       return;
     }
-    const { data: urlData } = supabase.storage.from("avatars").getPublicUrl(filePath);
-    const newUrl = `${urlData.publicUrl}?t=${Date.now()}`;
-    await supabase.from("profiles").update({ avatar_url: urlData.publicUrl }).eq("id", user.id);
-    setAvatarUrl(newUrl);
+    const { data: signed } = await supabase.storage.from("avatars").createSignedUrl(filePath, 3600);
+    await supabase.from("profiles").update({ avatar_url: filePath }).eq("id", user.id);
+    setAvatarUrl(signed?.signedUrl || null);
     setAvatarUploading(false);
     toast({ title: "Avatar updated" });
   };
