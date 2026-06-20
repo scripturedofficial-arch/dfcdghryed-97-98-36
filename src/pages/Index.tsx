@@ -43,7 +43,7 @@ const Index = () => {
     <div className="min-h-screen bg-white text-black">
       <SEO
         title="Scriptured — Divine by Design"
-        description="Scripture-inspired streetwear where ancient wisdom meets modern design. Limited drops with 70% of profits donated."
+        description="We don't make clothes. We write them. Luxury streetwear rooted in culture, legacy, and the sacred."
         path="/"
       />
       <Navigation />

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import CurrencySelector from "@/components/CurrencySelector";
 const Footer = () => {
   const footerLinks = {
-    company: ['About', 'Manifesto', 'The 12', 'Impact Report'],
+    company: ['About', 'Manifesto'],
     content: ['Journal', 'Editorials'],
     support: ['Contact', 'FAQ', 'Shipping & Returns', 'Size Return'],
     shop: ['Made-to-Order', 'Size Guide']
@@ -19,7 +19,7 @@ const Footer = () => {
               {/* Brand Info */}
               <div className="flex-1">
                 <h3 className="font-serif text-2xl font-bold mb-4">SCRIPTURED</h3>
-                <p className="text-gray-300 mb-6 max-w-sm">Where ancient wisdom meets modern streetwear. Fashion with purpose, impact with intention.</p>
+                <p className="text-gray-300 mb-6 max-w-sm">We don't make clothes. We write them.</p>
                 <div className="flex space-x-4">
                   <a href="https://www.instagram.com/scriptured.official/" target="_blank" rel="noopener noreferrer" className="hover:text-gray-300 transition-colors duration-200">
                     <Instagram className="w-5 h-5" />
@@ -42,13 +42,13 @@ const Footer = () => {
               {/* Newsletter Signup - Desktop */}
               <div className="hidden sm:block flex-1 max-w-md">
                 <h2 className="font-serif text-2xl font-bold mb-4">
-                  Stay Inspired
+                  The next chapter.
                 </h2>
                 <p className="text-lg text-gray-300 mb-6">
-                  Get our latest scripture meditations and design stories delivered to your inbox.
+                  Be the first to know when the next drop arrives.
                 </p>
                 <div className="flex flex-col sm:flex-row">
-                  <input type="email" placeholder="Enter your email" className="flex-1 bg-gray-900 border border-gray-700 px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:border-white sm:rounded-l sm:rounded-r-none rounded" />
+                  <input type="email" placeholder="Your email" className="flex-1 bg-gray-900 border border-gray-700 px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:border-white sm:rounded-l sm:rounded-r-none rounded" />
                   <button className="bg-white text-black px-6 py-3 font-medium hover:bg-gray-200 transition-colors duration-200 sm:rounded-r sm:rounded-l-none rounded mt-2 sm:mt-0">
                     SUBSCRIBE
                   </button>
@@ -97,13 +97,13 @@ const Footer = () => {
         {/* Newsletter Signup - Mobile Only */}
         <div className="sm:hidden mb-12">
           <h2 className="font-serif text-2xl font-bold mb-4 text-center">
-            Stay Inspired
+            The next chapter.
           </h2>
           <p className="text-lg text-gray-300 mb-6 text-center">
-            Get our latest scripture meditations and design stories delivered to your inbox.
+            Be the first to know when the next drop arrives.
           </p>
           <div className="flex flex-col sm:flex-row max-w-md mx-auto">
-            <input type="email" placeholder="Enter your email" className="flex-1 bg-gray-900 border border-gray-700 px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:border-white sm:rounded-l sm:rounded-r-none rounded" />
+            <input type="email" placeholder="Your email" className="flex-1 bg-gray-900 border border-gray-700 px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:border-white sm:rounded-l sm:rounded-r-none rounded" />
             <button className="bg-white text-black px-6 py-3 font-medium hover:bg-gray-200 transition-colors duration-200 sm:rounded-r sm:rounded-l-none rounded mt-2 sm:mt-0">
               SUBSCRIBE
             </button>
@@ -126,7 +126,7 @@ const Footer = () => {
           </div>
           
           <div className="text-sm text-gray-400">
-            <p>© 2025 Scriptured. All rights reserved.</p>
+            <p>© 2026 Scriptured. All rights reserved.</p>
           </div>
           
           
