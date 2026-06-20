@@ -7,8 +7,8 @@ const Manifesto = () => {
   return (
     <div className="min-h-screen bg-white text-black">
       <SEO
-        title="Manifesto — What Scriptured Stands For"
-        description="The Scriptured manifesto: faith, craft and purpose behind every piece across the 36Five and The 12 collections."
+        title="Manifesto — Scriptured Clothing"
+        description="Some brands are built. Scriptured was written. The Scriptured manifesto — on culture, legacy, and the sacred."
         path="/manifesto"
       />
       <Navigation />
@@ -20,7 +20,7 @@ const Manifesto = () => {
             Our Manifesto
           </h1>
           <p className="text-xl md:text-2xl text-gray-300 leading-relaxed">
-            Fashion for the faithful, streetwear for the soul-conscious
+            Some brands are built. Scriptured was written.
           </p>
         </div>
       </section>
@@ -28,115 +28,65 @@ const Manifesto = () => {
       {/* Main Manifesto Content */}
       <section className="py-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="prose prose-lg mx-auto">
-            <div className="text-center mb-16">
-              <h2 className="font-serif text-4xl font-bold mb-8">
-                In a World of Empty Messaging
-              </h2>
-              <p className="text-xl leading-relaxed mb-8">
-                In a world saturated with fast fashion and empty messaging, Scriptured stands as a beacon of purpose. 
-                We believe that clothing should carry meaning, that style should serve a higher calling, 
-                and that every purchase should contribute to something greater than ourselves.
+
+          {/* Opening */}
+          <div className="text-center mb-20">
+            <p className="text-lg leading-relaxed mb-6 text-gray-700">
+              Not designed in a boardroom. Not assembled from trend reports. Scriptured was conceived in the space between meaning and material — the idea that what you wear should say something that matters. That clothing, at its highest form, is a kind of scripture. A text. A declaration.
+            </p>
+            <p className="text-lg leading-relaxed text-gray-700">
+              We exist at the intersection of the streets and the eternal — where the everyday becomes the meaningful, where what you put on your body becomes a statement about who you are and what you believe.
+            </p>
+          </div>
+
+          {/* Pillars */}
+          <div className="space-y-16 mb-20">
+            <div className="border-t border-gray-200 pt-12">
+              <p className="text-xs tracking-[0.3em] uppercase text-[#C8A96E] mb-4 font-medium">01</p>
+              <h3 className="font-serif text-3xl font-bold mb-6">Intentionality</h3>
+              <p className="text-lg text-gray-700 leading-relaxed max-w-2xl">
+                Nothing we make is accidental. Every graphic, every colourway, every edition number carries a reason. We ask: what does this piece mean? If we can't answer, it doesn't get made.
               </p>
             </div>
 
-            <aside className="my-12">
-              <blockquote className="border-l-4 border-gray-200 pl-6 italic text-xl text-gray-700">
-                <p className="mb-3">"We are not bound by time."</p>
-                <p className="mb-3">We wear the questions of the past to answer the challenges of the present.</p>
-                <p>This is more than fabric – it’s thought, stitched into form.</p>
-              </blockquote>
-            </aside>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16">
-              <div>
-                <h3 className="font-serif text-2xl font-bold mb-4">Our Foundation</h3>
-                <p className="text-lg leading-relaxed">
-                  Our collections are born from scripture, philosophy, and timeless wisdom. Each piece tells a story, 
-                  carries a message, and supports causes that align with our values of honesty, integrity, 
-                  compassion, modesty, and creativity.
-                </p>
-              </div>
-              <div>
-                <h3 className="font-serif text-2xl font-bold mb-4">Our Promise</h3>
-                <p className="text-lg leading-relaxed">
-                  This is fashion for the faithful, streetwear for the soul-conscious, 
-                  and clothing for those who understand that true style transcends trends.
-                </p>
-              </div>
-            </div>
-
-            {/* Vision Section */}
-            <div className="bg-gray-50 p-12 rounded-lg mb-16">
-              <h3 className="font-serif text-3xl font-bold text-center mb-8">Our Vision</h3>
-              <p className="text-lg leading-relaxed text-center mb-6">
-                We envision a world where fashion serves a purpose beyond aesthetics, where every garment 
-                is a conversation starter, a source of inspiration, and a force for positive change.
-              </p>
-              <p className="text-lg leading-relaxed text-center">
-                Through thoughtful design, ethical production, and meaningful partnerships, 
-                we're building a community of conscious consumers who understand that what we wear 
-                reflects who we are and what we stand for.
+            <div className="border-t border-gray-200 pt-12">
+              <p className="text-xs tracking-[0.3em] uppercase text-[#C8A96E] mb-4 font-medium">02</p>
+              <h3 className="font-serif text-3xl font-bold mb-6">Scarcity with substance</h3>
+              <p className="text-lg text-gray-700 leading-relaxed max-w-2xl">
+                We are exclusive — but not arbitrarily. Our scarcity is earned through quality, craft, and meaning. The 12 Collection Box exists in editions of twelve because twelve is sacred. 36Five exists because 365 is the number of days in a year — a full cycle of life. Numbers mean something here.
               </p>
             </div>
 
-            {/* Values Integration */}
-            <div className="mb-16">
-              <h3 className="font-serif text-3xl font-bold text-center mb-12">Living Our Values</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {[
-                  {
-                    value: "Honesty",
-                    description: "Every thread tells the truth about its origin, every process is transparent, every promise is kept."
-                  },
-                  {
-                    value: "Integrity", 
-                    description: "We do what's right, even when no one is watching. Our principles guide every decision."
-                  },
-                  {
-                    value: "Compassion",
-                    description: "Every purchase contributes to causes that matter, supporting communities and creating positive change."
-                  },
-                  {
-                    value: "Modesty",
-                    description: "We believe in the power of understated elegance and humble confidence."
-                  },
-                  {
-                    value: "Creativity",
-                    description: "Innovation with intention—designing pieces that inspire both the wearer and the world."
-                  }
-                ].map((item, index) => (
-                  <div key={index} className="text-center">
-                    <h4 className="font-serif text-xl font-bold mb-3">{item.value}</h4>
-                    <p className="text-gray-600">{item.description}</p>
-                  </div>
-                ))}
-              </div>
+            <div className="border-t border-gray-200 pt-12">
+              <p className="text-xs tracking-[0.3em] uppercase text-[#C8A96E] mb-4 font-medium">03</p>
+              <h3 className="font-serif text-3xl font-bold mb-6">Cultural permanence</h3>
+              <p className="text-lg text-gray-700 leading-relaxed max-w-2xl">
+                Trends die. Scriptures don't. We build for permanence. A Scriptured piece should feel as relevant in ten years as it does the day it arrives. We reference culture, but we don't chase it.
+              </p>
             </div>
 
-            {/* Call to Action */}
-            <div className="text-center bg-black text-white p-12 rounded-lg">
-              <h3 className="font-serif text-3xl font-bold mb-6">Join the Movement</h3>
-              <p className="text-lg mb-8">
-                Ready to wear your values? Explore our collections and become part of a community 
-                that believes fashion can change the world.
+            <div className="border-t border-gray-200 pt-12">
+              <p className="text-xs tracking-[0.3em] uppercase text-[#C8A96E] mb-4 font-medium">04</p>
+              <h3 className="font-serif text-3xl font-bold mb-6">The spectrum of access</h3>
+              <p className="text-lg text-gray-700 leading-relaxed max-w-2xl">
+                We believe luxury should have layers. 36Five opens the door. The 12 is for those who are chosen. This is not elitism — it is architecture. Every great brand has an inner room.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link 
-                  to="/shop" 
-                  className="bg-white text-black px-8 py-3 font-medium hover:bg-gray-100 transition-colors duration-300 rounded"
-                >
-                  EXPLORE COLLECTIONS
-                </Link>
-                <Link 
-                  to="/about" 
-                  className="border border-white text-white px-8 py-3 font-medium hover:bg-white hover:text-black transition-colors duration-300 rounded"
-                >
-                  LEARN OUR STORY
-                </Link>
-              </div>
             </div>
           </div>
+
+          {/* Closing */}
+          <div className="text-center bg-black text-white p-16">
+            <p className="font-serif text-4xl font-bold mb-8 leading-tight">
+              We don't make clothes.<br />We write them.
+            </p>
+            <a
+              href="/36five"
+              className="inline-block border border-white/30 text-white text-xs tracking-[0.25em] uppercase px-10 py-4 hover:bg-white hover:text-black transition-all duration-300 font-medium"
+            >
+              Enter 36Five
+            </a>
+          </div>
+
         </div>
       </section>
 

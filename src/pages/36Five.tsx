@@ -49,8 +49,8 @@ const ThirtySixFive = () => {
   return (
     <div className="min-h-screen bg-white text-black">
       <SEO
-        title="36Five — Everyday Scripture Streetwear | Scriptured"
-        description="36Five is Scriptured's everyday clothing line: scripture-inspired essentials in limited drops, designed for daily wear."
+        title="36Five — The Philosophical Line | Scriptured"
+        description="365 days. Every one written. Which page are you on? Explore 36Five — the philosophical line by Scriptured."
         path="/36five"
       />
       <Navigation />

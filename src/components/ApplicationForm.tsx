@@ -20,8 +20,6 @@ const applicationSchema = z.object({
   email: z.string().email("Valid email is required"),
   phoneNumber: z.string().optional(),
   countryCity: z.string().min(2, "Country & City is required"),
-  faith: z.string().min(1, "Please select your faith connection"),
-  otherFaith: z.string().optional(),
   instagram: z.string().optional(),
   twitter: z.string().optional(),
   tiktok: z.string().optional(),
@@ -55,8 +53,6 @@ const ApplicationForm = () => {
       email: "",
       phoneNumber: "",
       countryCity: "",
-      faith: "",
-      otherFaith: "",
       instagram: "",
       twitter: "",
       tiktok: "",
@@ -86,7 +82,7 @@ const ApplicationForm = () => {
     fetchLocationData();
   }, []);
 
-  const selectedFaith = form.watch("faith");
+  
 
   const onSubmit = async (data: ApplicationFormData) => {
     setIsSubmitting(true);
@@ -144,7 +140,7 @@ const ApplicationForm = () => {
             THE 12 – ULTRA-EXCLUSIVE DROP APPLICATION
           </h1>
           <p className="font-serif text-xl text-gold/80 italic">
-            Limited Edition. Faith-Inspired. For the Chosen Few.
+            The record is sealed. The 12 are chosen.
           </p>
         </div>
 
@@ -227,50 +223,6 @@ const ApplicationForm = () => {
                 )}
               />
 
-              <FormField
-                control={form.control}
-                name="faith"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-foreground font-medium">Faith & Connection</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
-                      <FormControl>
-                        <SelectTrigger className="bg-background border-input text-foreground focus:border-gold transition-all duration-300 rounded-lg h-12">
-                          <SelectValue placeholder="Select your faith connection" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent className="bg-background border-border">
-                        <SelectItem value="christianity" className="text-foreground hover:bg-accent">Christianity</SelectItem>
-                        <SelectItem value="islam" className="text-foreground hover:bg-accent">Islam</SelectItem>
-                        <SelectItem value="hinduism" className="text-foreground hover:bg-accent">Hinduism</SelectItem>
-                        <SelectItem value="buddhism" className="text-foreground hover:bg-accent">Buddhism</SelectItem>
-                        <SelectItem value="other" className="text-foreground hover:bg-accent">Other (please specify)</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              {selectedFaith === "other" && (
-                <FormField
-                  control={form.control}
-                  name="otherFaith"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-muted-foreground font-medium">Please specify your faith</FormLabel>
-                      <FormControl>
-                        <Input
-                          {...field}
-                          className="bg-background border-input text-foreground placeholder:text-muted-foreground focus:border-gold transition-all duration-300 rounded-lg h-12"
-                          placeholder="Please specify"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              )}
             </div>
 
             {/* Social Media */}
@@ -467,7 +419,7 @@ const ApplicationForm = () => {
               <Button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full h-14 bg-gradient-to-r from-gold to-yellow-400 hover:from-yellow-400 hover:to-gold text-black font-semibold text-lg rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-gold/50 disabled:opacity-50"
+                className="w-full h-14 bg-[#C8A96E] hover:bg-[#C8A96E]/90 text-black font-semibold text-lg transition-all duration-300 disabled:opacity-50"
               >
                 {isSubmitting ? "Submitting..." : "Submit My Application"}
               </Button>
