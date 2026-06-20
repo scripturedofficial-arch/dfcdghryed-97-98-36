@@ -28,162 +28,94 @@ const About = () => {
   }, []);
   return <div className="min-h-screen bg-white text-black">
       <SEO
-        title="About Scriptured — Faith, Design & Purpose"
-        description="Scriptured is a faith-rooted clothing house behind the 36Five and The 12 lines. Discover our story, mission and values."
+        title="About — Scriptured Clothing"
+        description="Some brands are built. Scriptured was written. A luxury clothing brand rooted in culture, legacy, and the sacred."
         path="/about"
       />
       <Navigation />
-      
-      {/* Hero Section */}
-      
 
-      {/* Mission Section - fixed visibility issues */}
-      <section className="py-20 bg-gray-50">
+      {/* Origin Section */}
+      <section className="py-32 bg-black text-white">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <p className="text-xs tracking-[0.3em] uppercase text-[#C8A96E] mb-8 font-medium">
+            THE ORIGIN
+          </p>
+          <h1 className="font-serif text-5xl md:text-7xl font-bold mb-6 leading-tight">
+            Some brands are built.
+          </h1>
+          <h2 className="font-serif text-5xl md:text-7xl font-bold mb-12 text-[#C8A96E] leading-tight">
+            Scriptured was written.
+          </h2>
+          <p className="text-lg md:text-xl text-gray-300 leading-relaxed max-w-2xl mx-auto">
+            Not designed in a boardroom. Not assembled from trend reports. Scriptured was conceived in the space between meaning and material — the idea that what you wear should say something that matters.
+          </p>
+        </div>
+      </section>
+
+      {/* The Name Section */}
+      <section className="py-24 bg-white">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <p className="text-xs tracking-[0.3em] uppercase text-[#C8A96E] mb-8 font-medium text-center">
+            THE NAME
+          </p>
+          <div className="space-y-6 text-lg text-gray-700 leading-relaxed">
+            <p>
+              Scriptured. Not 'Scripted' — which implies a performance. Not 'Scripture' alone — which belongs to something older. Scriptured is its own word. A garment that has been written. A person who carries meaning. A brand that was authored, not assembled.
+            </p>
+            <p>
+              The heavy serif wordmark reinforces this. It looks like a masthead from an ancient text — a volume that will outlast the moment it was made.
+            </p>
+            <p className="font-serif text-2xl text-black font-bold text-center pt-6">
+              We are not for everyone. We are for those who feel the weight of that.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Pillars Section */}
+      <section className="py-24 bg-gray-50">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            {/* Left Content */}
-            <div className="space-y-6">
-              <h2 className="font-serif text-4xl md:text-5xl font-bold mb-6 text-black">
-                Purpose Beyond Fashion
-              </h2>
-              <div className="space-y-6 text-lg text-gray-700">
-                <p>
-                  Scriptured isn't just streetwear—it's a movement that bridges ancient wisdom 
-                  with contemporary culture. Every piece carries profound meaning, carefully 
-                  crafted to inspire reflection and spiritual growth.
-                </p>
-                <p>
-                  We believe fashion can be a force for good. Every purchase contributes to 
-                  causes aligned with each scripture's inspiration—from literacy programs 
-                  to youth mentorship and educational scholarships.
-                </p>
-              </div>
-
-              {/* Values */}
-              <div className="mt-8 grid grid-cols-2 gap-4">
-                {['Honesty', 'Integrity', 'Compassion', 'Modesty'].map(value => <div key={value} className="text-center p-4 bg-white rounded shadow-sm">
-                    <p className="font-medium text-black">{value}</p>
-                  </div>)}
-              </div>
+          <p className="text-xs tracking-[0.3em] uppercase text-[#C8A96E] mb-4 font-medium text-center">
+            WHAT WE STAND ON
+          </p>
+          <h2 className="font-serif text-4xl font-bold text-center mb-16 text-black">
+            The brand pillars
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+            <div>
+              <h3 className="font-serif text-xl font-bold mb-3 text-black">Intentionality</h3>
+              <p className="text-gray-600 leading-relaxed">Nothing we make is accidental. Every graphic, every colourway, every edition number carries a reason. We ask: what does this piece mean? If we can't answer, it doesn't get made.</p>
             </div>
-
-            {/* Right Content - Stats */}
-            <div className="space-y-6">
-              <div className="bg-white p-8 rounded-lg shadow-sm">
-                <div className="text-center mb-8">
-                  <h3 className="font-serif text-3xl font-bold mb-4 text-black">Our Impact</h3>
-                  <p className="text-gray-600">Making a difference through every purchase</p>
-                </div>
-
-                <div className="grid grid-cols-1 gap-6">
-                  <div className="text-center p-6 border border-gray-200 rounded">
-                    <div className="font-serif text-3xl font-bold mb-2 text-black">Limited</div>
-                    <p className="text-sm text-gray-600">Pieces Per Line</p>
-                  </div>
-                  
-                  <div className="text-center p-6 border border-gray-200 rounded">
-                    <div className="font-serif text-3xl font-bold mb-2 text-black">2-3</div>
-                    <p className="text-sm text-gray-600">Weeks made-to-order</p>
-                  </div>
-                  
-                  <div className="text-center p-6 border border-gray-200 rounded">
-                    <div className="font-serif text-3xl font-bold mb-2 text-black">100%</div>
-                    <p className="text-sm text-gray-600">Ethically sourced materials</p>
-                  </div>
-                </div>
-
-                <div className="text-center pt-6">
-                  <a href="/manifesto" className="bg-black text-white px-6 py-3 font-medium hover:bg-gray-800 transition-colors duration-300 rounded inline-block">
-                    READ OUR MANIFESTO
-                  </a>
-                </div>
-              </div>
+            <div>
+              <h3 className="font-serif text-xl font-bold mb-3 text-black">Scarcity with substance</h3>
+              <p className="text-gray-600 leading-relaxed">We are exclusive — but not arbitrarily. Our scarcity is earned through quality, craft, and meaning. Numbers mean something here. Every edition is chosen for a reason.</p>
+            </div>
+            <div>
+              <h3 className="font-serif text-xl font-bold mb-3 text-black">Cultural permanence</h3>
+              <p className="text-gray-600 leading-relaxed">Trends die. Scriptures don't. We build for permanence. A Scriptured piece should feel as relevant in ten years as it does the day it arrives. We reference culture, but we don't chase it.</p>
+            </div>
+            <div>
+              <h3 className="font-serif text-xl font-bold mb-3 text-black">The spectrum of access</h3>
+              <p className="text-gray-600 leading-relaxed">We believe luxury should have layers. 36Five opens the door. The 12 is for those who are chosen. This is not elitism — it is architecture. Every great brand has an inner room.</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Manifesto Section */}
-      <div id="manifesto" className="py-16 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="font-serif text-4xl md:text-5xl font-bold text-center mb-12">
-            Our Manifesto
-          </h2>
-          <div className="prose prose-lg mx-auto text-center">
-            <p className="text-lg leading-relaxed mb-6">
-              In a world saturated with fast fashion and empty messaging, Scriptured stands as a beacon of purpose. 
-              We believe that clothing should carry meaning, that style should serve a higher calling, 
-              and that every purchase should contribute to something greater than ourselves.
-            </p>
-            <p className="text-lg leading-relaxed mb-6">
-              Our collections are born from scripture, philosophy, and timeless wisdom. Each piece tells a story, 
-              carries a message, and supports causes that align with our values of honesty, integrity, 
-              compassion, modesty, and creativity.
-            </p>
-            <p className="text-lg leading-relaxed">
-              This is fashion for the faithful, streetwear for the soul-conscious, 
-              and clothing for those who understand that true style transcends trends.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      {/* Values Section */}
-      <div className="py-16 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="font-serif text-4xl md:text-5xl font-bold text-center mb-16">
-            Our Values
-          </h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
-            {[{
-            value: "Honesty",
-            description: "Transparent in all our practices"
-          }, {
-            value: "Integrity",
-            description: "Staying true to our principles"
-          }, {
-            value: "Compassion",
-            description: "Supporting meaningful causes"
-          }, {
-            value: "Modesty",
-            description: "Humble approach to fashion and life"
-          }, {
-            value: "Creativity",
-            description: "Innovative designs with purpose"
-          }].map((item, index) => <div key={index} className={`text-center ${index === 4 ? 'col-span-2 md:col-span-1 mx-auto max-w-xs' : ''}`}>
-                <h3 className="font-serif text-2xl font-bold mb-4">{item.value}</h3>
-                <p className="text-gray-600">{item.description}</p>
-              </div>)}
-          </div>
-        </div>
-      </div>
-
-      {/* Impact Section */}
-      <div id="impact" className="py-16 px-4 sm:px-6 lg:px-8 bg-black text-white">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="font-serif text-4xl md:text-5xl font-bold mb-8">
-            Purpose-Driven Impact
-          </h2>
-          <p className="text-xl leading-relaxed mb-8">
-            Every purchase contributes to causes that matter. Our commitment to ethical 
-            practices and meaningful partnerships creates positive change in communities worldwide.
+      {/* Closing Section */}
+      <section className="py-24 bg-black text-white text-center">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <p className="font-serif text-3xl md:text-5xl font-bold mb-10 leading-tight">
+            We don't make clothes.<br />We write them.
           </p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
-            <div>
-              <div className="text-3xl font-bold mb-2">Ethical</div>
-              <div className="text-gray-300">Production Always</div>
-            </div>
-            <div>
-              <div className="text-3xl font-bold mb-2">Limited</div>
-              <div className="text-gray-300">Edition Pieces</div>
-            </div>
-            <div>
-              <div className="text-3xl font-bold mb-2">Made</div>
-              <div className="text-gray-300">To Order</div>
-            </div>
-          </div>
+          <a
+            href="/36five"
+            className="inline-block border border-white/30 text-white text-xs tracking-[0.25em] uppercase px-10 py-4 hover:bg-white hover:text-black transition-all duration-300 font-medium"
+          >
+            Enter 36Five
+          </a>
         </div>
-      </div>
+      </section>
 
       <Footer />
     </div>;
