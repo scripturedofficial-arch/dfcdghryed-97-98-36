@@ -79,7 +79,7 @@ const SetupUsername = () => {
     }
 
     // Upload avatar if selected
-    let avatarUrl: string | null = null;
+    let avatarPath: string | null = null;
     if (avatarFile) {
       const ext = avatarFile.name.split(".").pop();
       const filePath = `${user.id}/avatar.${ext}`;
@@ -90,13 +90,12 @@ const SetupUsername = () => {
       if (uploadError) {
         toast({ title: "Upload failed", description: "Could not upload avatar. You can add one later in Settings.", variant: "destructive" });
       } else {
-        const { data: urlData } = supabase.storage.from("avatars").getPublicUrl(filePath);
-        avatarUrl = urlData.publicUrl;
+        avatarPath = filePath;
       }
     }
 
     const updateData: { id: string; username: string; avatar_url?: string } = { id: user.id, username };
-    if (avatarUrl) updateData.avatar_url = avatarUrl;
+    if (avatarPath) updateData.avatar_url = avatarPath;
 
     const { error } = await supabase
       .from("profiles")
