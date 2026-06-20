@@ -108,10 +108,9 @@ const Settings = () => {
       setAvatarUploading(false);
       return;
     }
-    const { data: urlData } = supabase.storage.from("avatars").getPublicUrl(filePath);
-    const newUrl = `${urlData.publicUrl}?t=${Date.now()}`;
-    await supabase.from("profiles").update({ avatar_url: urlData.publicUrl }).eq("id", user.id);
-    setAvatarUrl(newUrl);
+    const { data: signed } = await supabase.storage.from("avatars").createSignedUrl(filePath, 3600);
+    await supabase.from("profiles").update({ avatar_url: filePath }).eq("id", user.id);
+    setAvatarUrl(signed?.signedUrl || null);
     setAvatarUploading(false);
     toast({ title: "Avatar updated" });
   };
