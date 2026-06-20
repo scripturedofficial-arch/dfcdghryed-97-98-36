@@ -58,7 +58,13 @@ const Settings = () => {
         setProfile(prev => ({ ...prev, firstName: p.first_name || "", lastName: p.last_name || "", email: user.email || "" }));
         setUsername(p.username || "");
         setOriginalUsername(p.username || "");
-        setAvatarUrl(p.avatar_url || null);
+        if (p.avatar_url) {
+          const path = p.avatar_url.includes("/avatars/")
+            ? p.avatar_url.split("/avatars/")[1].split("?")[0]
+            : p.avatar_url;
+          const { data: signed } = await supabase.storage.from("avatars").createSignedUrl(path, 3600);
+          setAvatarUrl(signed?.signedUrl || null);
+        }
       }
       setProfileLoading(false);
     };
